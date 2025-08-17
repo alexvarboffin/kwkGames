@@ -154,47 +154,51 @@ fun GameBoard(onMatch: () -> Unit) {
     var grid by remember { mutableStateOf(List(GRID_SIZE) { List(GRID_SIZE) { emojis.random() } }) }
     var selectedItem by remember { mutableStateOf<Pair<Int, Int>?>(null) }
 
-    fun swap(r1: Int, c1: Int, r2: Int, c2: Int) {
-        val newGrid = grid.map { it.toMutableList() }.toMutableList()
+    // This is now a pure function
+    fun swap(g: List<List<String>>, r1: Int, c1: Int, r2: Int, c2: Int): List<List<String>> {
+        val newGrid = g.map { it.toMutableList() }.toMutableList()
         val temp = newGrid[r1][c1]
         newGrid[r1][c1] = newGrid[r2][c2]
         newGrid[r2][c2] = temp
-        grid = newGrid
+        return newGrid
     }
 
-    fun checkMatches(): Boolean {
-        val newGrid = grid.map { it.toMutableList() }.toMutableList()
+    // This is now a pure function
+    fun checkMatches(g: List<List<String>>): Pair<List<List<String>>, Boolean> {
+        val newGrid = g.map { it.toMutableList() }.toMutableList()
         var matchFound = false
 
-        // Horizontal
+        val rowsToRemove = mutableSetOf<Pair<Int, Int>>()
+        // Check horizontal matches
         for (r in 0 until GRID_SIZE) {
             for (c in 0 until GRID_SIZE - 2) {
                 if (newGrid[r][c].isNotBlank() && newGrid[r][c] == newGrid[r][c+1] && newGrid[r][c] == newGrid[r][c+2]) {
                     matchFound = true
-                    newGrid[r][c] = emptyEmoji; newGrid[r][c+1] = emptyEmoji; newGrid[r][c+2] = emptyEmoji
+                    rowsToRemove.add(r to c); rowsToRemove.add(r to c+1); rowsToRemove.add(r to c+2)
                 }
             }
         }
 
-        // Vertical
+        // Check vertical matches
         for (c in 0 until GRID_SIZE) {
             for (r in 0 until GRID_SIZE - 2) {
                 if (newGrid[r][c].isNotBlank() && newGrid[r][c] == newGrid[r+1][c] && newGrid[r][c] == newGrid[r+2][c]) {
                     matchFound = true
-                    newGrid[r][c] = emptyEmoji; newGrid[r+1][c] = emptyEmoji; newGrid[r+2][c] = emptyEmoji
+                    rowsToRemove.add(r to c); rowsToRemove.add(r+1 to c); rowsToRemove.add(r+2 to c)
                 }
             }
         }
 
         if(matchFound) {
-            grid = newGrid
+            rowsToRemove.forEach { newGrid[it.first][it.second] = emptyEmoji }
             onMatch()
         }
-        return matchFound
+        return newGrid to matchFound
     }
 
-    fun dropAndRefill() {
-        val newGrid = grid.map { it.toMutableList() }.toMutableList()
+    // This is now a pure function
+    fun dropAndRefill(g: List<List<String>>): List<List<String>> {
+        val newGrid = g.map { it.toMutableList() }.toMutableList()
         for (c in 0 until GRID_SIZE) {
             var emptyRow = GRID_SIZE - 1
             for (r in GRID_SIZE - 1 downTo 0) {
@@ -209,14 +213,7 @@ fun GameBoard(onMatch: () -> Unit) {
                 newGrid[r][c] = emojis.random()
             }
         }
-        grid = newGrid
-    }
-
-    fun checkMatchesAndRefill() {
-        if (checkMatches()) {
-            dropAndRefill()
-            checkMatchesAndRefill()
-        }
+        return newGrid
     }
 
     Box(modifier = Modifier.border(2.dp, Color.White)){
@@ -238,10 +235,28 @@ fun GameBoard(onMatch: () -> Unit) {
                                     } else {
                                         val (selI, selJ) = currentSelection
                                         if ((abs(selI - i) == 1 && selJ == j) || (abs(selJ - j) == 1 && selI == i)) {
-                                            swap(selI, selJ, i, j)
-                                            checkMatchesAndRefill()
+                                            // Perform swap and check for matches in a structured way
+                                            var gridAfterSwap = swap(grid, selI, selJ, i, j)
+                                            var (gridAfterMatches, matchFound) = checkMatches(gridAfterSwap)
+
+                                            if (matchFound) {
+                                                var finalGrid = gridAfterMatches
+                                                while(true) {
+                                                    finalGrid = dropAndRefill(finalGrid)
+                                                    val (nextPassGrid, nextMatchFound) = checkMatches(finalGrid)
+                                                    if(nextMatchFound) {
+                                                        finalGrid = nextPassGrid
+                                                    } else {
+                                                        grid = finalGrid
+                                                        break
+                                                    }
+                                                }
+                                            } else {
+                                                // No match, so don't update the grid (or swap back)
+                                                // For now, we just don't apply the swap
+                                            }
                                         }
-                                        selectedItem = null
+                                        selectedItem = null // Deselect item
                                     }
                                 }
                         ) {
