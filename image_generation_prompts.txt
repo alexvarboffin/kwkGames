@@ -1,0 +1,31 @@
+# Prompts for AI Image Generation (Cricket Match-3 Game)
+
+## 1. App Icon (512x512)
+A modern, stylized app icon for a mobile cricket game. A dynamic, glossy cricket ball with a bold star logo in the center. The icon should be simple, memorable, and look great on a mobile screen. High resolution, 512x512, on a transparent background.
+
+---
+
+## 2. Game Pieces (Match-3 Icons)
+Create a set of shiny, simple, cartoon-style icons for a match-3 puzzle game. Each icon should be clear, easily recognizable, and on a transparent background.
+
+- **Cricket Bat:** "A simple, shiny cartoon cricket bat, match-3 game asset, icon, on a transparent background."
+- **Cricket Ball:** "A simple, shiny cartoon red cricket ball, match-3 game asset, icon, on a transparent background."
+- **Wicket:** "A simple, shiny cartoon cricket wicket (three stumps and bails), match-3 game asset, icon, on a transparent background."
+- **Glove:** "A simple, shiny cartoon cricket batting glove, match-3 game asset, icon, on a transparent background."
+- **Helmet:** "A simple, shiny cartoon cricket helmet, match-3 game asset, icon, on a transparent background."
+- **Trophy (Special Item):** "A simple, shiny cartoon gold trophy, match-3 game asset, icon, on a transparent background."
+
+---
+
+## 3. UI Backgrounds (Vertical Orientation)
+
+- **Main Menu Background:** "Epic cricket stadium at night under bright floodlights, dramatic starry sky. The view is from the stands, looking down at the perfectly green field. There should be an empty space in the center for the game title and buttons. Vertical orientation. Mobile game main menu background. Stylized, vibrant, digital painting."
+- **Level Select Background:** "A whimsical, cartoon map for a mobile cricket game level select screen. A path winds through a stylized cricket field with numbered level markers. In the background, a friendly-looking stadium under a blue sky with fluffy clouds. Vertical UI background. Fun and inviting for players."
+- **Game Board Background:** "A background for a match-3 game board. The view is from behind the batsman, looking out onto a beautiful, sunny cricket pitch. The grass is perfectly manicured. The focus is on the field, with the stadium softly blurred in the distance. Vertical orientation, digital painting."
+
+---
+
+## 4. UI Elements
+
+- **Buttons:** "A set of rustic, slightly weathered wooden sign buttons for a mobile game UI. The buttons should have a rope or twine border. Create versions with the text 'Career Mode', 'Endless Mode', 'Play', and also blank versions for level numbers. On a transparent background. Fun, cartoon style."
+- **Game Title Logo:** "A stylized, dynamic and bold logo with the text 'Cricket Craze' (or your chosen game title). The letters should be chunky, with a glossy finish and a subtle cricket texture (like leather or wood). The logo should be exciting and appealing. On a transparent background."

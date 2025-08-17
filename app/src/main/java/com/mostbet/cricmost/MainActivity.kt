@@ -6,6 +6,7 @@ import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,6 +19,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -68,11 +71,13 @@ fun AppNavigation(webView: WebView) {
 
 @Composable
 fun MainScreen(navController: NavController) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF006400))
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_background),
+            contentDescription = "Background",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -80,7 +85,6 @@ fun MainScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("CRICKET FROUA", fontSize = 32.sp, color = Color.White)
             Spacer(modifier = Modifier.height(150.dp))
             Button(onClick = { navController.navigate("level_select") },
                   modifier = Modifier.fillMaxWidth(0.8f)) {
@@ -103,10 +107,15 @@ fun MainScreen(navController: NavController) {
 @Composable
 fun LevelScreen(navController: NavController) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF004d00))
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center // This will center the grid
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_level_select_background),
+            contentDescription = "Level Select Background",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
         LazyVerticalGrid(
             columns = GridCells.Fixed(4),
             modifier = Modifier.padding(16.dp)
@@ -125,24 +134,31 @@ fun GameScreen(navController: NavController) {
     var score by remember { mutableStateOf(0) }
     var moves by remember { mutableStateOf(24) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF004d00))
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
+    Box(modifier = Modifier.fillMaxSize()) { // Wrap in a Box
+        Image(
+            painter = painterResource(id = R.drawable.ic_game_background),
+            contentDescription = "Game Background",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Moves: $moves", fontSize = 24.sp, color = Color.White, fontWeight = FontWeight.Bold)
-            Text(text = "Score: $score", fontSize = 24.sp, color = Color.White, fontWeight = FontWeight.Bold)
-        }
-        Spacer(modifier = Modifier.height(32.dp))
-        GameBoard {
-            score += 100
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "Moves: $moves", fontSize = 24.sp, color = Color.White, fontWeight = FontWeight.Bold)
+                Text(text = "Score: $score", fontSize = 24.sp, color = Color.White, fontWeight = FontWeight.Bold)
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            GameBoard {
+                score += 100
+            }
         }
     }
 }
