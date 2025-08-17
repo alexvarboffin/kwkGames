@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.walhalla.cricket"
+    namespace = "com.mostbet.cricmost"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.walhalla.cricket"
+        applicationId = "com.mostbet.cricmost"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
