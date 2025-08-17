@@ -24,18 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LevelActivity"
-            android:label="Select Level"
-            android:theme="@style/Theme.Cricket" />
-        <activity
-            android:name=".GameActivity"
-            android:label="Game"
-            android:theme="@style/Theme.Cricket" />
-        <activity
-            android:name=".WebViewActivity"
-            android:label="Privacy Policy"
-            android:theme="@style/Theme.Cricket" />
     </application>
 
 </manifest>
