@@ -13,11 +13,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -104,11 +108,12 @@ fun MainScreen(navController: NavController) {
     }
 }
 
+
+
 @Composable
 fun LevelScreen(navController: NavController) {
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center // This will center the grid
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_level_select_background),
@@ -116,14 +121,69 @@ fun LevelScreen(navController: NavController) {
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(4),
-            modifier = Modifier.padding(16.dp)
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(30) { level ->
-                Button(onClick = { navController.navigate("game") }) {
-                    Text(text = (level + 1).toString())
+            Text(
+                text = "LEVELS",
+                fontSize = 48.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier.padding(vertical = 32.dp)
+            )
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(3),
+                modifier = Modifier.padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(30) { level ->
+                    val stars = Random.nextInt(0, 4) // Random stars for demo
+                    LevelItem(level = level + 1, stars = stars) {
+                        navController.navigate("game")
+                    }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun LevelItem(level: Int, stars: Int, onClick: () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Button(
+            onClick = onClick,
+            shape = CircleShape,
+            modifier = Modifier.size(80.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+            contentPadding = PaddingValues(0.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(Color(0xFFFAD961), Color(0xFFF76B1C))
+                        )
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = level.toString(),
+                    fontSize = 32.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+        Row(modifier = Modifier.padding(top = 4.dp)) {
+            repeat(3) { index ->
+                val starEmoji = if (index < stars) "⭐" else "☆"
+                Text(text = starEmoji, fontSize = 24.sp)
             }
         }
     }
