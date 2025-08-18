@@ -3,7 +3,6 @@ package com.mostbet.cricmost
 import android.content.Context
 import android.os.Bundle
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -16,12 +15,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -47,7 +44,6 @@ import androidx.navigation.navArgument
 import com.mostbet.cricmost.ui.theme.CricketTheme
 import kotlinx.coroutines.delay
 import kotlin.math.abs
-import kotlin.random.Random
 
 const val GRID_SIZE = 8
 const val ENDLESS_MODE_TIME = 60f
@@ -62,10 +58,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        webView = WebView(this).apply {
-            webViewClient = WebViewClient()
-            loadUrl("https://jojoapp.site/apps")
-        }
+        webView = WebView(this).apply {} //not set WebViewClient!!!
 
         setContent {
             CricketTheme {
@@ -73,7 +66,13 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        webView.loadPrivacyPolicy("https://jojoapp.site/apps")
+    }
 }
+
 
 @Composable
 fun AppNavigation(webView: WebView) {
