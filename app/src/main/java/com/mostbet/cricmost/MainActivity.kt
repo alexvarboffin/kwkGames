@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -93,15 +94,38 @@ fun MainScreen(navController: NavController) {
         Image(painter = painterResource(id = R.drawable.ic_background), contentDescription = "Background", contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
         Column(modifier = Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.height(150.dp))
-            Button(onClick = { navController.navigate("level_select") }, modifier = Modifier.fillMaxWidth(0.8f)) { Text("Career Mode") }
+            BeautifulButton(onClick = { navController.navigate("level_select") }, text = "Career Mode", modifier = Modifier.fillMaxWidth(0.8f))
             Spacer(modifier = Modifier.height(20.dp))
-            Button(onClick = { navController.navigate("game_endless") }, modifier = Modifier.fillMaxWidth(0.8f)) { Text("Endless Mode") }
+            BeautifulButton(onClick = { navController.navigate("game_endless") }, text = "Endless Mode", modifier = Modifier.fillMaxWidth(0.8f))
             Spacer(modifier = Modifier.height(40.dp))
             Row(modifier = Modifier.fillMaxWidth(0.8f), horizontalArrangement = Arrangement.SpaceEvenly) {
-                Button(onClick = { navController.navigate("privacy_policy") }, modifier = Modifier.weight(1f)) { Text("Privacy") }
+                BeautifulButton(onClick = { navController.navigate("privacy_policy") }, text = "Privacy", modifier = Modifier.weight(1f))
                 Spacer(modifier = Modifier.width(16.dp))
-                Button(onClick = { navController.navigate("privacy_policy") }, modifier = Modifier.weight(1f)) { Text("FAQ") }
+                BeautifulButton(onClick = { navController.navigate("privacy_policy") }, text = "FAQ", modifier = Modifier.weight(1f))
             }
+        }
+    }
+}
+
+@Composable
+fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modifier) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Transparent,
+            contentColor = Color.White
+        ),
+        contentPadding = PaddingValues()
+    ) {
+        Box(
+            modifier = Modifier
+                .background(Brush.verticalGradient(colors = listOf(Color(0xFFFAD961), Color(0xFFF76B1C))))
+                .border(BorderStroke(2.dp, Color.White))
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = text, fontWeight = FontWeight.Bold)
         }
     }
 }
