@@ -114,14 +114,17 @@ fun LevelScreen(navController: NavController) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(painter = painterResource(id = R.drawable.ic_level_select_background), contentDescription = "Level Select Background", contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-        Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "LEVELS", fontSize = 48.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(vertical = 32.dp))
-            LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                items(30) { levelIndex ->
-                    val currentLevel = levelIndex + 1
-                    val isLocked = currentLevel > unlockedLevel
-                    LevelItem(level = currentLevel, stars = 0, isLocked = isLocked) {
-                        navController.navigate("game_career/$currentLevel")
+        Column {
+            Box(modifier = Modifier.height(30.dp))
+            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "", fontSize = 48.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(vertical = 32.dp))
+                LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    items(30) { levelIndex ->
+                        val currentLevel = levelIndex + 1
+                        val isLocked = currentLevel > unlockedLevel
+                        LevelItem(level = currentLevel, stars = 0, isLocked = isLocked) {
+                            navController.navigate("game_career/$currentLevel")
+                        }
                     }
                 }
             }
