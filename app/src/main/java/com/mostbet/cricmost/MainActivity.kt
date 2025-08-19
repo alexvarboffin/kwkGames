@@ -89,23 +89,55 @@ fun AppNavigation(webView: WebView) {
         }
         composable("game_endless") { GameScreen(navController, isEndlessMode = true, level = 1) }
         composable("privacy_policy") { PrivacyPolicyScreen(webView) }
+        //composable("faq") { FaqScreen() }
+
     }
 }
 
 @Composable
 fun MainScreen(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize()) {
-        Image(painter = painterResource(id = R.drawable.ic_background), contentDescription = "Background", contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_background),
+            contentDescription = "Background",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Spacer(modifier = Modifier.height(150.dp))
-            BeautifulButton(onClick = { navController.navigate("level_select") }, text = "Career Mode", modifier = Modifier.fillMaxWidth(0.8f))
+            BeautifulButton(
+                onClick = { navController.navigate("level_select") },
+                text = "Career Mode",
+                modifier = Modifier.fillMaxWidth(0.8f)
+            )
             Spacer(modifier = Modifier.height(20.dp))
-            BeautifulButton(onClick = { navController.navigate("game_endless") }, text = "Endless Mode", modifier = Modifier.fillMaxWidth(0.8f))
+            BeautifulButton(
+                onClick = { navController.navigate("game_endless") },
+                text = "Endless Mode",
+                modifier = Modifier.fillMaxWidth(0.8f)
+            )
             Spacer(modifier = Modifier.height(40.dp))
-            Row(modifier = Modifier.fillMaxWidth(0.8f), horizontalArrangement = Arrangement.SpaceEvenly) {
-                BeautifulButton(onClick = { navController.navigate("privacy_policy") }, text = "Privacy", modifier = Modifier.weight(1f))
+            Row(
+                modifier = Modifier.fillMaxWidth(0.8f),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                BeautifulButton(
+                    onClick = { navController.navigate("privacy_policy") },
+                    text = "Privacy",
+                    modifier = Modifier.weight(1f)
+                )
                 Spacer(modifier = Modifier.width(16.dp))
-                BeautifulButton(onClick = { navController.navigate("privacy_policy") }, text = "FAQ", modifier = Modifier.weight(1f))
+                BeautifulButton(
+                    onClick = { navController.navigate("faq") },
+                    text = "FAQ",
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
     }
@@ -124,7 +156,14 @@ fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modi
     ) {
         Box(
             modifier = Modifier
-                .background(Brush.verticalGradient(colors = listOf(Color(0xFFFAD961), Color(0xFFF76B1C))))
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFFFAD961),
+                            Color(0xFFF76B1C)
+                        )
+                    )
+                )
                 .border(BorderStroke(2.dp, Color.White))
                 .padding(16.dp),
             contentAlignment = Alignment.Center
@@ -141,12 +180,31 @@ fun LevelScreen(navController: NavController) {
     val unlockedLevel by remember { mutableStateOf(sharedPrefs.getInt(KEY_UNLOCKED_LEVEL, 3)) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Image(painter = painterResource(id = R.drawable.ic_level_select_background), contentDescription = "Level Select Background", contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+        Image(
+            painter = painterResource(id = R.drawable.ic_level_select_background),
+            contentDescription = "Level Select Background",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
         Column {
             Box(modifier = Modifier.height(30.dp))
-            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "", fontSize = 48.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(vertical = 32.dp))
-                LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "",
+                    fontSize = 48.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier.padding(vertical = 32.dp)
+                )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
                     items(30) { levelIndex ->
                         val currentLevel = levelIndex + 1
                         val isLocked = currentLevel > unlockedLevel
@@ -162,20 +220,40 @@ fun LevelScreen(navController: NavController) {
 
 @Composable
 fun LevelItem(level: Int, stars: Int, isLocked: Boolean, onClick: () -> Unit) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier.alpha(if (isLocked) 0.5f else 1f)) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.alpha(if (isLocked) 0.5f else 1f)
+    ) {
         Button(
-            onClick = onClick, 
+            onClick = onClick,
             enabled = !isLocked,
-            shape = CircleShape, 
-            modifier = Modifier.size(80.dp), 
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent), 
+            shape = CircleShape,
+            modifier = Modifier.size(80.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
             contentPadding = PaddingValues(0.dp)
         ) {
-            Box(modifier = Modifier.fillMaxSize().background(Brush.verticalGradient(colors = listOf(Color(0xFFFAD961), Color(0xFFF76B1C)))), contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                Color(0xFFFAD961),
+                                Color(0xFFF76B1C)
+                            )
+                        )
+                    ), contentAlignment = Alignment.Center
+            ) {
                 if (isLocked) {
                     Text(text = "🔒", fontSize = 32.sp)
                 } else {
-                    Text(text = level.toString(), fontSize = 32.sp, color = Color.Black, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = level.toString(),
+                        fontSize = 32.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         }
@@ -226,30 +304,70 @@ fun GameScreen(navController: NavController, isEndlessMode: Boolean, level: Int)
     val animatedTime by animateFloatAsState(targetValue = timeLeft / ENDLESS_MODE_TIME, label = "")
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Image(painter = painterResource(id = R.drawable.ic_game_background), contentDescription = "Game Background", contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "MOST GAME", fontSize = 32.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(bottom = 16.dp))
+        Image(
+            painter = painterResource(id = R.drawable.ic_game_background),
+            contentDescription = "Game Background",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "MOST GAME",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
             if (isEndlessMode) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) { Text("Best: $bestScore", color = Color.White); Text("Score: $score", color = Color.White) }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Text("Best: $bestScore", color = Color.White); Text(
+                    "Score: $score",
+                    color = Color.White
+                )
+                }
             } else {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) { Text("Moves: $moves", color = Color.White); Text("Goal: $goalScore", color = Color.White); Text("Score: $score", color = Color.White) }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Text("Moves: $moves", color = Color.White); Text(
+                    "Goal: $goalScore",
+                    color = Color.White
+                ); Text("Score: $score", color = Color.White)
+                }
             }
             Spacer(modifier = Modifier.height(32.dp))
             GameBoard {
                 score += 100
-                if(isEndlessMode) timeLeft = (timeLeft + 1).coerceAtMost(ENDLESS_MODE_TIME)
+                if (isEndlessMode) timeLeft = (timeLeft + 1).coerceAtMost(ENDLESS_MODE_TIME)
                 else moves--
             }
-            if(isEndlessMode) {
+            if (isEndlessMode) {
                 Spacer(modifier = Modifier.weight(1f))
-                LinearProgressIndicator(progress = { animatedTime }, modifier = Modifier.fillMaxWidth().height(20.dp))
+                LinearProgressIndicator(
+                    progress = { animatedTime },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(20.dp)
+                )
             }
         }
         if (showTimeoutDialog) {
             TimeoutDialog(score = score) { navController.popBackStack() }
         }
         if (showLevelEndDialog) {
-            LevelEndDialog(score = score, goal = goalScore, onDismiss = { navController.popBackStack() })
+            LevelEndDialog(
+                score = score,
+                goal = goalScore,
+                onDismiss = { navController.popBackStack() })
         }
     }
 }
@@ -257,7 +375,17 @@ fun GameScreen(navController: NavController, isEndlessMode: Boolean, level: Int)
 @Composable
 fun TimeoutDialog(score: Int, onDismiss: () -> Unit) {
     Dialog(onDismissRequest = onDismiss) {
-        Card { Column(Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) { Text("TIMEOUT!", fontWeight = FontWeight.Bold); Text("SCORE: $score"); Button(onClick = onDismiss) { Text("Main Menu") } } }
+        Card {
+            Column(
+                Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    "TIMEOUT!",
+                    fontWeight = FontWeight.Bold
+                ); Text("SCORE: $score"); Button(onClick = onDismiss) { Text("Main Menu") }
+            }
+        }
     }
 }
 
@@ -265,7 +393,17 @@ fun TimeoutDialog(score: Int, onDismiss: () -> Unit) {
 fun LevelEndDialog(score: Int, goal: Int, onDismiss: () -> Unit) {
     val isComplete = score >= goal
     Dialog(onDismissRequest = onDismiss) {
-        Card { Column(Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) { Text(if(isComplete) "LEVEL COMPLETE!" else "LEVEL FAILED", fontWeight = FontWeight.Bold); Text("SCORE: $score / $goal"); Button(onClick = onDismiss) { Text("Continue") } } }
+        Card {
+            Column(
+                Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    if (isComplete) "LEVEL COMPLETE!" else "LEVEL FAILED",
+                    fontWeight = FontWeight.Bold
+                ); Text("SCORE: $score / $goal"); Button(onClick = onDismiss) { Text("Continue") }
+            }
+        }
     }
 }
 
@@ -277,51 +415,83 @@ fun GameBoard(onMatch: () -> Unit) {
     var selectedItem by remember { mutableStateOf<Pair<Int, Int>?>(null) }
 
     fun swap(g: List<List<String>>, r1: Int, c1: Int, r2: Int, c2: Int): List<List<String>> {
-        val newGrid = g.map { it.toMutableList() }.toMutableList(); val temp = newGrid[r1][c1]; newGrid[r1][c1] = newGrid[r2][c2]; newGrid[r2][c2] = temp; return newGrid
+        val newGrid = g.map { it.toMutableList() }.toMutableList();
+        val temp = newGrid[r1][c1]; newGrid[r1][c1] = newGrid[r2][c2]; newGrid[r2][c2] =
+            temp; return newGrid
     }
 
     fun checkMatches(g: List<List<String>>): Pair<List<List<String>>, Boolean> {
-        val newGrid = g.map { it.toMutableList() }.toMutableList(); var matchFound = false; val toRemove = mutableSetOf<Pair<Int, Int>>()
-        for (r in 0 until GRID_SIZE) for (c in 0 until GRID_SIZE - 2) if (newGrid[r][c].isNotBlank() && newGrid[r][c] == newGrid[r][c+1] && newGrid[r][c] == newGrid[r][c+2]) { matchFound = true; toRemove.add(r to c); toRemove.add(r to c+1); toRemove.add(r to c+2) }
-        for (c in 0 until GRID_SIZE) for (r in 0 until GRID_SIZE - 2) if (newGrid[r][c].isNotBlank() && newGrid[r][c] == newGrid[r+1][c] && newGrid[r][c] == newGrid[r+2][c]) { matchFound = true; toRemove.add(r to c); toRemove.add(r+1 to c); toRemove.add(r+2 to c) }
-        if(matchFound) { toRemove.forEach { newGrid[it.first][it.second] = emptyEmoji }; onMatch() }; return newGrid to matchFound
+        val newGrid = g.map { it.toMutableList() }.toMutableList();
+        var matchFound = false;
+        val toRemove = mutableSetOf<Pair<Int, Int>>()
+        for (r in 0 until GRID_SIZE) for (c in 0 until GRID_SIZE - 2) if (newGrid[r][c].isNotBlank() && newGrid[r][c] == newGrid[r][c + 1] && newGrid[r][c] == newGrid[r][c + 2]) {
+            matchFound =
+                true; toRemove.add(r to c); toRemove.add(r to c + 1); toRemove.add(r to c + 2)
+        }
+        for (c in 0 until GRID_SIZE) for (r in 0 until GRID_SIZE - 2) if (newGrid[r][c].isNotBlank() && newGrid[r][c] == newGrid[r + 1][c] && newGrid[r][c] == newGrid[r + 2][c]) {
+            matchFound =
+                true; toRemove.add(r to c); toRemove.add(r + 1 to c); toRemove.add(r + 2 to c)
+        }
+        if (matchFound) {
+            toRemove.forEach { newGrid[it.first][it.second] = emptyEmoji }; onMatch()
+        }; return newGrid to matchFound
     }
 
     fun dropAndRefill(g: List<List<String>>): List<List<String>> {
         val newGrid = g.map { it.toMutableList() }.toMutableList()
         for (c in 0 until GRID_SIZE) {
             var emptyRow = GRID_SIZE - 1
-            for (r in GRID_SIZE - 1 downTo 0) if (newGrid[r][c] != emptyEmoji) { val temp = newGrid[r][c]; newGrid[r][c] = emptyEmoji; newGrid[emptyRow][c] = temp; emptyRow-- }
-            for (r in 0..emptyRow) { newGrid[r][c] = emojis.random() }
+            for (r in GRID_SIZE - 1 downTo 0) if (newGrid[r][c] != emptyEmoji) {
+                val temp = newGrid[r][c]; newGrid[r][c] = emptyEmoji; newGrid[emptyRow][c] =
+                    temp; emptyRow--
+            }
+            for (r in 0..emptyRow) {
+                newGrid[r][c] = emojis.random()
+            }
         }
         return newGrid
     }
 
-    Box(modifier = Modifier.border(2.dp, Color.White)){
+    Box(modifier = Modifier.border(2.dp, Color.White)) {
         Column {
             for (i in 0 until GRID_SIZE) {
                 Row(modifier = Modifier.height(40.dp)) {
                     for (j in 0 until GRID_SIZE) {
                         val isSelected = selectedItem?.first == i && selectedItem?.second == j
-                        Box(contentAlignment = Alignment.Center, modifier = Modifier.size(40.dp).background(Color.Gray.copy(alpha = 0.3f)).border(if (isSelected) 2.dp else 0.dp, Color.White).clickable {
-                            val currentSelection = selectedItem
-                            if (currentSelection == null) { selectedItem = i to j } else {
-                                val (selI, selJ) = currentSelection
-                                if ((abs(selI - i) == 1 && selJ == j) || (abs(selJ - j) == 1 && selI == i)) {
-                                    var gridAfterSwap = swap(grid, selI, selJ, i, j)
-                                    var (gridAfterMatches, matchFound) = checkMatches(gridAfterSwap)
-                                    if (matchFound) {
-                                        var finalGrid = gridAfterMatches
-                                        while(true) {
-                                            finalGrid = dropAndRefill(finalGrid)
-                                            val (nextPassGrid, nextMatchFound) = checkMatches(finalGrid)
-                                            if(nextMatchFound) finalGrid = nextPassGrid else { grid = finalGrid; break }
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .size(40.dp)
+                                .background(Color.Gray.copy(alpha = 0.3f))
+                                .border(if (isSelected) 2.dp else 0.dp, Color.White)
+                                .clickable {
+                                    val currentSelection = selectedItem
+                                    if (currentSelection == null) {
+                                        selectedItem = i to j
+                                    } else {
+                                        val (selI, selJ) = currentSelection
+                                        if ((abs(selI - i) == 1 && selJ == j) || (abs(selJ - j) == 1 && selI == i)) {
+                                            var gridAfterSwap = swap(grid, selI, selJ, i, j)
+                                            var (gridAfterMatches, matchFound) = checkMatches(
+                                                gridAfterSwap
+                                            )
+                                            if (matchFound) {
+                                                var finalGrid = gridAfterMatches
+                                                while (true) {
+                                                    finalGrid = dropAndRefill(finalGrid)
+                                                    val (nextPassGrid, nextMatchFound) = checkMatches(
+                                                        finalGrid
+                                                    )
+                                                    if (nextMatchFound) finalGrid =
+                                                        nextPassGrid else {
+                                                        grid = finalGrid; break
+                                                    }
+                                                }
+                                            }
                                         }
+                                        selectedItem = null
                                     }
-                                }
-                                selectedItem = null
-                            }
-                        }) { Text(text = grid[i][j], fontSize = 24.sp) }
+                                }) { Text(text = grid[i][j], fontSize = 24.sp) }
                     }
                 }
             }
