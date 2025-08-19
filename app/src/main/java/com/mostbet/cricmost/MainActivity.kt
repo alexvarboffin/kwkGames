@@ -1,11 +1,14 @@
 package com.mostbet.cricmost
 
+
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -33,9 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
-import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -44,6 +45,7 @@ import androidx.navigation.navArgument
 import com.mostbet.cricmost.ui.theme.CricketTheme
 import kotlinx.coroutines.delay
 import kotlin.math.abs
+import androidx.core.net.toUri
 
 const val GRID_SIZE = 8
 const val ENDLESS_MODE_TIME = 60f
@@ -52,20 +54,21 @@ const val KEY_UNLOCKED_LEVEL = "unlockedLevel"
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var webView: WebView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         webView = WebView(this).apply {} //not set WebViewClient!!!
 
         setContent {
             CricketTheme {
-                AppNavigation(webView)
+                AppNavigation()
             }
         }
     }
+
+
+    private lateinit var webView: WebView
+
 
     override fun onResume() {
         super.onResume()
@@ -73,29 +76,59 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+fun openUrlInCustomTab(context: Context, url: String) {
+    val builder = CustomTabsIntent.Builder()
+    val customTabsIntent = builder.build()
+    customTabsIntent.launchUrl(context, url.toUri())
+}
+
 
 @Composable
-fun AppNavigation(webView: WebView) {
+fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "main_menu") {
-        composable("main_menu") { MainScreen(navController) }
-        composable("level_select") { LevelScreen(navController) }
+        composable("main_menu") {
+            val context = LocalContext.current
+            MainScreen(
+                onCareerModeClick = { navController.navigate("level_select") },
+                onEndlessModeClick = { navController.navigate("game_endless") },
+                onPrivacyClick = { openUrlInCustomTab(context, "https://jojoapp.site/Privacy") },
+                onFaqClick = { openUrlInCustomTab(context, "https://jojoapp.site/FAQ") }
+            )
+        }
+        composable("level_select") {
+            LevelScreen(
+                onLevelClick = { level -> navController.navigate("game_career/$level") }
+            )
+        }
         composable(
             route = "game_career/{level}",
             arguments = listOf(navArgument("level") { type = NavType.IntType })
         ) { backStackEntry ->
             val level = backStackEntry.arguments?.getInt("level") ?: 1
-            GameScreen(navController, isEndlessMode = false, level = level)
+            GameScreen(
+                isEndlessMode = false,
+                level = level,
+                onBack = { navController.popBackStack() }
+            )
         }
-        composable("game_endless") { GameScreen(navController, isEndlessMode = true, level = 1) }
-        composable("privacy_policy") { PrivacyPolicyScreen(webView) }
-        //composable("faq") { FaqScreen() }
-
+        composable("game_endless") {
+            GameScreen(
+                isEndlessMode = true,
+                level = 1,
+                onBack = { navController.popBackStack() }
+            )
+        }
     }
 }
 
 @Composable
-fun MainScreen(navController: NavController) {
+fun MainScreen(
+    onCareerModeClick: () -> Unit,
+    onEndlessModeClick: () -> Unit,
+    onPrivacyClick: () -> Unit,
+    onFaqClick: () -> Unit
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.ic_background),
@@ -112,13 +145,13 @@ fun MainScreen(navController: NavController) {
         ) {
             Spacer(modifier = Modifier.height(150.dp))
             BeautifulButton(
-                onClick = { navController.navigate("level_select") },
+                onClick = onCareerModeClick,
                 text = "Career Mode",
                 modifier = Modifier.fillMaxWidth(0.8f)
             )
             Spacer(modifier = Modifier.height(20.dp))
             BeautifulButton(
-                onClick = { navController.navigate("game_endless") },
+                onClick = onEndlessModeClick,
                 text = "Endless Mode",
                 modifier = Modifier.fillMaxWidth(0.8f)
             )
@@ -128,13 +161,13 @@ fun MainScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 BeautifulButton(
-                    onClick = { navController.navigate("privacy_policy") },
+                    onClick = onPrivacyClick,
                     text = "Privacy",
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 BeautifulButton(
-                    onClick = { navController.navigate("faq") },
+                    onClick = onFaqClick,
                     text = "FAQ",
                     modifier = Modifier.weight(1f)
                 )
@@ -174,7 +207,7 @@ fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modi
 }
 
 @Composable
-fun LevelScreen(navController: NavController) {
+fun LevelScreen(onLevelClick: (Int) -> Unit) {
     val context = LocalContext.current
     val sharedPrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     val unlockedLevel by remember { mutableStateOf(sharedPrefs.getInt(KEY_UNLOCKED_LEVEL, 3)) }
@@ -209,7 +242,7 @@ fun LevelScreen(navController: NavController) {
                         val currentLevel = levelIndex + 1
                         val isLocked = currentLevel > unlockedLevel
                         LevelItem(level = currentLevel, stars = 0, isLocked = isLocked) {
-                            navController.navigate("game_career/$currentLevel")
+                            onLevelClick(currentLevel)
                         }
                     }
                 }
@@ -264,7 +297,7 @@ fun LevelItem(level: Int, stars: Int, isLocked: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-fun GameScreen(navController: NavController, isEndlessMode: Boolean, level: Int) {
+fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
     val context = LocalContext.current
     var score by remember { mutableStateOf(0) }
     var bestScore by remember { mutableStateOf(0) } // Placeholder
@@ -361,13 +394,13 @@ fun GameScreen(navController: NavController, isEndlessMode: Boolean, level: Int)
             }
         }
         if (showTimeoutDialog) {
-            TimeoutDialog(score = score) { navController.popBackStack() }
+            TimeoutDialog(score = score) { onBack() }
         }
         if (showLevelEndDialog) {
             LevelEndDialog(
                 score = score,
                 goal = goalScore,
-                onDismiss = { navController.popBackStack() })
+                onDismiss = { onBack() })
         }
     }
 }
@@ -497,9 +530,4 @@ fun GameBoard(onMatch: () -> Unit) {
             }
         }
     }
-}
-
-@Composable
-fun PrivacyPolicyScreen(webView: WebView) {
-    AndroidView(factory = { webView })
 }
