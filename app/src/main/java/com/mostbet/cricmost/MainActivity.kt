@@ -1,10 +1,8 @@
 package com.mostbet.cricmost
 
-
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -45,19 +43,26 @@ import androidx.navigation.navArgument
 import com.mostbet.cricmost.ui.theme.CricketTheme
 import kotlinx.coroutines.delay
 import kotlin.math.abs
-import androidx.core.net.toUri
 
 const val GRID_SIZE = 8
 const val ENDLESS_MODE_TIME = 60f
 const val PREFS_NAME = "CricketPrefs"
 const val KEY_UNLOCKED_LEVEL = "unlockedLevel"
 
+sealed class Screen(val route: String) {
+    object MainMenu : Screen("main_menu")
+    object LevelSelect : Screen("level_select")
+    object GameCareer : Screen("game_career/{level}") {
+        fun createRoute(level: Int) = "game_career/$level"
+    }
+    object GameEndless : Screen("game_endless")
+}
+
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        webView = WebView(this).apply {} //not set WebViewClient!!!
 
         setContent {
             CricketTheme {
@@ -65,56 +70,47 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-
-    private lateinit var webView: WebView
-
-
-    override fun onResume() {
-        super.onResume()
-        webView.loadPrivacyPolicy("https://jojoapp.site/apps")
-    }
 }
 
 fun openUrlInCustomTab(context: Context, url: String) {
     val builder = CustomTabsIntent.Builder()
     val customTabsIntent = builder.build()
-    customTabsIntent.launchUrl(context, url.toUri())
+    customTabsIntent.launchUrl(context, Uri.parse(url))
 }
 
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "main_menu") {
-        composable("main_menu") {
+    NavHost(navController = navController, startDestination = Screen.MainMenu.route) {
+        composable(Screen.MainMenu.route) { 
             val context = LocalContext.current
             MainScreen(
-                onCareerModeClick = { navController.navigate("level_select") },
-                onEndlessModeClick = { navController.navigate("game_endless") },
+                onCareerModeClick = { navController.navigate(Screen.LevelSelect.route) },
+                onEndlessModeClick = { navController.navigate(Screen.GameEndless.route) },
                 onPrivacyClick = { openUrlInCustomTab(context, "https://jojoapp.site/Privacy") },
                 onFaqClick = { openUrlInCustomTab(context, "https://jojoapp.site/FAQ") }
             )
         }
-        composable("level_select") {
+        composable(Screen.LevelSelect.route) { 
             LevelScreen(
-                onLevelClick = { level -> navController.navigate("game_career/$level") }
+                onLevelClick = { level -> navController.navigate(Screen.GameCareer.createRoute(level)) }
             )
         }
         composable(
-            route = "game_career/{level}",
+            route = Screen.GameCareer.route,
             arguments = listOf(navArgument("level") { type = NavType.IntType })
         ) { backStackEntry ->
             val level = backStackEntry.arguments?.getInt("level") ?: 1
             GameScreen(
-                isEndlessMode = false,
+                isEndlessMode = false, 
                 level = level,
                 onBack = { navController.popBackStack() }
             )
         }
-        composable("game_endless") {
+        composable(Screen.GameEndless.route) { 
             GameScreen(
-                isEndlessMode = true,
+                isEndlessMode = true, 
                 level = 1,
                 onBack = { navController.popBackStack() }
             )
