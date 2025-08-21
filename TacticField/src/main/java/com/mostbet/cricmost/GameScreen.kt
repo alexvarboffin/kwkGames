@@ -382,8 +382,8 @@ fun PlayerDraggable(
             }
             .size(playerSizeDp)
             .clip(CircleShape)
-            .background(Brush.radialGradient(listOf(Color(0xFFE0A03D), Color(0xFFB07010))))
-            .border(BorderStroke(2.dp, Color(0xFFF0C050)), CircleShape)
+            .background(Brush.radialGradient(listOf(Color(0xFFD75A23), Color(0xFFB04A1A))))
+            .border(BorderStroke(2.dp, Color(0xFFF08A5A)), CircleShape)
             .pointerInput(Unit) {
                 detectDragGestures(
                     onDragEnd = {
