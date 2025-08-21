@@ -7,7 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,7 +19,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -41,7 +39,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mostbet.cricmost.ui.theme.CricketTheme
-import kotlinx.coroutines.delay
 import kotlin.math.abs
 
 const val GRID_SIZE = 8
@@ -290,11 +287,6 @@ fun LevelItem(level: Int, stars: Int, isLocked: Boolean, onClick: () -> Unit) {
             repeat(3) { index -> Text(text = if (index < stars) "⭐" else "☆", fontSize = 24.sp) }
         }
     }
-}
-
-@Composable
-fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
-    @@@
 }
 
 @Composable
