@@ -2,6 +2,7 @@ package com.mostbet.cricmost
 
 import android.content.Context
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -40,8 +41,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
@@ -146,8 +149,11 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
     var selectedPlayer by remember { mutableStateOf<Player?>(null) }
     var formationDropdownExpanded by remember { mutableStateOf(false) }
     var fieldSize by remember { mutableStateOf(IntSize.Zero) }
+    var currentFormationName by remember { mutableStateOf("4-4-2") }
 
-    fun changeFormation(formation: List<Pair<Float, Float>>) {
+    fun changeFormation(formationName: String) {
+        currentFormationName = formationName
+        val formation = Formations.formations[formationName]!!
         players.forEachIndexed { index, player ->
             player.position.value = formation.getOrElse(index) { 0.5f to 0.5f }
         }
@@ -190,14 +196,13 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
                 ) {
                     Formations.formations.keys.forEach { formationName ->
                         DropdownMenuItem(text = { Text(formationName) }, onClick = {
-                            changeFormation(Formations.formations[formationName]!!)
+                            changeFormation(formationName)
                             formationDropdownExpanded = false
                         })
                     }
                 }
             }
         }
-
         // Field
         Box(
             modifier = Modifier
@@ -223,6 +228,8 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
             FieldMarkings()
 
             if (fieldSize != IntSize.Zero) {
+                FormationMarkers(Formations.formations[currentFormationName]!!, fieldWidth, fieldHeight)
+
                 players.forEach { player ->
                     PlayerDraggable(
                         player = player,
@@ -248,6 +255,30 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
                     }
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun FormationMarkers(positions: List<Pair<Float, Float>>, fieldWidth: Float, fieldHeight: Float) {
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        positions.forEach { position ->
+            val x = position.first * fieldWidth
+            val y = position.second * fieldHeight
+            val markerSize = 10.dp.toPx()
+
+            drawLine(
+                color = Color.White.copy(alpha = 0.3f),
+                start = Offset(x - markerSize, y - markerSize),
+                end = Offset(x + markerSize, y + markerSize),
+                strokeWidth = 2.dp.toPx()
+            )
+            drawLine(
+                color = Color.White.copy(alpha = 0.3f),
+                start = Offset(x - markerSize, y + markerSize),
+                end = Offset(x + markerSize, y - markerSize),
+                strokeWidth = 2.dp.toPx()
+            )
         }
     }
 }
