@@ -72,7 +72,23 @@ data class PlayerStats(
     var dexterity: Int,
     var stamina: Int
 )
+object Grid {
+    const val PADDING_HORIZONTAL = 0.05f
+    const val PADDING_VERTICAL = 0.05f
+    const val GRID_WIDTH = 9
+    const val GRID_HEIGHT = 20
+
+    val points: List<Pair<Float, Float>> = (0 until GRID_WIDTH).flatMap { x ->
+        (0 until GRID_HEIGHT).map { y ->
+            val gridX = (1 - PADDING_HORIZONTAL * 2) / (GRID_WIDTH - 1) * x + PADDING_HORIZONTAL
+            val gridY = (1 - PADDING_VERTICAL * 2) / (GRID_HEIGHT - 1) * y + PADDING_VERTICAL
+            gridX to gridY
+        }
+    }
+}
+
 object Formations {
+    // Idealized positions, will be snapped to the nearest grid point
     val formations = mapOf(
         "4-4-2" to listOf(
             0.5f to 0.1f, // GK
@@ -94,19 +110,37 @@ object Formations {
         )
     )
 }
-fun getInitialPlayers(formation: List<Pair<Float, Float>> = Formations.formations["4-4-2"]!!): List<Player> {
+
+fun findNearestGridPoint(point: Pair<Float, Float>, grid: List<Pair<Float, Float>>, occupied: Set<Pair<Float, Float>>): Pair<Float, Float> {
+    return grid.filterNot { occupied.contains(it) }
+        .minByOrNull { (gridX, gridY) ->
+            sqrt((gridX - point.first).pow(2) + (gridY - point.second).pow(2))
+        } ?: point // Fallback to original point if grid is full
+}
+
+fun getInitialPlayers(formationName: String = "4-4-2"): List<Player> {
+    val idealPositions = Formations.formations[formationName]!!
+    val occupied = mutableSetOf<Pair<Float, Float>>()
+    val snappedPositions = idealPositions.map { idealPos ->
+        val snapped = findNearestGridPoint(idealPos, Grid.points, occupied)
+        occupied.add(snapped)
+        snapped
+    }
+
     return (1..11).map { i ->
         Player(
             id = i,
             name = "Player $i",
             level = 1,
             stats = mutableStateOf(PlayerStats(10, 10, 10)),
-            position = mutableStateOf(formation.getOrElse(i - 1) { 0.5f to 0.5f })
+            position = mutableStateOf(snappedPositions[i - 1])
         )
     }
 }
+
 const val PREFS_NAME = "TacticFieldPrefs"
 const val PLAYERS_DATA_KEY = "playersData"
+
 fun savePlayersData(context: Context, players: List<Player>) {
     val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit()
     val dataString = players.joinToString(";") { p ->
@@ -115,6 +149,7 @@ fun savePlayersData(context: Context, players: List<Player>) {
     prefs.putString(PLAYERS_DATA_KEY, dataString)
     prefs.apply()
 }
+
 fun loadPlayersData(context: Context): List<Player> {
     val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     val dataString = prefs.getString(PLAYERS_DATA_KEY, null)
@@ -142,6 +177,7 @@ fun loadPlayersData(context: Context): List<Player> {
         getInitialPlayers()
     }
 }
+
 @Composable
 fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
     val context = LocalContext.current
@@ -149,13 +185,17 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
     var selectedPlayer by remember { mutableStateOf<Player?>(null) }
     var formationDropdownExpanded by remember { mutableStateOf(false) }
     var fieldSize by remember { mutableStateOf(IntSize.Zero) }
-    var currentFormationName by remember { mutableStateOf("4-4-2") }
 
     fun changeFormation(formationName: String) {
-        currentFormationName = formationName
-        val formation = Formations.formations[formationName]!!
+        val idealPositions = Formations.formations[formationName]!!
+        val occupied = mutableSetOf<Pair<Float, Float>>()
+        val snappedPositions = idealPositions.map { idealPos ->
+            val snapped = findNearestGridPoint(idealPos, Grid.points, occupied)
+            occupied.add(snapped)
+            snapped
+        }
         players.forEachIndexed { index, player ->
-            player.position.value = formation.getOrElse(index) { 0.5f to 0.5f }
+            player.position.value = snappedPositions.getOrElse(index) { 0.5f to 0.5f }
         }
     }
 
@@ -203,6 +243,7 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
                 }
             }
         }
+
         // Field
         Box(
             modifier = Modifier
@@ -228,7 +269,7 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
             FieldMarkings()
 
             if (fieldSize != IntSize.Zero) {
-                FormationMarkers(Formations.formations[currentFormationName]!!, fieldWidth, fieldHeight)
+                FormationMarkers(Grid.points, fieldWidth, fieldHeight)
 
                 players.forEach { player ->
                     PlayerDraggable(
@@ -331,8 +372,6 @@ fun PlayerDraggable(
     val playerSizeDp = 60.dp
     val playerRadiusPx = with(LocalDensity.current) { playerSizeDp.toPx() / 2 }
 
-    var initialPosition by remember { mutableStateOf(player.position.value) }
-
     Box(
         modifier = Modifier
             .offset {
@@ -347,25 +386,10 @@ fun PlayerDraggable(
             .border(BorderStroke(2.dp, Color(0xFFF0C050)), CircleShape)
             .pointerInput(Unit) {
                 detectDragGestures(
-                    onDragStart = { initialPosition = player.position.value },
                     onDragEnd = {
-                        val droppedPlayer = player
-                        val targetPlayer = allPlayers.find { otherPlayer ->
-                            if (otherPlayer.id == droppedPlayer.id) return@find false
-                            val distance = sqrt(
-                                (droppedPlayer.position.value.first - otherPlayer.position.value.first).pow(2) +
-                                        (droppedPlayer.position.value.second - otherPlayer.position.value.second).pow(2)
-                            )
-                            distance < (playerSizeDp.value / fieldWidth) // Collision detection
-                        }
-
-                        if (targetPlayer != null) {
-                            val tempPos = droppedPlayer.position.value
-                            droppedPlayer.position.value = targetPlayer.position.value
-                            targetPlayer.position.value = tempPos
-                        } else {
-                            player.position.value = initialPosition
-                        }
+                        val currentPositions = allPlayers.map { it.position.value }.toSet()
+                        val nearestPoint = findNearestGridPoint(player.position.value, Grid.points, currentPositions - player.position.value)
+                        player.position.value = nearestPoint
                     }
                 ) { change, dragAmount ->
                     change.consume()
