@@ -21,12 +21,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -306,7 +309,12 @@ fun PlayerDraggable(
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = player.id.toString(), color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Icon(
+                imageVector = Icons.Default.Person,
+                contentDescription = "Player Icon",
+                tint = Color.White,
+                modifier = Modifier.size(32.dp)
+            )
             Text(text = player.name, color = Color.White, fontSize = 10.sp)
         }
     }
