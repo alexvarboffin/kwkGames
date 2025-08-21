@@ -12,12 +12,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Cricket">
+        android:theme="@style/Theme.PXBFootball">
         <activity
             android:name=".SplashScreenActivity"
-            android:exported="true" android:noHistory="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Cricket" android:screenOrientation="portrait">
+            android:exported="true"
+            android:theme="@style/Theme.PXBFootball" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,8 +26,11 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Cricket" android:screenOrientation="portrait"/>
+            android:theme="@style/Theme.PXBFootball" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".GameActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PXBFootball" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

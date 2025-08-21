@@ -21,5 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "kwkGames"
 include(":TacticField")
-include(":cricket")
 
