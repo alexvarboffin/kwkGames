@@ -19,5 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Cricket"
-include(":app")
+rootProject.name = "kwkGames"
+include(":TacticField")
+include(":cricket")
+
