@@ -219,6 +219,9 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
                 }
             }
 
+            // Field Markings
+            FieldMarkings()
+
             if (fieldSize != IntSize.Zero) {
                 players.forEach { player ->
                     PlayerDraggable(
@@ -246,6 +249,43 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun FieldMarkings() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Center Line
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(2.dp)
+                .background(Color.White.copy(alpha = 0.5f))
+                .align(Alignment.Center)
+        )
+        // Center Circle
+        Box(
+            modifier = Modifier
+                .size(120.dp)
+                .border(BorderStroke(2.dp, Color.White.copy(alpha = 0.5f)), CircleShape)
+                .align(Alignment.Center)
+        )
+        // Penalty Box Top
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(0.6f)
+                .height(100.dp)
+                .border(BorderStroke(2.dp, Color.White.copy(alpha = 0.5f)))
+                .align(Alignment.TopCenter)
+        )
+        // Penalty Box Bottom
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(0.6f)
+                .height(100.dp)
+                .border(BorderStroke(2.dp, Color.White.copy(alpha = 0.5f)))
+                .align(Alignment.BottomCenter)
+        )
     }
 }
 
