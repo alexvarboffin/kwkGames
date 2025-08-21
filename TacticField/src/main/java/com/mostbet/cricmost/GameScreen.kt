@@ -56,6 +56,8 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import kotlin.math.abs
+import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -85,6 +87,18 @@ object Grid {
             val gridY = (1 - PADDING_VERTICAL * 2) / (GRID_HEIGHT - 1) * y + PADDING_VERTICAL
             gridX to gridY
         }
+    }
+
+    fun positionToGridCoords(position: Pair<Float, Float>): Pair<Int, Int> {
+        val x = ((position.first - PADDING_HORIZONTAL) / (1 - PADDING_HORIZONTAL * 2) * (GRID_WIDTH - 1)).roundToInt()
+        val y = ((position.second - PADDING_VERTICAL) / (1 - PADDING_VERTICAL * 2) * (GRID_HEIGHT - 1)).roundToInt()
+        return x to y
+    }
+
+    fun gridDistance(start: Pair<Float, Float>, end: Pair<Float, Float>): Int {
+        val startCoords = positionToGridCoords(start)
+        val endCoords = positionToGridCoords(end)
+        return max(abs(startCoords.first - endCoords.first), abs(startCoords.second - endCoords.second))
     }
 }
 
@@ -417,9 +431,13 @@ fun PlayerDraggable(
                         onDragEnd = {
                             val currentPositions = allPlayers.map { it.position.value }.toSet()
                             val nearestPoint = findNearestGridPoint(player.position.value, Grid.points, currentPositions - initialPosition)
-                            if (nearestPoint != initialPosition) {
+                            val distance = Grid.gridDistance(initialPosition, nearestPoint)
+
+                            if (distance <= 5 && nearestPoint != initialPosition) {
                                 player.position.value = nearestPoint
                                 onMove()
+                            } else {
+                                player.position.value = initialPosition // Snap back if invalid move
                             }
                         }
                     ) { change, dragAmount ->
