@@ -8,7 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -44,10 +43,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -90,7 +91,6 @@ object Formations {
         )
     )
 }
-
 fun getInitialPlayers(formation: List<Pair<Float, Float>> = Formations.formations["4-4-2"]!!): List<Player> {
     return (1..11).map { i ->
         Player(
@@ -102,10 +102,8 @@ fun getInitialPlayers(formation: List<Pair<Float, Float>> = Formations.formation
         )
     }
 }
-
 const val PREFS_NAME = "TacticFieldPrefs"
 const val PLAYERS_DATA_KEY = "playersData"
-
 fun savePlayersData(context: Context, players: List<Player>) {
     val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit()
     val dataString = players.joinToString(";") { p ->
@@ -114,7 +112,6 @@ fun savePlayersData(context: Context, players: List<Player>) {
     prefs.putString(PLAYERS_DATA_KEY, dataString)
     prefs.apply()
 }
-
 fun loadPlayersData(context: Context): List<Player> {
     val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     val dataString = prefs.getString(PLAYERS_DATA_KEY, null)
@@ -142,13 +139,13 @@ fun loadPlayersData(context: Context): List<Player> {
         getInitialPlayers()
     }
 }
-
 @Composable
 fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
     val context = LocalContext.current
     val players = remember { mutableStateListOf(*loadPlayersData(context).toTypedArray()) }
     var selectedPlayer by remember { mutableStateOf<Player?>(null) }
     var formationDropdownExpanded by remember { mutableStateOf(false) }
+    var fieldSize by remember { mutableStateOf(IntSize.Zero) }
 
     fun changeFormation(formation: List<Pair<Float, Float>>) {
         players.forEachIndexed { index, player ->
@@ -202,12 +199,13 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
         }
 
         // Field
-        BoxWithConstraints(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
+                .onSizeChanged { fieldSize = it }
         ) {
-            val fieldWidth = constraints.maxWidth.toFloat()
-            val fieldHeight = constraints.maxHeight.toFloat()
+            val fieldWidth = fieldSize.width.toFloat()
+            val fieldHeight = fieldSize.height.toFloat()
 
             // Striped background
             Row(modifier = Modifier.fillMaxSize()) {
@@ -221,14 +219,16 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
                 }
             }
 
-            players.forEach { player ->
-                PlayerDraggable(
-                    player = player,
-                    allPlayers = players,
-                    fieldWidth = fieldWidth,
-                    fieldHeight = fieldHeight,
-                    onPlayerClick = { selectedPlayer = it }
-                )
+            if (fieldSize != IntSize.Zero) {
+                players.forEach { player ->
+                    PlayerDraggable(
+                        player = player,
+                        allPlayers = players,
+                        fieldWidth = fieldWidth,
+                        fieldHeight = fieldHeight,
+                        onPlayerClick = { selectedPlayer = it }
+                    )
+                }
             }
 
             if (selectedPlayer != null) {
