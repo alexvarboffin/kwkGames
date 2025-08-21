@@ -32,6 +32,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -185,6 +186,19 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
     var selectedPlayer by remember { mutableStateOf<Player?>(null) }
     var formationDropdownExpanded by remember { mutableStateOf(false) }
     var fieldSize by remember { mutableStateOf(IntSize.Zero) }
+    var movesRemaining by remember { mutableStateOf(4) }
+    var turnStartPosition by remember { mutableStateOf<List<Pair<Float, Float>>>(emptyList()) }
+
+    LaunchedEffect(players.size) {
+        turnStartPosition = players.map { it.position.value }
+    }
+
+    fun resetTurn() {
+        players.forEachIndexed { index, player ->
+            player.position.value = turnStartPosition[index]
+        }
+        movesRemaining = 4
+    }
 
     fun changeFormation(formationName: String) {
         val idealPositions = Formations.formations[formationName]!!
@@ -197,51 +211,58 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
         players.forEachIndexed { index, player ->
             player.position.value = snappedPositions.getOrElse(index) { 0.5f to 0.5f }
         }
+        turnStartPosition = players.map { it.position.value }
+        movesRemaining = 4
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Buttons
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFF1A222C))
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            val buttonColors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3C4D63))
-            Button(onClick = { savePlayersData(context, players) }, colors = buttonColors) {
-                Text("Save")
-            }
-            Button(onClick = {
-                val loadedPlayers = loadPlayersData(context)
-                players.clear()
-                players.addAll(loadedPlayers)
-            }, colors = buttonColors) {
-                Text("Load")
-            }
-            Button(onClick = {
-                players.clear()
-                players.addAll(getInitialPlayers())
-            }, colors = buttonColors) {
-                Text("Reset")
-            }
-            Box {
-                Button(onClick = { formationDropdownExpanded = true }, colors = buttonColors) {
-                    Text("Formation")
+        Column(modifier = Modifier.background(Color(0xFF1A222C))) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                val buttonColors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3C4D63))
+                Button(onClick = { savePlayersData(context, players) }, colors = buttonColors) {
+                    Text("Save")
                 }
-                DropdownMenu(
-                    expanded = formationDropdownExpanded,
-                    onDismissRequest = { formationDropdownExpanded = false }
-                ) {
-                    Formations.formations.keys.forEach { formationName ->
-                        DropdownMenuItem(text = { Text(formationName) }, onClick = {
-                            changeFormation(formationName)
-                            formationDropdownExpanded = false
-                        })
+                Button(onClick = {
+                    val loadedPlayers = loadPlayersData(context)
+                    players.clear()
+                    players.addAll(loadedPlayers)
+                    resetTurn()
+                }, colors = buttonColors) {
+                    Text("Load")
+                }
+                Button(onClick = { resetTurn() }, colors = buttonColors) {
+                    Text("Reset Turn")
+                }
+                Box {
+                    Button(onClick = { formationDropdownExpanded = true }, colors = buttonColors) {
+                        Text("Formation")
+                    }
+                    DropdownMenu(
+                        expanded = formationDropdownExpanded,
+                        onDismissRequest = { formationDropdownExpanded = false }
+                    ) {
+                        Formations.formations.keys.forEach { formationName ->
+                            DropdownMenuItem(text = { Text(formationName) }, onClick = {
+                                changeFormation(formationName)
+                                formationDropdownExpanded = false
+                            })
+                        }
                     }
                 }
             }
+            Text(
+                text = "Moves Remaining: $movesRemaining",
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp)
+            )
         }
 
         // Field
@@ -277,7 +298,9 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
                         allPlayers = players,
                         fieldWidth = fieldWidth,
                         fieldHeight = fieldHeight,
-                        onPlayerClick = { selectedPlayer = it }
+                        onPlayerClick = { selectedPlayer = it },
+                        movesRemaining = movesRemaining,
+                        onMove = { movesRemaining-- }
                     )
                 }
             }
@@ -367,10 +390,13 @@ fun PlayerDraggable(
     allPlayers: List<Player>,
     fieldWidth: Float,
     fieldHeight: Float,
-    onPlayerClick: (Player) -> Unit
+    onPlayerClick: (Player) -> Unit,
+    movesRemaining: Int,
+    onMove: () -> Unit
 ) {
     val playerSizeDp = 60.dp
     val playerRadiusPx = with(LocalDensity.current) { playerSizeDp.toPx() / 2 }
+    var initialPosition by remember { mutableStateOf(player.position.value) }
 
     Box(
         modifier = Modifier
@@ -384,20 +410,26 @@ fun PlayerDraggable(
             .clip(CircleShape)
             .background(Brush.radialGradient(listOf(Color(0xFFD75A23), Color(0xFFB04A1A))))
             .border(BorderStroke(2.dp, Color(0xFFF08A5A)), CircleShape)
-            .pointerInput(Unit) {
-                detectDragGestures(
-                    onDragEnd = {
-                        val currentPositions = allPlayers.map { it.position.value }.toSet()
-                        val nearestPoint = findNearestGridPoint(player.position.value, Grid.points, currentPositions - player.position.value)
-                        player.position.value = nearestPoint
+            .pointerInput(movesRemaining) {
+                if (movesRemaining > 0) {
+                    detectDragGestures(
+                        onDragStart = { initialPosition = player.position.value },
+                        onDragEnd = {
+                            val currentPositions = allPlayers.map { it.position.value }.toSet()
+                            val nearestPoint = findNearestGridPoint(player.position.value, Grid.points, currentPositions - initialPosition)
+                            if (nearestPoint != initialPosition) {
+                                player.position.value = nearestPoint
+                                onMove()
+                            }
+                        }
+                    ) { change, dragAmount ->
+                        change.consume()
+                        val newPosX =
+                            (player.position.value.first * fieldWidth + dragAmount.x) / fieldWidth
+                        val newPosY =
+                            (player.position.value.second * fieldHeight + dragAmount.y) / fieldHeight
+                        player.position.value = newPosX to newPosY
                     }
-                ) { change, dragAmount ->
-                    change.consume()
-                    val newPosX =
-                        (player.position.value.first * fieldWidth + dragAmount.x) / fieldWidth
-                    val newPosY =
-                        (player.position.value.second * fieldHeight + dragAmount.y) / fieldHeight
-                    player.position.value = newPosX to newPosY
                 }
             }
             .clickable { onPlayerClick(player) },
