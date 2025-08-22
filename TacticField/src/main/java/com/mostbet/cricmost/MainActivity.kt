@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -33,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -40,9 +43,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.mostbet.cricmost.ui.theme.PXBFootballTheme
 
 const val PREFS_NAME_GAME = "PXBGamePrefs"
@@ -77,7 +82,6 @@ fun openUrlInCustomTab(context: Context, url: String) {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    val context = LocalContext.current
 
     NavHost(navController = navController, startDestination = Screen.MainMenu.route) {
         composable(Screen.MainMenu.route) {
@@ -85,17 +89,19 @@ fun AppNavigation() {
         }
         composable(Screen.LevelSelect.route) {
             LevelSelectScreen(onLevelClick = { level ->
-                val intent = Intent(context, GameActivity::class.java).apply {
-                    putExtra("level", level)
-                }
-                context.startActivity(intent)
+                navController.navigate(Screen.TacticField.createRoute(level))
             })
         }
-        composable(Screen.TacticField.route) {
-            val intent = Intent(context, GameActivity::class.java).apply {
-                putExtra("level", 1) // Default level
-            }
-            context.startActivity(intent)
+        composable(
+            route = Screen.TacticField.route,
+            arguments = listOf(navArgument("level") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val level = backStackEntry.arguments?.getInt("level") ?: 1
+            GameScreen(
+                isEndlessMode = false,
+                level = level,
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }
@@ -120,40 +126,37 @@ fun MainMenuScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(64.dp))
 
-        val buttonModifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
+        PremiumButton(text = "Go to Game") { navController.navigate(Screen.TacticField.createRoute(1)) }
+        Spacer(modifier = Modifier.height(16.dp))
+        PremiumButton(text = "Select Level") { navController.navigate(Screen.LevelSelect.route) }
+        Spacer(modifier = Modifier.height(16.dp))
+        PremiumButton(text = "Privacy Policy") { openUrlInCustomTab(context, "https://www.google.com") }
+        Spacer(modifier = Modifier.height(16.dp))
+        PremiumButton(text = "FAQ") { openUrlInCustomTab(context, "https://www.google.com") }
+    }
+}
 
-        Button(
-            onClick = { navController.navigate(Screen.TacticField.createRoute(1)) },
-            modifier = buttonModifier,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500)) // Orange
+@Composable
+fun PremiumButton(text: String, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.fillMaxWidth(0.8f),
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(Color(0xFFFFA500), Color(0xFFFF8C00))
+                    )
+                )
+                .padding(vertical = 16.dp),
+            contentAlignment = Alignment.Center
         ) {
-            Text(text = "Go to Game", color = Color.Black)
-        }
-
-        Button(
-            onClick = { navController.navigate(Screen.LevelSelect.route) },
-            modifier = buttonModifier,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500)) // Orange
-        ) {
-            Text(text = "Select Level", color = Color.Black)
-        }
-
-        Button(
-            onClick = { openUrlInCustomTab(context, "https://www.google.com") },
-            modifier = buttonModifier,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500)) // Orange
-        ) {
-            Text(text = "Privacy Policy", color = Color.Black)
-        }
-
-        Button(
-            onClick = { openUrlInCustomTab(context, "https://www.google.com") },
-            modifier = buttonModifier,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500)) // Orange
-        ) {
-            Text(text = "FAQ", color = Color.Black)
+            Text(text = text, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
         }
     }
 }
