@@ -27,10 +27,10 @@ data class GameState(
     // Results of the spin
     val gameResult: GameResult? = null,
     val ballPosition: Int? = null,
-    val handPosition: Int? = null,
+    val handPosition: Int? = null, // Final hand position
+    val currentHandPosition: Int? = null, // Animated hand position
     val isAnimating: Boolean = false,
-    val animatedBallPosition: Int? = null,
-    val animatedHandPosition: Int? = null,
+    val animatedBallPosition: Int? = null, // Animated ball position
     val showSettingsDialog: Boolean = false
 )
 
@@ -79,26 +79,41 @@ class GameViewModel : ViewModel() {
         viewModelScope.launch {
             _soundEvent.emit(SoundEvent.Kick)
 
-            _uiState.update { it.copy(isAnimating = true, gameResult = null) } // Reset gameResult and start animation
-
-            val totalTargets = _uiState.value.targets.size
-            val positions = (0 until totalTargets).shuffled().take(3)
-
-            val ballPos = positions[0]
-            val handPos = positions[1] // Use one position for both hands
-
-            // Store animated positions
+            // Set initial state for animation: hands in center, ball not visible
             _uiState.update {
                 it.copy(
-                    animatedBallPosition = ballPos,
-                    animatedHandPosition = handPos
+                    isAnimating = true,
+                    gameResult = null,
+                    currentHandPosition = 8, // Center position for hands (assuming 18 targets, 6x3 grid, 8 is center-ish)
+                    ballPosition = null, // Hide ball initially
+                    handPosition = null // Final hand position will be set later
                 )
             }
 
-            // Simulate animation duration
-            kotlinx.coroutines.delay(1500L) // 1.5 seconds for animation
+            val totalTargets = _uiState.value.targets.size
+            val positions = (0 until totalTargets).shuffled().take(3) // Still need 3 for ball and hand, even if hand is one pos
 
-            val isLoss = (ballPos == handPos)
+            val ballPos = positions[0]
+            val finalHandPos = positions[1] // This will be the final hand position
+
+            // Short delay before hands start moving
+            kotlinx.coroutines.delay(200L)
+
+            // Animate hands to final position
+            _uiState.update {
+                it.copy(
+                    currentHandPosition = finalHandPos // Hands move to their final position
+                )
+            }
+
+            // Simulate remaining animation duration
+            kotlinx.coroutines.delay(1300L) // Total animation time 1.5s (200ms + 1300ms)
+
+            val lossZone = mutableListOf(finalHandPos)
+            if (finalHandPos > 0) lossZone.add(finalHandPos - 1)
+            if (finalHandPos < totalTargets - 1) lossZone.add(finalHandPos + 1)
+
+            val isLoss = ballPos in lossZone
 
             if (isLoss) {
                 // Loss
@@ -107,21 +122,35 @@ class GameViewModel : ViewModel() {
                     it.copy(
                         gameResult = GameResult.LOSS,
                         balance = it.balance - it.betAmount,
-                                                ballPosition = ballPos, // Final position
-                        handPosition = handPos, // Final position
-                        isAnimating = false // Animation finished
+                        ballPosition = ballPos, // Final ball position
+                        handPosition = finalHandPos, // Final hand position
+                        isAnimating = false, // Animation finished
+                        currentHandPosition = null // Clear current hand position after animation
                     )
                 }
             } else {
-                // Win
+                // Win scenario
                 val winAmount = _uiState.value.betAmount * _uiState.value.multiplier
+
+                // Adjust handPos to be close to ballPos for visual effect
+                val possibleHandPositions = mutableListOf<Int>()
+                if (ballPos > 0) possibleHandPositions.add(ballPos - 1)
+                if (ballPos < totalTargets - 1) possibleHandPositions.add(ballPos + 1)
+
+                val adjustedHandPos = if (possibleHandPositions.isNotEmpty()) {
+                    possibleHandPositions.random()
+                } else {
+                    finalHandPos // Keep the original handPos if no adjacent valid positions
+                }
+
                 _uiState.update {
                     it.copy(
                         gameResult = GameResult.WIN,
                         balance = it.balance + winAmount,
-                                                ballPosition = ballPos, // Final position
-                        handPosition = handPos, // Final position
-                        isAnimating = false // Animation finished
+                        ballPosition = ballPos, // Final ball position
+                        handPosition = adjustedHandPos, // Adjusted hand position for visual effect
+                        isAnimating = false, // Animation finished
+                        currentHandPosition = null // Clear current hand position after animation
                     )
                 }
             }
