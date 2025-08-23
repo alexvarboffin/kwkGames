@@ -1,27 +1,21 @@
-
 package com.olimpfootball.olimpbet.footgame
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,25 +26,17 @@ import com.olimpfootball.olimpbet.footgame.R
 fun GameScreen(gameViewModel: GameViewModel = viewModel(), onBack: () -> Unit) {
     val uiState by gameViewModel.uiState.collectAsState()
 
-    // The main layout of the game screen
     Box(modifier = Modifier.fillMaxSize()) {
         // Background Layer
         Column(modifier = Modifier.fillMaxSize()) {
-            // Top part: Stadium Image
             Image(
                 painter = painterResource(id = R.drawable.ic_game_background),
                 contentDescription = "Stadium Background",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
+                modifier = Modifier.fillMaxWidth().weight(1f),
                 contentScale = ContentScale.FillWidth
             )
-            // Bottom part: Pitch
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .background(Color(0xFF3A8A53)) // Field Green
+                modifier = Modifier.fillMaxWidth().weight(1f).background(Color(0xFF3A8A53))
             )
         }
 
@@ -61,18 +47,19 @@ fun GameScreen(gameViewModel: GameViewModel = viewModel(), onBack: () -> Unit) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             TopBar(balance = uiState.balance)
-            Spacer(modifier = Modifier.weight(1f))
             TacticField(
                 targets = uiState.targets,
-                selectedTargetId = uiState.selectedTargetId,
-                onTargetSelect = { gameViewModel.onTargetSelected(it) }
+                ballPosition = uiState.ballPosition,
+                leftHandPosition = uiState.leftHandPosition,
+                rightHandPosition = uiState.rightHandPosition
             )
-            Spacer(modifier = Modifier.weight(1f))
             GameControls(
                 betAmount = uiState.betAmount,
                 multiplier = uiState.multiplier,
+                isSeriesMode = uiState.isSeriesMode,
                 onBetAmountChange = { isMultiply -> gameViewModel.changeBetAmount(isMultiply) },
-                onBumpClicked = { gameViewModel.onBumpClicked() }
+                onBumpClicked = { gameViewModel.onBumpClicked() },
+                onToggleSeries = { gameViewModel.toggleSeriesMode() }
             )
         }
 
@@ -86,6 +73,7 @@ fun GameScreen(gameViewModel: GameViewModel = viewModel(), onBack: () -> Unit) {
     }
 }
 
+
 @Composable
 fun TopBar(balance: Double) {
     Row(
@@ -98,14 +86,14 @@ fun TopBar(balance: Double) {
         Text(String.format("Balance: %.2f", balance), color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
         Row {
             Icon(
-                painter = painterResource(id = android.R.drawable.star_on), // Placeholder
+                imageVector = Icons.Default.CardGiftcard,
                 contentDescription = "Rewards",
                 tint = Color.Yellow,
                 modifier = Modifier.size(32.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
             Icon(
-                painter = painterResource(id = android.R.drawable.ic_menu_manage), // Placeholder
+                imageVector = Icons.Default.Settings,
                 contentDescription = "Settings",
                 tint = Color.White,
                 modifier = Modifier.size(32.dp)
@@ -114,12 +102,16 @@ fun TopBar(balance: Double) {
     }
 }
 
+
 @Composable
-fun TacticField(targets: List<Target>, selectedTargetId: Int?, onTargetSelect: (Int) -> Unit) {
+fun TacticField(
+    targets: List<Target>,
+    ballPosition: Int?,
+    leftHandPosition: Int?,
+    rightHandPosition: Int?
+) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth(0.9f)
-            .aspectRatio(1.5f)
+        modifier = Modifier.fillMaxWidth(0.9f).aspectRatio(1.5f)
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_gate),
@@ -137,8 +129,9 @@ fun TacticField(targets: List<Target>, selectedTargetId: Int?, onTargetSelect: (
             items(targets) { target ->
                 TargetItem(
                     target = target,
-                    isSelected = target.id == selectedTargetId,
-                    onSelect = { onTargetSelect(target.id) }
+                    ballPosition = ballPosition,
+                    leftHandPosition = leftHandPosition,
+                    rightHandPosition = rightHandPosition
                 )
             }
         }
@@ -146,36 +139,31 @@ fun TacticField(targets: List<Target>, selectedTargetId: Int?, onTargetSelect: (
 }
 
 @Composable
-fun TargetItem(target: Target, isSelected: Boolean, onSelect: () -> Unit) {
+fun TargetItem(
+    target: Target,
+    ballPosition: Int?,
+    leftHandPosition: Int?,
+    rightHandPosition: Int?
+) {
     Box(
-        modifier = Modifier
-            .padding(4.dp)
-            .aspectRatio(1f)
-            .clickable(onClick = onSelect),
+        modifier = Modifier.padding(4.dp).aspectRatio(1f),
         contentAlignment = Alignment.Center
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_target_ball),
-            contentDescription = "Target",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Fit
-        )
-
-        if (isSelected) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(CircleShape)
-                    .background(Color.Yellow.copy(alpha = 0.4f))
-            )
-        }
-
-        if (target.isGoalkeeper) {
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                contentDescription = "Goalkeeper",
-                tint = Color.Yellow.copy(alpha = 0.8f),
-                modifier = Modifier.size(40.dp)
+        // If the game is finished, determine what to show
+        if (ballPosition != null) {
+            when (target.id) {
+                ballPosition -> Image(painter = painterResource(id = R.drawable.ic_ball), contentDescription = "Ball")
+                leftHandPosition -> Image(painter = painterResource(id = R.drawable.ic_hand_left), contentDescription = "Left Hand")
+                rightHandPosition -> Image(painter = painterResource(id = R.drawable.ic_hand_right), contentDescription = "Right Hand")
+                else -> Image(painter = painterResource(id = R.drawable.ic_target_ball), contentDescription = "Target") // Show default target in other spots
+            }
+        } else {
+            // Before the game ends, show the default target image
+            Image(
+                painter = painterResource(id = R.drawable.ic_target_ball),
+                contentDescription = "Target",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Fit
             )
         }
     }
@@ -185,28 +173,30 @@ fun TargetItem(target: Target, isSelected: Boolean, onSelect: () -> Unit) {
 fun GameControls(
     betAmount: Double,
     multiplier: Double,
+    isSeriesMode: Boolean,
     onBetAmountChange: (Boolean) -> Unit,
-    onBumpClicked: () -> Unit
+    onBumpClicked: () -> Unit,
+    onToggleSeries: () -> Unit
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+        modifier = Modifier.fillMaxWidth().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Top part of controls (Info, etc.)
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             InfoDisplay(label = "Possible gain", value = String.format("%.2f", betAmount * multiplier))
             InfoDisplay(label = "Multiplier", value = String.format("x %.2f", multiplier))
+            SeriesToggle(isSeriesMode = isSeriesMode, onToggle = onToggleSeries)
         }
         Spacer(modifier = Modifier.height(16.dp))
+
+        // Bet Amount Controls
         Row(
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .background(Color.Black.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
-                .padding(8.dp),
+            modifier = Modifier.fillMaxWidth(0.8f).background(Color.Black.copy(alpha = 0.3f), RoundedCornerShape(12.dp)).padding(8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -219,18 +209,27 @@ fun GameControls(
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
+
+        // Main Action Button
         Button(
             onClick = onBumpClicked,
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .height(60.dp),
+            modifier = Modifier.fillMaxWidth(0.8f).height(60.dp),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow)
         ) {
             Text("Bump", color = Color.Black, fontSize = 22.sp, fontWeight = FontWeight.Bold)
         }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Main Ball Image
+        Image(
+            painter = painterResource(id = R.drawable.ic_ball),
+            contentDescription = "Main Ball",
+            modifier = Modifier.size(80.dp)
+        )
     }
 }
+
 
 @Composable
 fun InfoDisplay(label: String, value: String) {

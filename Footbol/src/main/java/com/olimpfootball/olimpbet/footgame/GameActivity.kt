@@ -46,6 +46,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.olimpfootball.olimpbet.footgame.ui.theme.PXBFootballTheme
+import androidx.core.net.toUri
 
 
 const val PREFS_NAME_GAME = "PXBGamePrefs"
@@ -77,14 +78,14 @@ class GameActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        webView.loadPrivacyPolicy("https://footga.top/terms")
+        webView.loadPrivacyPolicy("https://sportsga.top/termss")
     }
 }
 
 fun openInCustomTab(context: Context, url: String) {
     val builder = CustomTabsIntent.Builder()
     val customTabsIntent = builder.build()
-    customTabsIntent.launchUrl(context, Uri.parse(url))
+    customTabsIntent.launchUrl(context, url.toUri())
 }
 
 @Composable
@@ -138,9 +139,9 @@ fun MainMenuScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
         PremiumButton(text = "Select Level") { navController.navigate(Screen.LevelSelect.route) }
         Spacer(modifier = Modifier.height(16.dp))
-        PremiumButton(text = "Privacy Policy") { openInCustomTab(context, "https://footga.top/privacy1") }
+        PremiumButton(text = "Privacy Policy") { openInCustomTab(context, "https://sportsga.top/Privacy2") }
         Spacer(modifier = Modifier.height(16.dp))
-        PremiumButton(text = "FAQ") { openInCustomTab(context, "https://footga.top/FAQ1") }
+        PremiumButton(text = "FAQ") { openInCustomTab(context, "https://sportsga.top/FAQ2") }
     }
 }
 
