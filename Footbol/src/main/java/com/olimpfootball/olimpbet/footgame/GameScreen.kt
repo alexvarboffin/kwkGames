@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.olimpfootball.olimpbet.footgame.R
 
 @Composable
 fun GameScreen(gameViewModel: GameViewModel = viewModel(), onBack: () -> Unit) {
@@ -31,10 +34,27 @@ fun GameScreen(gameViewModel: GameViewModel = viewModel(), onBack: () -> Unit) {
 
     // The main layout of the game screen
     Box(modifier = Modifier.fillMaxSize()) {
-        // TODO: Replace with actual background image from resources
-        // Image(painter = painterResource(id = R.drawable.game_background), ...)
-        Box(modifier = Modifier.fillMaxSize().background(Color(0xFF006400))) // Dark Green
+        // Background Layer
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Top part: Stadium Image
+            Image(
+                painter = painterResource(id = R.drawable.ic_game_background),
+                contentDescription = "Stadium Background",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentScale = ContentScale.FillWidth
+            )
+            // Bottom part: Pitch
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .background(Color(0xFF3A8A53)) // Field Green
+            )
+        }
 
+        // Foreground UI Layer
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -100,10 +120,16 @@ fun TacticField(targets: List<Target>, selectedTargetId: Int?, onTargetSelect: (
         modifier = Modifier
             .fillMaxWidth(0.9f)
             .aspectRatio(1.5f)
-            .background(Color.Black.copy(alpha = 0.2f), RoundedCornerShape(16.dp))
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_gate),
+            contentDescription = "Goal",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.FillBounds
+        )
+
         LazyVerticalGrid(
-            columns = GridCells.Fixed(4),
+            columns = GridCells.Fixed(6),
             modifier = Modifier.fillMaxSize().padding(16.dp),
             verticalArrangement = Arrangement.SpaceAround,
             horizontalArrangement = Arrangement.SpaceAround
@@ -125,16 +151,30 @@ fun TargetItem(target: Target, isSelected: Boolean, onSelect: () -> Unit) {
         modifier = Modifier
             .padding(4.dp)
             .aspectRatio(1f)
-            .clip(CircleShape)
-            .background(if (isSelected) Color.Yellow.copy(alpha = 0.5f) else Color.White.copy(alpha = 0.3f))
             .clickable(onClick = onSelect),
         contentAlignment = Alignment.Center
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_target_ball),
+            contentDescription = "Target",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Fit
+        )
+
+        if (isSelected) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape)
+                    .background(Color.Yellow.copy(alpha = 0.4f))
+            )
+        }
+
         if (target.isGoalkeeper) {
             Icon(
-                painter = painterResource(id = android.R.drawable.ic_dialog_alert), // Placeholder
+                imageVector = Icons.Default.AccountCircle,
                 contentDescription = "Goalkeeper",
-                tint = Color.Red,
+                tint = Color.Yellow.copy(alpha = 0.8f),
                 modifier = Modifier.size(40.dp)
             )
         }
@@ -204,6 +244,22 @@ fun InfoDisplay(label: String, value: String) {
         ) {
             Text(label, color = Color.Gray, fontSize = 14.sp)
             Text(value, color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        }
+    }
+}
+
+@Composable
+fun SeriesToggle(isSeriesMode: Boolean, onToggle: () -> Unit) {
+    Card(
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.3f))
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Series", color = Color.Gray, fontSize = 14.sp)
+            Switch(checked = isSeriesMode, onCheckedChange = { onToggle() })
         }
     }
 }

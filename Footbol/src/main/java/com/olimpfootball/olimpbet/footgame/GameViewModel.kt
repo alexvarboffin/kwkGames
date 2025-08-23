@@ -36,8 +36,10 @@ class GameViewModel : ViewModel() {
 
     fun resetGame() {
         viewModelScope.launch {
-            val totalTargets = 12
-            val goalkeeperPositions = List(2) { Random.nextInt(0, totalTargets) }.toSet()
+            val totalTargets = 18 // 6 in width * 3 in height
+            val possibleIndexes = (0 until totalTargets).shuffled()
+            val goalkeeperPositions = setOf(possibleIndexes[0], possibleIndexes[1])
+
             val newTargets = List(totalTargets) { Target(id = it, isGoalkeeper = goalkeeperPositions.contains(it)) }
             _uiState.update {
                 it.copy(
@@ -61,6 +63,10 @@ class GameViewModel : ViewModel() {
             _uiState.update { it.copy(betAmount = newBet) }
         }
     }
+
+//    fun toggleSeriesMode() {
+//        _uiState.update { it.copy(isSeriesMode = !it.isSeriesMode) }
+//    }
 
     fun onBumpClicked() {
         val selectedId = _uiState.value.selectedTargetId ?: return
