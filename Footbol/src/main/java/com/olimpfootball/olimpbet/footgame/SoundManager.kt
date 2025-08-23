@@ -2,13 +2,17 @@ package com.olimpfootball.olimpbet.footgame
 
 import android.content.Context
 import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.media.SoundPool
 import java.io.IOException
 
 class SoundManager(private val context: Context) {
 
     private var soundPool: SoundPool? = null
+    private var mediaPlayer: MediaPlayer? = null
+
     private val soundMap = mutableMapOf<String, Int>()
+    private var isMuted = false
 
     init {
         val audioAttributes = AudioAttributes.Builder()
@@ -21,33 +25,70 @@ class SoundManager(private val context: Context) {
             .setAudioAttributes(audioAttributes)
             .build()
 
-        loadSounds()
+        loadSound("btn.webm")
+        loadSound("game-over.webm")
+        loadSound("kick.webm")
+        loadSound("kick2.webm")
     }
 
-    private fun loadSounds() {
-        val soundFiles = listOf("btn.webm", "game-over.webm", "kick.webm", "kick2.webm")
-        soundFiles.forEach { fileName ->
+    private fun loadSound(fileName: String) {
+        try {
+            val assetManager = context.assets
+            val descriptor = assetManager.openFd(fileName)
+            val soundId = soundPool?.load(descriptor, 1)
+            if (soundId != null) {
+                soundMap[fileName] = soundId
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    fun playSound(fileName: String) {
+        if (!isMuted) {
+            val soundId = soundMap[fileName]
+            if (soundId != null) {
+                soundPool?.play(soundId, 1f, 1f, 1, 0, 1f)
+            }
+        }
+    }
+
+    fun startBackgroundMusic() {
+        if (mediaPlayer == null) {
             try {
-                val afd = context.assets.openFd(fileName)
-                val soundId = soundPool?.load(afd, 1)
-                if (soundId != null) {
-                    soundMap[fileName] = soundId
+                val assetManager = context.assets
+                val descriptor = assetManager.openFd("mainbgm.ogg")
+                mediaPlayer = MediaPlayer().apply {
+                    setDataSource(descriptor.fileDescriptor, descriptor.startOffset, descriptor.length)
+                    isLooping = true
+                    prepare()
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
+        if (!isMuted) {
+            mediaPlayer?.start()
+        }
     }
 
-    fun playSound(fileName: String) {
-        val soundId = soundMap[fileName]
-        soundId?.let {
-            soundPool?.play(it, 1f, 1f, 1, 0, 1f)
-        }
+    fun pauseBackgroundMusic() {
+        mediaPlayer?.pause()
     }
 
     fun release() {
         soundPool?.release()
         soundPool = null
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    fun toggleMute() {
+        isMuted = !isMuted
+        if (isMuted) {
+            mediaPlayer?.pause()
+        } else {
+            mediaPlayer?.start()
+        }
     }
 }

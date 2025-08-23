@@ -63,13 +63,17 @@ sealed class Screen(val route: String) {
 }
 
 class GameActivity : ComponentActivity() {
+
+    private lateinit var soundManager: SoundManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        soundManager = SoundManager(applicationContext)
         //enableEdgeToEdge()
         webView = WebView(this).apply {} //not set WebViewClient!!!
         setContent {
             PXBFootballTheme {
-                AppNavigation()
+                AppNavigation(soundManager = soundManager)
             }
         }
     }
@@ -90,7 +94,10 @@ fun openInCustomTab(context: Context, url: String) {
 }
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(navController: NavController, soundManager: SoundManager) {
+    LaunchedEffect(Unit) {
+        soundManager.startBackgroundMusic()
+    }
     val infiniteTransition = rememberInfiniteTransition()
     val scale by infiniteTransition.animateFloat(
         initialValue = 1f,
@@ -148,15 +155,15 @@ fun SplashScreen(navController: NavController) {
 }
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(soundManager: SoundManager) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screen.Splash.route) {
         composable(Screen.Splash.route) {
-            SplashScreen(navController = navController)
+            SplashScreen(navController = navController, soundManager = soundManager)
         }
         composable(Screen.MainMenu.route) {
-            MainMenuScreen(navController = navController)
+            MainMenuScreen(navController = navController, soundManager = soundManager)
         }
         composable(Screen.LevelSelect.route) {
             LevelSelectScreen(onLevelClick = { level ->
@@ -177,13 +184,13 @@ fun AppNavigation() {
             RewardsScreen(onClose = { navController.popBackStack() })
         }
         composable(Screen.Settings.route) {
-            SettingsScreen(navController = navController)
+            SettingsScreen(navController = navController, soundManager = soundManager)
         }
     }
 }
 
 @Composable
-fun MainMenuScreen(navController: NavController) {
+fun MainMenuScreen(navController: NavController, soundManager: SoundManager) {
     val context = LocalContext.current
 
     Column(
@@ -303,7 +310,7 @@ fun RewardsScreen(onClose: () -> Unit) {
 }
 
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun SettingsScreen(navController: NavController, soundManager: SoundManager) {
     var isMusicOn by remember { mutableStateOf(true) }
 
     Box(
@@ -335,7 +342,10 @@ fun SettingsScreen(navController: NavController) {
             }
             Spacer(modifier = Modifier.height(16.dp))
             SettingItem(text = "Music") {
-                Switch(checked = isMusicOn, onCheckedChange = { isMusicOn = it })
+                Switch(checked = isMusicOn, onCheckedChange = {
+                    isMusicOn = it
+                    soundManager.toggleMute()
+                })
             }
             Spacer(modifier = Modifier.height(16.dp))
 //            SettingItem(text = "Notifications") {
