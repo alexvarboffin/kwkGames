@@ -1,10 +1,8 @@
 package com.olimpfootball.olimpbet.footgame
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebView
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.browser.customtabs.CustomTabsIntent
@@ -17,10 +15,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -32,7 +26,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -43,6 +36,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.olimpfootball.olimpbet.footgame.ui.theme.PXBFootballTheme
 import androidx.core.net.toUri
+import com.olimpfootball.olimpbet.footgame.screen.MainMenuScreen
+import com.olimpfootball.olimpbet.footgame.screen.RewardsScreen
+import com.olimpfootball.olimpbet.footgame.screen.SettingsScreen
+import com.olimpfootball.olimpbet.footgame.screen.WelcomeScreen
 
 
 const val PREFS_NAME_GAME = "PXBGamePrefs"
@@ -185,176 +182,6 @@ fun AppNavigation(soundManager: SoundManager) {
         }
         composable(Screen.Settings.route) {
             SettingsScreen(navController = navController, soundManager = soundManager)
-        }
-    }
-}
-
-@Composable
-fun MainMenuScreen(navController: NavController, soundManager: SoundManager) {
-    val context = LocalContext.current
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF1A1A1A)) // Dark background
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "OLIMP Game",
-            fontSize = 40.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
-        Spacer(modifier = Modifier.height(64.dp))
-
-        PremiumButton(text = "Go to Game") { navController.navigate(Screen.TacticField.createRoute(1)) }
-        Spacer(modifier = Modifier.height(16.dp))
-        //PremiumButton(text = "Select Level") { navController.navigate(Screen.LevelSelect.route) }
-        Spacer(modifier = Modifier.height(16.dp))
-        PremiumButton(text = "Settings") { navController.navigate(Screen.Settings.route) }
-        Spacer(modifier = Modifier.height(16.dp))
-        PremiumButton(text = "Rewards") { navController.navigate(Screen.Rewards.route) }
-        Spacer(modifier = Modifier.height(16.dp))
-        PremiumButton(text = "Privacy Policy") { openInCustomTab(context, "https://sportsga.top/Privacy2") }
-        Spacer(modifier = Modifier.height(16.dp))
-        PremiumButton(text = "FAQ") { openInCustomTab(context, "https://sportsga.top/FAQ2") }
-    }
-}
-
-@Composable
-fun WelcomeScreen(onClose: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.8f))
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .background(Color(0xFF1A1A1A), RoundedCornerShape(16.dp))
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("HOW TO PLAY?", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "The main goal is simple — score against the goalkeeper! Every round is a one-on-one showdown where your timing and instinct are everything. Choose the right direction, outsmart the keeper, and send the ball straight into the net.",
-                textAlign = TextAlign.Center,
-                color = Color.White
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            PremiumButton(text = "Next") { onClose() }
-        }
-    }
-}
-
-@Composable
-fun RewardsScreen(onClose: () -> Unit) {
-    val context = LocalContext.current
-    val rewards = listOf(250, 500, 1000, 1500, 2000, 3000, 4500)
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.8f))
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .background(Color(0xFF1A1A1A), RoundedCornerShape(16.dp))
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Special Reward", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                IconButton(onClick = onClose) {
-                    Icon(imageVector = Icons.Filled.Close, contentDescription = "Close", tint = Color.White)
-                }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(rewards.size) { index ->
-                    Column(
-                        modifier = Modifier
-                            .background(Color.Black.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text("Day ${index + 1}", color = Color.Gray)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text("⭐", fontSize = 32.sp)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(rewards[index].toString(), color = Color.White, fontWeight = FontWeight.Bold)
-                    }
-                }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            PremiumButton(text = "Claim") {
-                Toast.makeText(context, "Reward Claimed!", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-}
-
-@Composable
-fun SettingsScreen(navController: NavController, soundManager: SoundManager) {
-    var isMusicOn by remember { mutableStateOf(true) }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.8f)),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .background(Color(0xFF1A1A1A), RoundedCornerShape(16.dp))
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Settings", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(imageVector = Icons.Filled.Close, contentDescription = "Close", tint = Color.White)
-                }
-            }
-            Spacer(modifier = Modifier.height(24.dp))
-            SettingItem(text = "User Name") {
-                Text("User#00001", color = Color.Yellow, fontSize = 18.sp)
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            SettingItem(text = "Music") {
-                Switch(checked = isMusicOn, onCheckedChange = {
-                    isMusicOn = it
-                    soundManager.toggleMute()
-                })
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-//            SettingItem(text = "Notifications") {
-//                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null, tint = Color.White)
-//            }
-            Spacer(modifier = Modifier.height(16.dp))
-            SettingItem(text = "How to play?", onClick = { navController.navigate(Screen.Welcome.route) })
-            Spacer(modifier = Modifier.height(32.dp))
-            Text("Delete Profile", color = Color.Red, modifier = Modifier.clickable { /* TODO */ })
         }
     }
 }
