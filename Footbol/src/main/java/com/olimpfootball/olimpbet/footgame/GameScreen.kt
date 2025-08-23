@@ -346,9 +346,9 @@ fun SettingsContent(onDismiss: () -> Unit) {
             Switch(checked = isMusicOn, onCheckedChange = { isMusicOn = it })
         }
         Spacer(modifier = Modifier.height(16.dp))
-        SettingItem(text = "Notifications") {
-            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null, tint = Color.White)
-        }
+//        SettingItem(text = "Notifications") {
+//            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null, tint = Color.White)
+//        }
         Spacer(modifier = Modifier.height(16.dp))
         SettingItem(text = "How to play?", onClick = { /* TODO */ }) {}
         Spacer(modifier = Modifier.height(32.dp))

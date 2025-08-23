@@ -2,16 +2,19 @@ package com.olimpfootball.olimpbet.footgame
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 // Represents a single spot on the grid.
 data class Target(val id: Int)
 
 enum class GameResult { WIN, LOSS }
+
+sealed class SoundEvent {
+    object Kick : SoundEvent()
+    object GameOver : SoundEvent()
+    object ButtonClick : SoundEvent()
+}
 
 // Data class to hold the entire state of the game screen
 data class GameState(
@@ -34,6 +37,9 @@ class GameViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(GameState())
     val uiState: StateFlow<GameState> = _uiState.asStateFlow()
 
+    private val _soundEvent = MutableSharedFlow<SoundEvent>()
+    val soundEvent: SharedFlow<SoundEvent> = _soundEvent.asSharedFlow()
+
     fun resetGame() {
         _uiState.update {
             it.copy(
@@ -46,6 +52,7 @@ class GameViewModel : ViewModel() {
     }
 
     fun changeBetAmount(multiply: Boolean) {
+        viewModelScope.launch { _soundEvent.emit(SoundEvent.ButtonClick) }
         val currentBet = _uiState.value.betAmount
         val newBet = if (multiply) currentBet * 2 else currentBet / 2
         if (newBet > 0 && newBet <= _uiState.value.balance) {
@@ -54,10 +61,12 @@ class GameViewModel : ViewModel() {
     }
 
     fun toggleSeriesMode() {
+        viewModelScope.launch { _soundEvent.emit(SoundEvent.ButtonClick) }
         _uiState.update { it.copy(isSeriesMode = !it.isSeriesMode) }
     }
 
     fun toggleSettingsDialog() {
+        viewModelScope.launch { _soundEvent.emit(SoundEvent.ButtonClick) }
         _uiState.update { it.copy(showSettingsDialog = !it.showSettingsDialog) }
     }
 
@@ -67,6 +76,7 @@ class GameViewModel : ViewModel() {
         if (_uiState.value.gameResult != null) return
 
         viewModelScope.launch {
+            _soundEvent.emit(SoundEvent.Kick)
             val totalTargets = _uiState.value.targets.size
             val positions = (0 until totalTargets).shuffled().take(3)
 
@@ -78,6 +88,7 @@ class GameViewModel : ViewModel() {
 
             if (isLoss) {
                 // Loss
+                _soundEvent.emit(SoundEvent.GameOver)
                 _uiState.update {
                     it.copy(
                         gameResult = GameResult.LOSS,
