@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.browser.customtabs.CustomTabsIntent
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -102,18 +104,21 @@ fun SplashScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF1A1A1A)) // Dark background
-            .clickable { navController.navigate(Screen.MainMenu.route) {
-                popUpTo(Screen.Splash.route) { inclusive = true }
-            } },
+            .background(Color(0xFF1A1A1A)), // Dark background
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.olimp_icon),
+                contentDescription = "App Icon",
+                modifier = Modifier.size(128.dp)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "OLIEMP FOOTBALL",
+                text = "OLIEMP",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFFFD700), // Gold color
@@ -123,11 +128,21 @@ fun SplashScreen(navController: NavController) {
                 }
             )
             Text(
-                text = "Click to start",
-                fontSize = 24.sp,
-                color = Color.White.copy(alpha = 0.8f),
-                modifier = Modifier.padding(top = 32.dp)
+                text = "FOOTBALL",
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFFFD700), // Gold color
+                modifier = Modifier.graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                }
             )
+            Spacer(modifier = Modifier.height(32.dp))
+            PremiumButton(text = "Click to start") {
+                navController.navigate(Screen.MainMenu.route) {
+                    popUpTo(Screen.Splash.route) { inclusive = true }
+                }
+            }
         }
     }
 }
@@ -153,7 +168,7 @@ fun AppNavigation() {
             arguments = listOf(navArgument("level") { type = NavType.IntType })
         ) { backStackEntry ->
             val level = backStackEntry.arguments?.getInt("level") ?: 1
-            GameScreen(onBack = { navController.popBackStack() })
+            GameScreen(navController = navController, onBack = { navController.popBackStack() })
         }
         composable(Screen.Welcome.route) {
             WelcomeScreen(onClose = { navController.popBackStack() })
@@ -232,6 +247,7 @@ fun WelcomeScreen(onClose: () -> Unit) {
 
 @Composable
 fun RewardsScreen(onClose: () -> Unit) {
+    val context = LocalContext.current
     val rewards = listOf(250, 500, 1000, 1500, 2000, 3000, 4500)
     Box(
         modifier = Modifier
@@ -279,7 +295,9 @@ fun RewardsScreen(onClose: () -> Unit) {
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            PremiumButton(text = "Claim") { /* TODO: Handle claim logic */ }
+            PremiumButton(text = "Claim") {
+                Toast.makeText(context, "Reward Claimed!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
@@ -321,10 +339,10 @@ fun SettingsScreen(navController: NavController) {
             }
             Spacer(modifier = Modifier.height(16.dp))
             SettingItem(text = "Notifications") {
-                Icon(imageVector = Icons.Filled.ArrowForward, contentDescription = null, tint = Color.White)
+                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null, tint = Color.White)
             }
             Spacer(modifier = Modifier.height(16.dp))
-            SettingItem(text = "How to play?", onClick = { navController.navigate(Screen.Welcome.route) }) {}
+            SettingItem(text = "How to play?", onClick = { navController.navigate(Screen.Welcome.route) })
             Spacer(modifier = Modifier.height(32.dp))
             Text("Delete Profile", color = Color.Red, modifier = Modifier.clickable { /* TODO */ })
         }
@@ -332,7 +350,7 @@ fun SettingsScreen(navController: NavController) {
 }
 
 @Composable
-fun SettingItem(text: String, onClick: (() -> Unit)? = null, content: @Composable () -> Unit) {
+fun SettingItem(text: String, onClick: (() -> Unit)? = null, trailingContent: @Composable (() -> Unit)? = null) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -343,7 +361,9 @@ fun SettingItem(text: String, onClick: (() -> Unit)? = null, content: @Composabl
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(text, color = Color.White, fontSize = 18.sp)
-        content()
+        if (trailingContent != null) {
+            trailingContent()
+        }
     }
 }
 

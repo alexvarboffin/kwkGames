@@ -130,7 +130,7 @@ TacticField/
 
 ```xml
 <resources>
-    <string name="app_name">PXB GAME</string>
+    <string name="app_name">``</string>
 </resources>
 ```
 

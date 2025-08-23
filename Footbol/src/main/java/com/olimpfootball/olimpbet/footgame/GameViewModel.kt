@@ -25,7 +25,8 @@ data class GameState(
     val gameResult: GameResult? = null,
     val ballPosition: Int? = null,
     val leftHandPosition: Int? = null,
-    val rightHandPosition: Int? = null
+    val rightHandPosition: Int? = null,
+    val showSettingsDialog: Boolean = false
 )
 
 class GameViewModel : ViewModel() {
@@ -33,7 +34,6 @@ class GameViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(GameState())
     val uiState: StateFlow<GameState> = _uiState.asStateFlow()
 
-    // This function now simply resets the result state, preparing for the next spin.
     fun resetGame() {
         _uiState.update {
             it.copy(
@@ -55,6 +55,10 @@ class GameViewModel : ViewModel() {
 
     fun toggleSeriesMode() {
         _uiState.update { it.copy(isSeriesMode = !it.isSeriesMode) }
+    }
+
+    fun toggleSettingsDialog() {
+        _uiState.update { it.copy(showSettingsDialog = !it.showSettingsDialog) }
     }
 
     // The core slot machine logic
