@@ -28,7 +28,7 @@ import com.olimpfootball.olimpbet.footgame.R
 fun GameScreen(gameViewModel: GameViewModel = viewModel(), onBack: () -> Unit) {
     val uiState by gameViewModel.uiState.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
         // Background Layer
         Column(modifier = Modifier.fillMaxSize()) {
             Image(
@@ -81,7 +81,7 @@ fun TopBar(balance: Double) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp).background(Color.Black.copy(alpha = 0.7f)),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

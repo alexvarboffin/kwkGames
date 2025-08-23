@@ -7,26 +7,30 @@ import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -45,11 +49,15 @@ const val KEY_STARS = "stars"
 
 // Updated Screen sealed class
 sealed class Screen(val route: String) {
+    object Splash : Screen("splash")
     object MainMenu : Screen("main_menu")
     object LevelSelect : Screen("level_select")
     object TacticField : Screen("tactic_field/{level}") {
         fun createRoute(level: Int) = "tactic_field/$level"
     }
+    object Welcome : Screen("welcome")
+    object Rewards : Screen("rewards")
+    object Settings : Screen("settings")
 }
 
 class GameActivity : ComponentActivity() {
@@ -80,11 +88,58 @@ fun openInCustomTab(context: Context, url: String) {
 }
 
 @Composable
+fun SplashScreen(navController: NavController) {
+    val infiniteTransition = rememberInfiniteTransition()
+    val scale by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = 1.1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF1A1A1A)) // Dark background
+            .clickable { navController.navigate(Screen.MainMenu.route) {
+                popUpTo(Screen.Splash.route) { inclusive = true }
+            } },
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "OLIEMP FOOTBALL",
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFFFD700), // Gold color
+                modifier = Modifier.graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                }
+            )
+            Text(
+                text = "Click to start",
+                fontSize = 24.sp,
+                color = Color.White.copy(alpha = 0.8f),
+                modifier = Modifier.padding(top = 32.dp)
+            )
+        }
+    }
+}
+
+@Composable
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    // Updated NavHost
-    NavHost(navController = navController, startDestination = Screen.MainMenu.route) {
+    NavHost(navController = navController, startDestination = Screen.Splash.route) {
+        composable(Screen.Splash.route) {
+            SplashScreen(navController = navController)
+        }
         composable(Screen.MainMenu.route) {
             MainMenuScreen(navController = navController)
         }
@@ -98,16 +153,20 @@ fun AppNavigation() {
             arguments = listOf(navArgument("level") { type = NavType.IntType })
         ) { backStackEntry ->
             val level = backStackEntry.arguments?.getInt("level") ?: 1
-            GameScreen(
-                //isEndlessMode = false,
-                //level = level,
-                onBack = { navController.popBackStack() }
-            )
+            GameScreen(onBack = { navController.popBackStack() })
+        }
+        composable(Screen.Welcome.route) {
+            WelcomeScreen(onClose = { navController.popBackStack() })
+        }
+        composable(Screen.Rewards.route) {
+            RewardsScreen(onClose = { navController.popBackStack() })
+        }
+        composable(Screen.Settings.route) {
+            SettingsScreen(navController = navController)
         }
     }
 }
 
-// Updated MainMenuScreen
 @Composable
 fun MainMenuScreen(navController: NavController) {
     val context = LocalContext.current
@@ -130,11 +189,161 @@ fun MainMenuScreen(navController: NavController) {
 
         PremiumButton(text = "Go to Game") { navController.navigate(Screen.TacticField.createRoute(1)) }
         Spacer(modifier = Modifier.height(16.dp))
-        PremiumButton(text = "Select Level") { navController.navigate(Screen.LevelSelect.route) }
+        //PremiumButton(text = "Select Level") { navController.navigate(Screen.LevelSelect.route) }
+        Spacer(modifier = Modifier.height(16.dp))
+        PremiumButton(text = "Settings") { navController.navigate(Screen.Settings.route) }
+        Spacer(modifier = Modifier.height(16.dp))
+        PremiumButton(text = "Rewards") { navController.navigate(Screen.Rewards.route) }
         Spacer(modifier = Modifier.height(16.dp))
         PremiumButton(text = "Privacy Policy") { openInCustomTab(context, "https://sportsga.top/Privacy2") }
         Spacer(modifier = Modifier.height(16.dp))
         PremiumButton(text = "FAQ") { openInCustomTab(context, "https://sportsga.top/FAQ2") }
+    }
+}
+
+@Composable
+fun WelcomeScreen(onClose: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.8f))
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .background(Color(0xFF1A1A1A), RoundedCornerShape(16.dp))
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("HOW TO PLAY?", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "The main goal is simple — score against the goalkeeper! Every round is a one-on-one showdown where your timing and instinct are everything. Choose the right direction, outsmart the keeper, and send the ball straight into the net.",
+                textAlign = TextAlign.Center,
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            PremiumButton(text = "Next") { onClose() }
+        }
+    }
+}
+
+@Composable
+fun RewardsScreen(onClose: () -> Unit) {
+    val rewards = listOf(250, 500, 1000, 1500, 2000, 3000, 4500)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.8f))
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .background(Color(0xFF1A1A1A), RoundedCornerShape(16.dp))
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Special Reward", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                IconButton(onClick = onClose) {
+                    Icon(imageVector = Icons.Filled.Close, contentDescription = "Close", tint = Color.White)
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(rewards.size) { index ->
+                    Column(
+                        modifier = Modifier
+                            .background(Color.Black.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text("Day ${index + 1}", color = Color.Gray)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text("⭐", fontSize = 32.sp)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(rewards[index].toString(), color = Color.White, fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            PremiumButton(text = "Claim") { /* TODO: Handle claim logic */ }
+        }
+    }
+}
+
+@Composable
+fun SettingsScreen(navController: NavController) {
+    var isMusicOn by remember { mutableStateOf(true) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.8f)),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .background(Color(0xFF1A1A1A), RoundedCornerShape(16.dp))
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Settings", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(imageVector = Icons.Filled.Close, contentDescription = "Close", tint = Color.White)
+                }
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+            SettingItem(text = "User Name") {
+                Text("User#00001", color = Color.Yellow, fontSize = 18.sp)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            SettingItem(text = "Music") {
+                Switch(checked = isMusicOn, onCheckedChange = { isMusicOn = it })
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            SettingItem(text = "Notifications") {
+                Icon(imageVector = Icons.Filled.ArrowForward, contentDescription = null, tint = Color.White)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            SettingItem(text = "How to play?", onClick = { navController.navigate(Screen.Welcome.route) }) {}
+            Spacer(modifier = Modifier.height(32.dp))
+            Text("Delete Profile", color = Color.Red, modifier = Modifier.clickable { /* TODO */ })
+        }
+    }
+}
+
+@Composable
+fun SettingItem(text: String, onClick: (() -> Unit)? = null, content: @Composable () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.Black.copy(alpha = 0.2f), RoundedCornerShape(12.dp))
+            .clickable(enabled = onClick != null) { onClick?.invoke() }
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(text, color = Color.White, fontSize = 18.sp)
+        content()
     }
 }
 
