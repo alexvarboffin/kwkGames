@@ -66,8 +66,10 @@ fun GameScreen(
             TacticField(
                 targets = uiState.targets,
                 ballPosition = uiState.ballPosition,
-                leftHandPosition = uiState.leftHandPosition,
-                rightHandPosition = uiState.rightHandPosition
+                handPosition = uiState.handPosition,
+                isAnimating = uiState.isAnimating,
+                animatedBallPosition = uiState.animatedBallPosition,
+                animatedHandPosition = uiState.animatedHandPosition
             )
             GameControls(
                 betAmount = uiState.betAmount,
@@ -79,8 +81,8 @@ fun GameScreen(
             )
         }
 
-        // Show result dialog
-        if (uiState.gameResult != null) {
+        // Show result dialog only when not animating and game is finished
+        if (uiState.gameResult != null && !uiState.isAnimating) {
             GameResultDialog(
                 result = uiState.gameResult!!,
                 onPlayAgain = { gameViewModel.resetGame() }
@@ -133,8 +135,10 @@ fun TopBar(balance: Double, onSettingsClicked: () -> Unit, onRewardsClicked: () 
 fun TacticField(
     targets: List<Target>,
     ballPosition: Int?,
-    leftHandPosition: Int?,
-    rightHandPosition: Int?
+    handPosition: Int?,
+    isAnimating: Boolean,
+    animatedBallPosition: Int?,
+    animatedHandPosition: Int?
 ) {
     Box(
         modifier = Modifier.fillMaxWidth(0.9f).aspectRatio(1.5f)
@@ -156,8 +160,10 @@ fun TacticField(
                 TargetItem(
                     target = target,
                     ballPosition = ballPosition,
-                    leftHandPosition = leftHandPosition,
-                    rightHandPosition = rightHandPosition
+                    handPosition = handPosition,
+                    isAnimating = isAnimating,
+                    animatedBallPosition = animatedBallPosition,
+                    animatedHandPosition = animatedHandPosition
                 )
             }
         }
@@ -168,29 +174,61 @@ fun TacticField(
 fun TargetItem(
     target: Target,
     ballPosition: Int?,
-    leftHandPosition: Int?,
-    rightHandPosition: Int?
+    handPosition: Int?,
+    isAnimating: Boolean,
+    animatedBallPosition: Int?,
+    animatedHandPosition: Int?
 ) {
     Box(
         modifier = Modifier.padding(4.dp).aspectRatio(1f),
         contentAlignment = Alignment.Center
     ) {
-        // If the game is finished, determine what to show
-        if (ballPosition != null) {
-            when (target.id) {
-                ballPosition -> Image(painter = painterResource(id = R.drawable.ic_ball), contentDescription = "Ball")
-                leftHandPosition -> Image(painter = painterResource(id = R.drawable.ic_hand_left), contentDescription = "Left Hand")
-                rightHandPosition -> Image(painter = painterResource(id = R.drawable.ic_hand_right), contentDescription = "Right Hand")
-                else -> Image(painter = painterResource(id = R.drawable.ic_target_ball), contentDescription = "Target") // Show default target in other spots
+        // Always show the target image as background
+        Image(
+            painter = painterResource(id = R.drawable.ic_target_ball),
+            contentDescription = "Target",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Fit
+        )
+
+        if (isAnimating) {
+            // During animation, show animated positions
+            if (target.id == animatedBallPosition) {
+                Image(painter = painterResource(id = R.drawable.ic_ball), contentDescription = "Ball")
+            }
+            if (target.id == animatedHandPosition) {
+                // Display both hands at the single hand position
+                Image(
+                    painter = painterResource(id = R.drawable.ic_hand_left),
+                    contentDescription = "Left Hand",
+                    modifier = Modifier.offset(x = -10.dp)
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.ic_hand_right),
+                    contentDescription = "Right Hand",
+                    modifier = Modifier.offset(x = 10.dp)
+                )
             }
         } else {
-            // Before the game ends, show the default target image
-            Image(
-                painter = painterResource(id = R.drawable.ic_target_ball),
-                contentDescription = "Target",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Fit
-            )
+            // After animation, show final positions if game is finished
+            if (ballPosition != null) {
+                when (target.id) {
+                    ballPosition -> Image(painter = painterResource(id = R.drawable.ic_ball), contentDescription = "Ball")
+                    handPosition -> {
+                        // Display both hands at the single hand position
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_hand_left),
+                            contentDescription = "Left Hand",
+                            modifier = Modifier.offset(x = -10.dp)
+                        )
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_hand_right),
+                            contentDescription = "Right Hand",
+                            modifier = Modifier.offset(x = 10.dp)
+                        )
+                    }
+                }
+            }
         }
     }
 }

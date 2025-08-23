@@ -27,8 +27,10 @@ data class GameState(
     // Results of the spin
     val gameResult: GameResult? = null,
     val ballPosition: Int? = null,
-    val leftHandPosition: Int? = null,
-    val rightHandPosition: Int? = null,
+    val handPosition: Int? = null,
+    val isAnimating: Boolean = false,
+    val animatedBallPosition: Int? = null,
+    val animatedHandPosition: Int? = null,
     val showSettingsDialog: Boolean = false
 )
 
@@ -45,8 +47,7 @@ class GameViewModel : ViewModel() {
             it.copy(
                 gameResult = null,
                 ballPosition = null,
-                leftHandPosition = null,
-                rightHandPosition = null
+                handPosition = null
             )
         }
     }
@@ -72,19 +73,32 @@ class GameViewModel : ViewModel() {
 
     // The core slot machine logic
     fun onBumpClicked() {
-        // Don't run if a game is already finished and waiting for reset
-        if (_uiState.value.gameResult != null) return
+        // Don't run if a game is already finished or animating
+        if (_uiState.value.gameResult != null || _uiState.value.isAnimating) return
 
         viewModelScope.launch {
             _soundEvent.emit(SoundEvent.Kick)
+
+            _uiState.update { it.copy(isAnimating = true, gameResult = null) } // Reset gameResult and start animation
+
             val totalTargets = _uiState.value.targets.size
             val positions = (0 until totalTargets).shuffled().take(3)
 
             val ballPos = positions[0]
-            val leftHandPos = positions[1]
-            val rightHandPos = positions[2]
+            val handPos = positions[1] // Use one position for both hands
 
-            val isLoss = (ballPos == leftHandPos || ballPos == rightHandPos)
+            // Store animated positions
+            _uiState.update {
+                it.copy(
+                    animatedBallPosition = ballPos,
+                    animatedHandPosition = handPos
+                )
+            }
+
+            // Simulate animation duration
+            kotlinx.coroutines.delay(1500L) // 1.5 seconds for animation
+
+            val isLoss = (ballPos == handPos)
 
             if (isLoss) {
                 // Loss
@@ -93,9 +107,9 @@ class GameViewModel : ViewModel() {
                     it.copy(
                         gameResult = GameResult.LOSS,
                         balance = it.balance - it.betAmount,
-                        ballPosition = ballPos,
-                        leftHandPosition = leftHandPos,
-                        rightHandPosition = rightHandPos
+                                                ballPosition = ballPos, // Final position
+                        handPosition = handPos, // Final position
+                        isAnimating = false // Animation finished
                     )
                 }
             } else {
@@ -105,9 +119,9 @@ class GameViewModel : ViewModel() {
                     it.copy(
                         gameResult = GameResult.WIN,
                         balance = it.balance + winAmount,
-                        ballPosition = ballPos,
-                        leftHandPosition = leftHandPos,
-                        rightHandPosition = rightHandPos
+                                                ballPosition = ballPos, // Final position
+                        handPosition = handPos, // Final position
+                        isAnimating = false // Animation finished
                     )
                 }
             }
