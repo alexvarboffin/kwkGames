@@ -205,7 +205,7 @@ fun GameControls(
     onToggleSeries: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
+        modifier = Modifier.fillMaxWidth().padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Top part of controls (Info, etc.)
@@ -226,8 +226,8 @@ fun GameControls(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("Amount:", color = Color.White, fontSize = 18.sp)
-            Text(String.format("%.2f", betAmount), color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text("Amount:", color = Color.White, fontSize = 16.sp)
+            Text(String.format("%.2f", betAmount), color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
             Row {
                 Button(onClick = { onBetAmountChange(false) }) { Text("÷2") }
                 Spacer(modifier = Modifier.width(8.dp))
@@ -264,11 +264,11 @@ fun InfoDisplay(label: String, value: String) {
         colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.3f))
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(label, color = Color.Gray, fontSize = 14.sp)
-            Text(value, color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(value, color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
