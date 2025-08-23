@@ -28,7 +28,7 @@ data class GameState(
     val gameResult: GameResult? = null,
     val ballPosition: Int? = null,
     val handPosition: Int? = null, // Final hand position
-    val currentHandPosition: Int? = null, // Animated hand position
+    val currentHandPosition: Int? = 8, // Animated hand position
     val isAnimating: Boolean = false,
     val animatedBallPosition: Int? = null, // Animated ball position
     val showSettingsDialog: Boolean = false

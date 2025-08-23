@@ -217,6 +217,19 @@ fun TargetItem(
                 modifier = Modifier.offset(x = 10.dp)
             )
         }
+        // Render hands initially at currentHandPosition (center)
+        else if (!isAnimating && currentHandPosition != null && target.id == currentHandPosition) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_hand_left),
+                contentDescription = "Left Hand",
+                modifier = Modifier.offset(x = -10.dp)
+            )
+            Image(
+                painter = painterResource(id = R.drawable.ic_hand_right),
+                contentDescription = "Right Hand",
+                modifier = Modifier.offset(x = 10.dp)
+            )
+        }
 
         // Render ball
         if (ballPosition != null && target.id == ballPosition) {
@@ -313,7 +326,7 @@ fun SeriesToggle(isSeriesMode: Boolean, onToggle: () -> Unit) {
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Series", color = Color.Gray, fontSize = 14.sp)
+            Text("Series", color = Color.Gray, fontSize = 12.sp)
             Switch(checked = isSeriesMode, onCheckedChange = { onToggle() })
         }
     }
