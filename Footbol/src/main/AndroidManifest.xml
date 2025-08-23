@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PXBFootball">
         <activity
-            android:name="com.olimpfootball.olimpbet.footgame.SplashScreenActivity"
+            android:name="com.olimpfootball.olimpbet.footgame.GameActivity"
             android:exported="true"
             android:theme="@style/Theme.PXBFootball" android:screenOrientation="portrait">
             <intent-filter>
@@ -23,11 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.olimpfootball.olimpbet.footgame.GameActivity"
-            android:exported="false"
-            android:theme="@style/Theme.PXBFootball" android:screenOrientation="portrait"/>
-        
     </application>
 
 </manifest>

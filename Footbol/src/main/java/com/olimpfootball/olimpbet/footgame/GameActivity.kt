@@ -8,17 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -53,6 +43,7 @@ const val PREFS_NAME_GAME = "PXBGamePrefs"
 const val KEY_UNLOCKED_LEVEL = "unlockedLevel"
 const val KEY_STARS = "stars"
 
+// Updated Screen sealed class
 sealed class Screen(val route: String) {
     object MainMenu : Screen("main_menu")
     object LevelSelect : Screen("level_select")
@@ -92,6 +83,7 @@ fun openInCustomTab(context: Context, url: String) {
 fun AppNavigation() {
     val navController = rememberNavController()
 
+    // Updated NavHost
     NavHost(navController = navController, startDestination = Screen.MainMenu.route) {
         composable(Screen.MainMenu.route) {
             MainMenuScreen(navController = navController)
@@ -115,6 +107,7 @@ fun AppNavigation() {
     }
 }
 
+// Updated MainMenuScreen
 @Composable
 fun MainMenuScreen(navController: NavController) {
     val context = LocalContext.current
@@ -122,13 +115,13 @@ fun MainMenuScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF0288D1)) // Blue background
+            .background(Color(0xFF1A1A1A)) // Dark background
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "PXB Football",
+            text = "OLIMP Game",
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White
@@ -159,13 +152,13 @@ fun PremiumButton(text: String, onClick: () -> Unit) {
                 .fillMaxWidth()
                 .background(
                     Brush.verticalGradient(
-                        colors = listOf(Color(0xFFFFA500), Color(0xFFFF8C00))
+                        colors = listOf(Color(0xFFFFD700), Color(0xFFFFA500)) // Gold/Orange gradient
                     )
                 )
                 .padding(vertical = 16.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = text, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            Text(text = text, color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)
         }
     }
 }
