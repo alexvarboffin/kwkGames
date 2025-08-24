@@ -36,6 +36,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.olimpfootball.olimpbet.footgame.ui.theme.PXBFootballTheme
 import androidx.core.net.toUri
+import com.olimpfootball.olimpbet.footgame.data.provideUserPreferencesRepository
 import com.olimpfootball.olimpbet.footgame.screen.MainMenuScreen
 import com.olimpfootball.olimpbet.footgame.screen.RewardsScreen
 import com.olimpfootball.olimpbet.footgame.screen.SettingsScreen
@@ -65,7 +66,7 @@ class GameActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        soundManager = SoundManager(applicationContext)
+        soundManager = SoundManager(applicationContext, provideUserPreferencesRepository(applicationContext))
         //enableEdgeToEdge()
         webView = WebView(this).apply {} //not set WebViewClient!!!
         setContent {
@@ -172,7 +173,7 @@ fun AppNavigation(soundManager: SoundManager) {
             arguments = listOf(navArgument("level") { type = NavType.IntType })
         ) { backStackEntry ->
             val level = backStackEntry.arguments?.getInt("level") ?: 1
-            GameScreen(navController = navController, onBack = { navController.popBackStack() })
+            GameScreen(navController = navController, onBack = { navController.popBackStack() }, soundManager = soundManager)
         }
         composable(Screen.Welcome.route) {
             WelcomeScreen(onClose = { navController.popBackStack() })

@@ -4,9 +4,14 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.SoundPool
+import com.olimpfootball.olimpbet.footgame.data.UserPreferencesRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.io.IOException
 
-class SoundManager(private val context: Context) {
+class SoundManager(private val context: Context, private val userPreferencesRepository: UserPreferencesRepository) {
 
     private var soundPool: SoundPool? = null
     private var mediaPlayer: MediaPlayer? = null
@@ -29,6 +34,10 @@ class SoundManager(private val context: Context) {
         loadSound("game-over.webm")
         loadSound("kick.webm")
         loadSound("kick2.webm")
+
+        CoroutineScope(Dispatchers.Main).launch {
+            isMuted = userPreferencesRepository.preferencesFlow.first()
+        }
     }
 
     private fun loadSound(fileName: String) {
@@ -89,6 +98,9 @@ class SoundManager(private val context: Context) {
             mediaPlayer?.pause()
         } else {
             mediaPlayer?.start()
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            userPreferencesRepository.setIsMusicOn(isMuted)
         }
     }
 }
