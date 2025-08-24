@@ -82,6 +82,12 @@ class GameActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         webView.loadPrivacyPolicy("https://sportsga.top/termss")
+        soundManager.startBackgroundMusic()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        soundManager.pauseBackgroundMusic()
     }
 
 
@@ -95,8 +101,9 @@ fun openInCustomTab(context: Context, url: String) {
 
 @Composable
 fun SplashScreen(navController: NavController, soundManager: SoundManager) {
-    LaunchedEffect(Unit) {
+    DisposableEffect(Unit) {
         soundManager.startBackgroundMusic()
+        onDispose {  }
     }
     val infiniteTransition = rememberInfiniteTransition()
     val scale by infiniteTransition.animateFloat(

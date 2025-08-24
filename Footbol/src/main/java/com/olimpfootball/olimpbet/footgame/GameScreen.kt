@@ -97,9 +97,9 @@ fun GameScreen(
     }
 
 
-    DisposableEffect(Unit) {
-
-    }
+//    DisposableEffect(Unit) {
+//
+//    }
 }
 
 
