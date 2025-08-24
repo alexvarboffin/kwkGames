@@ -4,20 +4,28 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.SoundPool
+import androidx.compose.runtime.mutableStateOf
 import com.olimpfootball.olimpbet.footgame.data.UserPreferencesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class SoundManager(private val context: Context, private val userPreferencesRepository: UserPreferencesRepository) {
+class SoundManager(
+    private val context: Context,
+    private val userPreferencesRepository: UserPreferencesRepository
+) {
 
     private var soundPool: SoundPool? = null
     private var mediaPlayer: MediaPlayer? = null
 
     private val soundMap = mutableMapOf<String, Int>()
-    private var isMuted = false
+    var isMuted = mutableStateOf(false)
+
+    private var flow = userPreferencesRepository.preferencesFlow
+    val scope = CoroutineScope(Dispatchers.Main)
 
     init {
         val audioAttributes = AudioAttributes.Builder()
@@ -35,8 +43,10 @@ class SoundManager(private val context: Context, private val userPreferencesRepo
         loadSound("kick.webm")
         loadSound("kick2.webm")
 
-        CoroutineScope(Dispatchers.Main).launch {
-            isMuted = userPreferencesRepository.preferencesFlow.first()
+        scope.launch {
+            flow.collect {
+                isMuted.value = it
+            }
         }
     }
 
@@ -54,7 +64,7 @@ class SoundManager(private val context: Context, private val userPreferencesRepo
     }
 
     fun playSound(fileName: String) {
-        if (!isMuted) {
+        if (!isMuted.value) {
             val soundId = soundMap[fileName]
             if (soundId != null) {
                 soundPool?.play(soundId, 1f, 1f, 1, 0, 1f)
@@ -63,21 +73,27 @@ class SoundManager(private val context: Context, private val userPreferencesRepo
     }
 
     fun startBackgroundMusic() {
-        if (mediaPlayer == null) {
-            try {
-                val assetManager = context.assets
-                val descriptor = assetManager.openFd("mainbgm.ogg")
-                mediaPlayer = MediaPlayer().apply {
-                    setDataSource(descriptor.fileDescriptor, descriptor.startOffset, descriptor.length)
-                    isLooping = true
-                    prepare()
+        CoroutineScope(Dispatchers.Main).launch {
+            if (mediaPlayer == null) {
+                try {
+                    val assetManager = context.assets
+                    val descriptor = assetManager.openFd("mainbgm.ogg")
+                    mediaPlayer = MediaPlayer().apply {
+                        setDataSource(
+                            descriptor.fileDescriptor,
+                            descriptor.startOffset,
+                            descriptor.length
+                        )
+                        isLooping = true
+                        prepare()
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
-            } catch (e: IOException) {
-                e.printStackTrace()
             }
-        }
-        if (!isMuted) {
-            mediaPlayer?.start()
+            if (!userPreferencesRepository.preferencesFlow.first()) {
+                mediaPlayer?.start()
+            }
         }
     }
 
@@ -93,14 +109,14 @@ class SoundManager(private val context: Context, private val userPreferencesRepo
     }
 
     fun toggleMute() {
-        isMuted = !isMuted
-        if (isMuted) {
+        isMuted.value = !isMuted.value
+        if (isMuted.value) {
             mediaPlayer?.pause()
         } else {
             mediaPlayer?.start()
         }
-        CoroutineScope(Dispatchers.Main).launch {
-            userPreferencesRepository.setIsMusicOn(isMuted)
+        scope.launch {
+            userPreferencesRepository.setIsMusicOn(isMuted.value)
         }
     }
 }

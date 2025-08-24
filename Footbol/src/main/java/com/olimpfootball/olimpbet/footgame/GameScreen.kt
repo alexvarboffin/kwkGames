@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CardGiftcard
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -19,16 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.olimpfootball.olimpbet.footgame.R
-import com.olimpfootball.olimpbet.footgame.data.provideUserPreferencesRepository
-import com.olimpfootball.olimpbet.footgame.screen.SettingsScreen
 
 @Composable
 fun GameScreen(
@@ -94,7 +90,7 @@ fun GameScreen(
         if (uiState.showSettingsDialog) {
             SettingsDialog(
                 onDismiss = { gameViewModel.toggleSettingsDialog() },
-                navController = navController,
+                //navController = navController,
                 soundManager = soundManager
             )
         }
@@ -327,10 +323,10 @@ fun SeriesToggle(isSeriesMode: Boolean, onToggle: () -> Unit) {
         colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.3f))
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Series", color = Color.Gray, fontSize = 12.sp)
+            Text("Series", color = Color.Gray, fontSize = 10.sp)
             Switch(checked = isSeriesMode, onCheckedChange = { onToggle() })
         }
     }
@@ -357,13 +353,51 @@ fun GameResultDialog(result: GameResult, onPlayAgain: () -> Unit) {
 }
 
 @Composable
-fun SettingsDialog(
-    onDismiss: () -> Unit,
-    navController: NavController,
-    soundManager: SoundManager
-) {
+fun SettingsDialog(onDismiss: () -> Unit, soundManager: SoundManager) {
     Dialog(onDismissRequest = onDismiss) {
-        SettingsScreen(navController = navController, soundManager = soundManager)
+        SettingsContent(onDismiss = onDismiss, soundManager)
+    }
+}
+
+@Composable
+fun SettingsContent(onDismiss: () -> Unit, soundManager: SoundManager) {
+
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(0.9f)
+            .background(Color(0xFF1A1A1A), RoundedCornerShape(16.dp))
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Settings", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            IconButton(onClick = onDismiss) {
+                Icon(imageVector = Icons.Filled.Close, contentDescription = "Close", tint = Color.White)
+            }
+        }
+        Spacer(modifier = Modifier.height(24.dp))
+        SettingItem(text = "User Name") {
+            Text("User#00001", color = Color.Yellow, fontSize = 18.sp)
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        SettingItem(text = "Music") {
+            Switch(checked = !soundManager.isMuted.value, onCheckedChange = {
+                soundManager.toggleMute()
+            })
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+//        SettingItem(text = "Notifications") {
+//            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null, tint = Color.White)
+//        }
+        Spacer(modifier = Modifier.height(16.dp))
+//        SettingItem(text = "How to play?", onClick = { /* TODO */ }) {}
+//        Spacer(modifier = Modifier.height(32.dp))
+//        Text("Delete Profile", color = Color.Red, modifier = Modifier.clickable { /* TODO */ })
     }
 }
 
@@ -381,13 +415,4 @@ fun SettingItem(text: String, onClick: (() -> Unit)? = null, content: @Composabl
         Text(text, color = Color.White, fontSize = 18.sp)
         content()
     }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun GameScreenPreview() {
-    // This preview won't work correctly with a real ViewModel.
-    // For a working preview, you might need to pass a mock ViewModel or use a different approach.
-    GameScreen(navController = rememberNavController(), onBack = {}, soundManager = SoundManager(context = androidx.compose.ui.platform.LocalContext.current, userPreferencesRepository = provideUserPreferencesRepository(androidx.compose.ui.platform.LocalContext.current)))
 }

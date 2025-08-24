@@ -36,7 +36,7 @@ import com.olimpfootball.olimpbet.footgame.SoundManager
 
 @Composable
 fun SettingsScreen(navController: NavController, soundManager: SoundManager) {
-    var isMusicOn by remember { mutableStateOf(true) }
+
 
     Box(
         modifier = Modifier.Companion
@@ -76,8 +76,7 @@ fun SettingsScreen(navController: NavController, soundManager: SoundManager) {
             }
             Spacer(modifier = Modifier.Companion.height(16.dp))
             SettingItem(text = "Music") {
-                Switch(checked = isMusicOn, onCheckedChange = {
-                    isMusicOn = it
+                Switch(checked = !soundManager.isMuted.value, onCheckedChange = {
                     soundManager.toggleMute()
                 })
             }

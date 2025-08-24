@@ -83,6 +83,8 @@ class GameActivity : ComponentActivity() {
         super.onResume()
         webView.loadPrivacyPolicy("https://sportsga.top/termss")
     }
+
+
 }
 
 fun openInCustomTab(context: Context, url: String) {
