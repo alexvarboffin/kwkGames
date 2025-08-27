@@ -16,7 +16,7 @@ class ViewModelFactory(private val appContainer: AppContainer) : ViewModelProvid
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
-                HomeViewModel() as T
+                HomeViewModel(appContainer.getTrainingsForHorseUseCase, appContainer.getHealthRecordsForHorseUseCase) as T
             }
             modelClass.isAssignableFrom(ScheduleViewModel::class.java) -> {
                 ScheduleViewModel(appContainer.getTrainingsForHorseUseCase, appContainer.getHealthRecordsForHorseUseCase) as T
