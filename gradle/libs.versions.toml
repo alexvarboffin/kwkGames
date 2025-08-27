@@ -12,8 +12,14 @@ browser = "1.8.0"
 material = "1.9.0"
 navigationCompose = "2.9.3"
 datastore = "1.1.1"
-
+coilCompose = "3.1.0"
+coilNetworkKtor2 = "3.0.4"
+coilNetworkKtor3 = "3.0.4"
 [libraries]
+
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+#coil-network-ktor2 = { module = "io.coil-kt.coil3:coil-network-ktor2", version.ref = "coilNetworkKtor2" }
+coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coilNetworkKtor3" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material = { module = "androidx.compose.material:material", version.ref = "material" }

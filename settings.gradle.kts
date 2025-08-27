@@ -9,6 +9,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven("https://coil-kt.github.io/coil")
     }
 }
 dependencyResolutionManagement {
@@ -16,9 +17,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven("https://coil-kt.github.io/coil")
     }
 }
 
 rootProject.name = "kwkGames"
-include(":Footbol")
+include(":HorceTrainer")
 
