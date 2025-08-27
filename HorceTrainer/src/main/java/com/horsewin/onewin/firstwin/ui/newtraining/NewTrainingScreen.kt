@@ -12,11 +12,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -241,6 +244,8 @@ fun NewTrainingScreen(
                 ),
                 modifier = Modifier.weight(1f)
             ) {
+                Icon(Icons.Default.Close, contentDescription = "Cancel")
+                Spacer(modifier = Modifier.size(8.dp))
                 Text("Cancel")
             }
             Spacer(modifier = Modifier.width(16.dp))
@@ -265,6 +270,8 @@ fun NewTrainingScreen(
                 ),
                 modifier = Modifier.weight(1f)
             ) {
+                Icon(Icons.Default.Check, contentDescription = "Save")
+                Spacer(modifier = Modifier.size(8.dp))
                 Text("Save")
             }
         }

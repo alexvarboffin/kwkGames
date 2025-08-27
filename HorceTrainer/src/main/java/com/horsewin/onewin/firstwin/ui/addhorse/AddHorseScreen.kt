@@ -24,6 +24,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -302,6 +304,8 @@ fun AddHorseScreen(
                 ),
                 modifier = Modifier.weight(1f)
             ) {
+                Icon(Icons.Default.Close, contentDescription = "Cancel")
+                Spacer(modifier = Modifier.size(8.dp))
                 Text("Cancel")
             }
             Spacer(modifier = Modifier.width(16.dp))
@@ -329,6 +333,8 @@ fun AddHorseScreen(
                 ),
                 modifier = Modifier.weight(1f)
             ) {
+                Icon(Icons.Default.Check, contentDescription = "Save")
+                Spacer(modifier = Modifier.size(8.dp))
                 Text("Save")
             }
         }

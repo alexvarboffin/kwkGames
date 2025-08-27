@@ -13,10 +13,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,15 +61,28 @@ fun HomeScreen(
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 24.dp)
         )
-        Button(onClick = onAddHorseClick) { Text("Add Horse") }
+        Button(onClick = onAddHealthDataClick) {
+            Icon(Icons.Default.Favorite, contentDescription = "Add Health Data")
+            Spacer(modifier = Modifier.size(8.dp))
+            Text("Add Health Data")
+        }
+
         // Quick Actions
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
 
-            Button(onClick = onNewTrainingClick) { Text("New Training") }
-            Button(onClick = onAddHealthDataClick) { Text("Add Health Data") }
+            Button(onClick = onNewTrainingClick) {
+                Icon(Icons.Default.Star, contentDescription = "New Training")
+                Spacer(modifier = Modifier.size(8.dp))
+                Text("New Training")
+            }
+            Button(onClick = onAddHorseClick) {
+                Icon(Icons.Default.Add, contentDescription = "Add Horse")
+                Spacer(modifier = Modifier.size(8.dp))
+                Text("Add Horse")
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))

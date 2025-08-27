@@ -228,6 +228,8 @@ fun ProfileScreen(
                             contentColor = Color.White
                         )
                     ) {
+                        Icon(Icons.Default.Add, contentDescription = "Add Horse")
+                        Spacer(modifier = Modifier.size(8.dp))
                         Text("Add Horse")
                     }
                 }
