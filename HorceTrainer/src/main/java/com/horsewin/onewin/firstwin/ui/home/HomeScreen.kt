@@ -1,5 +1,9 @@
 package com.horsewin.onewin.firstwin.ui.home
 
+import android.content.Context
+import android.net.Uri
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.horsewin.onewin.firstwin.presentation.home.HomeUiState
@@ -34,6 +40,8 @@ fun HomeScreen(
     onNewTrainingClick: () -> Unit = {},
     onAddHealthDataClick: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -108,5 +116,30 @@ fun HomeScreen(
                 }
             }
         }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            Text(
+                text = "Privacy Policy",
+                color = Blue,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable { openUrl(context, "https://halkip.top/Privacy3") }
+            )
+            Text(
+                text = "FAQ",
+                color = Blue,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable { openUrl(context, "https://halkip.top/FAQ3") }
+            )
+        }
     }
+}
+
+fun openUrl(context: Context, url: String) {
+    val intent = CustomTabsIntent.Builder().build()
+    intent.launchUrl(context, Uri.parse(url))
 }

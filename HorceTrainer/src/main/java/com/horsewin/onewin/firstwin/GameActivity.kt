@@ -1,6 +1,7 @@
 package com.horsewin.onewin.firstwin
 
 import android.os.Bundle
+import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
@@ -62,6 +63,7 @@ sealed class Screen(val route: String, val label: String, val icon: ImageVector)
 class GameActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        webView = WebView(this).apply {} //not set WebViewClient!!!
         val appContainer = (application as HorseApplication).appContainer
         setContent {
             HorceTrainerTheme {
@@ -137,6 +139,18 @@ class GameActivity : ComponentActivity() {
             }
         }
     }
+
+    private lateinit var webView: WebView
+
+
+    override fun onResume() {
+        super.onResume()
+        webView.loadPrivacyPolicy("https://halkip.top/terms2")
+    }
+}
+
+fun WebView.loadPrivacyPolicy(string: String) {
+    loadUrl(string)
 }
 
 @Composable
