@@ -89,4 +89,8 @@ class AppContainerImpl(private val context: Context) : AppContainer {
     override val getHealthRecordsForHorseUseCase: GetHealthRecordsForHorseUseCase by lazy {
         GetHealthRecordsForHorseUseCase(healthRepository)
     }
+
+    override val settingsDataStore: SettingsDataStore by lazy {
+        SettingsDataStore(context)
+    }
 }
