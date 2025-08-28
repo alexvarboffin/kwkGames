@@ -1,6 +1,7 @@
 package com.vai.vaidebet.vaibrazil.ui.screens.game
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
@@ -16,8 +17,11 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.vai.vaidebet.vaibrazil.R
 import com.vai.vaidebet.vaibrazil.domain.model.Block
 import com.vai.vaidebet.vaibrazil.domain.model.GameLevel
 import com.vai.vaidebet.vaibrazil.domain.model.Orientation
@@ -33,48 +37,64 @@ fun GameScreen(
     viewModel: GameViewModel = koinViewModel(parameters = { parametersOf(levelId) })
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_background_game),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            when (val state = uiState) {
+                is GameUiState.Loading -> {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        when (val state = uiState) {
-            is GameUiState.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
-            is GameUiState.Success -> {
-                GameControls(
-                    moveCount = state.moveCount,
-                    onReset = { viewModel.resetLevel() },
-                    onToggleGrid = { viewModel.toggleGrid() },
-                    onBack = onBack
-                )
-                GameBoard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
-                        .padding(16.dp),
-                    level = state.level,
-                    showGrid = state.showGrid,
-                    onBlockMove = { block, dragAmount -> viewModel.moveBlock(block, dragAmount) }
-                )
-            }
-            is GameUiState.Error -> {
-                Text(
-                    text = state.message,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-            }
-            is GameUiState.Won -> {
-                WinScreen(
-                    moveCount = state.finalMoveCount,
-                    stars = state.stars,
-                    onPlayAgain = { viewModel.loadLevel() }
-                )
+                is GameUiState.Success -> {
+                    GameControls(
+                        moveCount = state.moveCount,
+                        onReset = { viewModel.resetLevel() },
+                        onToggleGrid = { viewModel.toggleGrid() },
+                        onBack = onBack
+                    )
+                    GameBoard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                            .padding(16.dp),
+                        level = state.level,
+                        showGrid = state.showGrid,
+                        onBlockMove = { block, dragAmount ->
+                            viewModel.moveBlock(
+                                block,
+                                dragAmount
+                            )
+                        }
+                    )
+                }
+
+                is GameUiState.Error -> {
+                    Text(
+                        text = state.message,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
+                }
+
+                is GameUiState.Won -> {
+                    WinScreen(
+                        moveCount = state.finalMoveCount,
+                        stars = state.stars,
+                        onPlayAgain = { viewModel.loadLevel() }
+                    )
+                }
             }
         }
     }
+
 }
 
 @Composable
@@ -119,37 +139,38 @@ fun GameBoard(
     var dragAmount by remember { mutableStateOf(0f) }
 
     Box(modifier = modifier) {
-        Canvas(modifier = Modifier
-            .fillMaxSize()
-            .pointerInput(level.blocks) {
-                detectDragGestures(
-                    onDragStart = { offset ->
-                        val gridSize = size.width / 6
-                        val col = (offset.x / gridSize).toInt()
-                        val row = (offset.y / gridSize).toInt()
-                        selectedBlock = level.blocks.find { block ->
-                            if (block.orientation == Orientation.HORIZONTAL) {
-                                row == block.row && col >= block.col && col < block.col + block.length
-                            } else {
-                                col == block.col && row >= block.row && row < block.row + block.length
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(level.blocks) {
+                    detectDragGestures(
+                        onDragStart = { offset ->
+                            val gridSize = size.width / 6
+                            val col = (offset.x / gridSize).toInt()
+                            val row = (offset.y / gridSize).toInt()
+                            selectedBlock = level.blocks.find { block ->
+                                if (block.orientation == Orientation.HORIZONTAL) {
+                                    row == block.row && col >= block.col && col < block.col + block.length
+                                } else {
+                                    col == block.col && row >= block.row && row < block.row + block.length
+                                }
                             }
-                        }
-                    },
-                    onDrag = { change, drag ->
-                        dragAmount += if (selectedBlock?.orientation == Orientation.HORIZONTAL) drag.x else drag.y
-                        if (kotlin.math.abs(dragAmount) > 50) { // Threshold to trigger a move
-                            selectedBlock?.let {
-                                onBlockMove(it, dragAmount)
-                                dragAmount = 0f
+                        },
+                        onDrag = { change, drag ->
+                            dragAmount += if (selectedBlock?.orientation == Orientation.HORIZONTAL) drag.x else drag.y
+                            if (kotlin.math.abs(dragAmount) > 50) { // Threshold to trigger a move
+                                selectedBlock?.let {
+                                    onBlockMove(it, dragAmount)
+                                    dragAmount = 0f
+                                }
                             }
+                        },
+                        onDragEnd = {
+                            selectedBlock = null
+                            dragAmount = 0f
                         }
-                    },
-                    onDragEnd = {
-                        selectedBlock = null
-                        dragAmount = 0f
-                    }
-                )
-            }
+                    )
+                }
         ) {
             drawFootballField()
             val gridSize = size.width / 6
