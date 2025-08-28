@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Win</string>
+    <string name="app_name">VAI Swipe</string>
+    <string name="privacy_policy_url">https://haliol.top/Privacy4</string>
+    <string name="faq_url">https://haliol.top/FAQ4</string>
 </resources>

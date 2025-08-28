@@ -14,7 +14,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    single { LocalDataSource() }
+    single { LocalDataSource(androidContext()) } // Provide Context here
     single<GameRepository> { GameRepositoryImpl(get()) }
     single<UserProgressRepository> { UserProgressRepositoryImpl(androidContext()) }
     factory { GetLevelsUseCase(get()) }

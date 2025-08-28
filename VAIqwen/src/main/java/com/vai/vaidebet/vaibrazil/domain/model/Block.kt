@@ -4,14 +4,21 @@ data class Block(
     val id: Int,
     val isTarget: Boolean,
     val orientation: Orientation,
-    val length: Int, // This is either width or height depending on orientation
-    val widthInGrid: Int, // New field
-    val heightInGrid: Int, // New field
+    val length: Int,
     val row: Int,
-    val col: Int
+    val col: Int,
+    val shape: BlockShape = BlockShape.RECTANGLE
 )
 
 enum class Orientation {
     HORIZONTAL,
-    VERTICAL
+    VERTICAL,
+    SQUARE
+}
+
+enum class BlockShape {
+    RECTANGLE,
+    L_SHAPED,
+    T_SHAPED,
+    Z_SHAPED
 }

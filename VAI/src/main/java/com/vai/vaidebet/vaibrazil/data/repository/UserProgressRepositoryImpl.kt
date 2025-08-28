@@ -25,7 +25,7 @@ class UserProgressRepositoryImpl(private val context: Context) : UserProgressRep
 
     override fun getProgress(): Flow<UserProgress> {
         return context.dataStore.data.map { preferences ->
-            val highestUnlockedLevel = preferences[PreferencesKeys.HIGHEST_UNLOCKED_LEVEL] ?: 1
+            val highestUnlockedLevel = preferences[PreferencesKeys.HIGHEST_UNLOCKED_LEVEL] ?: 3
             val starsJson = preferences[PreferencesKeys.STARS] ?: "{}"
             val stars = Json.decodeFromString<Map<String, Int>>(starsJson)
             UserProgress(highestUnlockedLevel, stars)
