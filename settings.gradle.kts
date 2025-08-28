@@ -23,4 +23,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "kwkGames"
 include(":VAI")
+include(":VAIQwen")
+
 

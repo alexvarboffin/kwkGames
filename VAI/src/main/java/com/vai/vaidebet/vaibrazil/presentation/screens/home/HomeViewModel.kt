@@ -3,13 +3,17 @@ package com.vai.vaidebet.vaibrazil.presentation.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vai.vaidebet.vaibrazil.domain.model.GameLevel
+import com.vai.vaidebet.vaibrazil.domain.model.UserProgress
 import com.vai.vaidebet.vaibrazil.domain.usecase.GetLevelsUseCase
+import com.vai.vaidebet.vaibrazil.domain.usecase.GetUserProgressUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val getLevelsUseCase: GetLevelsUseCase
+    private val getLevelsUseCase: GetLevelsUseCase,
+    private val getUserProgressUseCase: GetUserProgressUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
@@ -19,17 +23,23 @@ class HomeViewModel(
     private var totalPages = 0
 
     init {
-        loadLevels()
+        loadLevelsAndProgress()
     }
 
-    private fun loadLevels() {
+    private fun loadLevelsAndProgress() {
         viewModelScope.launch {
             _uiState.value = HomeUiState.Loading
             try {
                 val levels = getLevelsUseCase()
-                val levelsByPage = levels.chunked(16)
-                totalPages = levelsByPage.size
-                _uiState.value = HomeUiState.Success(levelsByPage, currentPage, totalPages)
+                val progress = getUserProgressUseCase()
+
+                levels.combine(progress) { levelsData, progressData ->
+                    val levelsByPage = levelsData.chunked(16)
+                    totalPages = levelsByPage.size
+                    HomeUiState.Success(levelsByPage, currentPage, totalPages, progressData)
+                }.collect { state ->
+                    _uiState.value = state
+                }
             } catch (e: Exception) {
                 _uiState.value = HomeUiState.Error(e.message ?: "Unknown error")
             }
@@ -62,7 +72,8 @@ sealed class HomeUiState {
     data class Success(
         val levelsByPage: List<List<GameLevel>>,
         val currentPage: Int,
-        val totalPages: Int
+        val totalPages: Int,
+        val userProgress: UserProgress
     ) : HomeUiState()
     data class Error(val message: String) : HomeUiState()
 }

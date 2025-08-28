@@ -1,8 +1,9 @@
 package com.vai.vaidebet.vaibrazil.domain.repository
 
 import com.vai.vaidebet.vaibrazil.domain.model.GameLevel
+import kotlinx.coroutines.flow.Flow
 
 interface GameRepository {
-    suspend fun getLevels(): List<GameLevel>
+    fun getLevels(): Flow<List<GameLevel>>
     suspend fun getLevel(id: Int): GameLevel?
 }

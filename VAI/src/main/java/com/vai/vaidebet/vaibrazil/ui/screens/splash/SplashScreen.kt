@@ -61,7 +61,7 @@ fun SplashScreen(
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_splash),
+            painter = painterResource(id = R.drawable.ic_splash_def),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -74,7 +74,7 @@ fun SplashScreen(
                 modifier = Modifier
                     .size(150.dp)
                     .scale(logoScale)
-                    .clip(CircleShape)
+                    .clip(shape = CircleShape)
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_splash),
@@ -86,19 +86,19 @@ fun SplashScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.primary)
-                    .padding(horizontal = 32.dp, vertical = 16.dp)
-            ) {
-                Text(
-                    text = "VAI SWIPE",
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
+//            Box(
+//                modifier = Modifier
+//                    .clip(RoundedCornerShape(16.dp))
+//                    .background(MaterialTheme.colorScheme.primary)
+//                    .padding(horizontal = 32.dp, vertical = 16.dp)
+//            ) {
+//                Text(
+//                    text = "VAI SWIPE",
+//                    fontSize = 48.sp,
+//                    fontWeight = FontWeight.Bold,
+//                    color = MaterialTheme.colorScheme.onPrimary
+//                )
+//            }
 
 
             Spacer(modifier = Modifier.height(64.dp))

@@ -7,12 +7,16 @@ import com.vai.vaidebet.vaibrazil.domain.model.Block
 import com.vai.vaidebet.vaibrazil.domain.model.GameLevel
 import com.vai.vaidebet.vaibrazil.domain.model.Orientation
 import com.vai.vaidebet.vaibrazil.domain.usecase.GetLevelUseCase
+import com.vai.vaidebet.vaibrazil.domain.usecase.UpdateHighestUnlockedLevelUseCase
+import com.vai.vaidebet.vaibrazil.domain.usecase.UpdateStarsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class GameViewModel(
     private val getLevelUseCase: GetLevelUseCase,
+    private val updateHighestUnlockedLevelUseCase: UpdateHighestUnlockedLevelUseCase,
+    private val updateStarsUseCase: UpdateStarsUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -112,6 +116,10 @@ class GameViewModel(
                 moveCount <= solutionMoves -> 3
                 moveCount <= solutionMoves * 1.5 -> 2
                 else -> 1
+            }
+            viewModelScope.launch {
+                updateStarsUseCase(levelId, stars)
+                updateHighestUnlockedLevelUseCase(levelId + 1)
             }
             _uiState.value = GameUiState.Won(moveCount, stars)
         }
