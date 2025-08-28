@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.vai.vaidebet.vaibrazil.domain.model.Block
 import com.vai.vaidebet.vaibrazil.domain.model.GameLevel
 import com.vai.vaidebet.vaibrazil.domain.model.Orientation
+
 import com.vai.vaidebet.vaibrazil.domain.usecase.GetLevelUseCase
 import com.vai.vaidebet.vaibrazil.domain.usecase.UpdateHighestUnlockedLevelUseCase
 import com.vai.vaidebet.vaibrazil.domain.usecase.UpdateStarsUseCase
@@ -66,8 +67,8 @@ class GameViewModel(
         val currentState = _uiState.value
         if (currentState is GameUiState.Success) {
             val currentOffset = _blockPixelOffsets.value[block.id] ?: Pair(0f, 0f)
-            val newOffsetX = currentOffset.first + dragX
-            val newOffsetY = currentOffset.second + dragY
+            var newOffsetX = currentOffset.first + dragX
+            var newOffsetY = currentOffset.second + dragY
 
             val newBlocks = currentState.level.blocks.toMutableList()
             val blockIndex = newBlocks.indexOf(block)
@@ -110,15 +111,8 @@ class GameViewModel(
     }
 
     fun onBlockDragEnd(block: Block) {
-        // Snap to grid or revert if not on a valid grid position
-        val currentState = _uiState.value
-        if (currentState is GameUiState.Success) {
-            val currentOffset = _blockPixelOffsets.value[block.id] ?: Pair(0f, 0f)
-            if (currentOffset.first != 0f || currentOffset.second != 0f) {
-                // Revert to original position if not snapped to a new grid cell
-                _blockPixelOffsets.value = _blockPixelOffsets.value.toMutableMap().apply { this[block.id] = Pair(0f, 0f) }
-            }
-        }
+        // Reset pixel offset after drag ends
+        _blockPixelOffsets.value = _blockPixelOffsets.value.toMutableMap().apply { this[block.id] = Pair(0f, 0f) }
     }
 
 

@@ -1,7 +1,8 @@
-package com.vai.vaidebet.vaibrazil.presentation.screens.game
+package com.vai.vaidebet.vaibrazil.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vai.vaidebet.vaibrazil.data.LevelRepository
 import com.vai.vaidebet.vaibrazil.domain.model.Block
 import com.vai.vaidebet.vaibrazil.domain.model.GameLevel
 import com.vai.vaidebet.vaibrazil.domain.usecase.GetLevelUseCase
@@ -9,10 +10,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class GameViewModel(
-    private val levelId: Int,
-    private val getLevelUseCase: GetLevelUseCase
-) : ViewModel() {
+class GameViewModel(private val levelId: Int) : ViewModel() {
+    private val repository = LevelRepository()
+    private val getLevelUseCase = GetLevelUseCase(repository)
     
     private val _uiState = MutableStateFlow<GameUiState>(GameUiState.Loading)
     val uiState: StateFlow<GameUiState> = _uiState

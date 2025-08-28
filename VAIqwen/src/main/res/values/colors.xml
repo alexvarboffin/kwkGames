@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">#FFFFFF</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Цвета для игры -->
+    <color name="green_field">#FF4CAF50</color>
+    <color name="yellow_block">#FFFFEB3B</color>
+    <color name="red_block">#FFF44336</color>
+    <color name="blue_block">#FF2196F3</color>
+    <color name="purple_block">#FF9C27B0</color>
+    <color name="orange_block">#FFFF9800</color>
+    <color name="brown_block">#FF795548</color>
+    <color name="gray_block">#FF9E9E9E</color>
 </resources>

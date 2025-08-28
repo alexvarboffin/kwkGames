@@ -1,15 +1,24 @@
 package com.vai.vaidebet.vaibrazil.di
 
-import com.vai.vaidebet.vaibrazil.data.datasource.LocalDataSource
+import com.vai.vaidebet.vaibrazil.data.LevelRepository
 import com.vai.vaidebet.vaibrazil.data.repository.GameRepositoryImpl
 import com.vai.vaidebet.vaibrazil.domain.repository.GameRepository
 import com.vai.vaidebet.vaibrazil.domain.usecase.GetLevelUseCase
 import com.vai.vaidebet.vaibrazil.domain.usecase.GetLevelsUseCase
+import com.vai.vaidebet.vaibrazil.presentation.screens.game.GameViewModel
+import com.vai.vaidebet.vaibrazil.presentation.screens.home.HomeViewModel
+import org.koin.dsl.module
 
-object AppModule {
-    private val localDataSource = LocalDataSource()
-    private val gameRepository: GameRepository = GameRepositoryImpl(localDataSource)
+val appModule = module {
+    // Репозитории
+    single<GameRepository> { GameRepositoryImpl() }
+    single { LevelRepository() }
     
-    val getLevelsUseCase = GetLevelsUseCase(gameRepository)
-    val getLevelUseCase = GetLevelUseCase(gameRepository)
+    // UseCases
+    single { GetLevelsUseCase(get()) }
+    single { GetLevelUseCase(get()) }
+    
+    // ViewModels
+    factory { HomeViewModel(get()) }
+    factory { (levelId: Int) -> GameViewModel(levelId, get()) }
 }

@@ -1,414 +1,300 @@
 package com.vai.vaidebet.vaibrazil.ui.screens.game
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.vai.vaidebet.vaibrazil.R
 import com.vai.vaidebet.vaibrazil.domain.model.Block
-import com.vai.vaidebet.vaibrazil.domain.model.BlockShape
 import com.vai.vaidebet.vaibrazil.domain.model.GameLevel
 import com.vai.vaidebet.vaibrazil.domain.model.Orientation
 import com.vai.vaidebet.vaibrazil.presentation.screens.game.GameUiState
-import com.vai.vaidebet.vaibrazil.presentation.screens.game.GameViewModel
-import com.vai.vaidebet.vaibrazil.ui.theme.Yellow
-import com.vai.vaidebet.vaibrazil.ui.theme.Black
-import com.vai.vaidebet.vaibrazil.ui.theme.Green
+import com.vai.vaidebet.vaibrazil.ui.theme.*
 
 @Composable
 fun GameScreen(
-    viewModel: GameViewModel,
+    uiState: GameUiState,
+    onMoveBlock: (blockId: Int, newRow: Int, newCol: Int) -> Unit,
     onBack: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
-        when {
-            uiState.isLoading -> {
-                Text(
-                    text = "Loading...",
-                    color = Yellow,
-                    fontSize = 24.sp,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+        when (uiState) {
+            is GameUiState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+            is GameUiState.Success -> {
+                GameContent(
+                    level = uiState.level,
+                    blocks = uiState.blocks,
+                    moves = uiState.moves,
+                    onMoveBlock = onMoveBlock,
+                    onBack = onBack
                 )
             }
-            uiState.error != null -> {
-                Text(
-                    text = "Error: ${uiState.error}",
-                    color = Color.Red,
-                    fontSize = 24.sp,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
-            }
-            uiState.isWon -> {
+            is GameUiState.Won -> {
+                // Отображаем экран победы
                 WinScreen(
-                    moveCount = uiState.moveCount,
+                    level = uiState.level,
+                    moves = uiState.moves,
                     stars = uiState.stars,
-                    onPlayAgain = { viewModel.resetLevel() },
                     onBack = onBack
                 )
             }
-            else -> {
-                GameControls(
-                    moveCount = uiState.moveCount,
-                    onReset = { viewModel.resetLevel() },
-                    onToggleGrid = { viewModel.toggleGrid() },
-                    onBack = onBack
-                )
-                GameBoard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
-                        .padding(16.dp),
-                    level = uiState.level!!,
-                    showGrid = uiState.showGrid,
-                    onBlockMove = { block, dragAmount -> viewModel.moveBlock(block, dragAmount) }
-                )
+            is GameUiState.Error -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = uiState.message,
+                        color = MaterialTheme.colors.error
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun GameControls(
-    moveCount: Int,
-    onReset: () -> Unit,
-    onToggleGrid: () -> Unit,
+fun GameContent(
+    level: GameLevel,
+    blocks: List<Block>,
+    moves: Int,
+    onMoveBlock: (blockId: Int, newRow: Int, newCol: Int) -> Unit,
     onBack: () -> Unit
 ) {
+    // Заголовок
     Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        IconButton(onClick = onBack) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Назад"
+            )
+        }
+        
+        Text(
+            text = level.name,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+        
+        Spacer(modifier = Modifier.width(48.dp))
+    }
+    
+    // Счетчик ходов
+    Text(
+        text = "Ходы: $moves",
+        fontSize = 16.sp,
+        modifier = Modifier
+            .align(Alignment.End)
+            .padding(top = 8.dp, bottom = 8.dp)
+    )
+    
+    // Игровое поле
+    GameBoard(
+        blocks = blocks,
+        onBlockMoved = onMoveBlock,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+            .aspectRatio(1f)
+            .background(GreenField)
+    )
+}
+
+@Composable
+fun WinScreen(
+    level: GameLevel,
+    moves: Int,
+    stars: Int,
+    onBack: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Moves: $moveCount",
-            fontSize = 20.sp,
-            color = Yellow
+            text = "Победа!",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 16.dp)
         )
-        Row {
-            Button(
-                onClick = onReset,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Yellow,
-                    contentColor = Black
+        
+        Text(
+            text = "Уровень ${level.name} пройден",
+            fontSize = 20.sp,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        
+        Text(
+            text = "Ходы: $moves",
+            fontSize = 18.sp,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        
+        // Отображаем звезды
+        Row(
+            modifier = Modifier.padding(bottom = 32.dp)
+        ) {
+            repeat(3) { index ->
+                Icon(
+                    imageVector = androidx.compose.material.icons.filled.Star,
+                    contentDescription = null,
+                    tint = if (index < stars) Color.Yellow else Color.Gray,
+                    modifier = Modifier
+                        .size(48.dp)
+                        .padding(4.dp)
                 )
-            ) {
-                Text(text = "Reset")
             }
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(
-                onClick = onToggleGrid,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Yellow,
-                    contentColor = Black
-                )
-            ) {
-                Text(text = "Grid")
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(
-                onClick = onBack,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Yellow,
-                    contentColor = Black
-                )
-            ) {
-                Text(text = "Back")
-            }
+        }
+        
+        Button(
+            onClick = onBack,
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text("Вернуться к уровням")
         }
     }
 }
 
 @Composable
 fun GameBoard(
-    modifier: Modifier = Modifier,
-    level: GameLevel,
-    showGrid: Boolean,
-    onBlockMove: (Block, Float) -> Unit
+    blocks: List<Block>,
+    onBlockMoved: (blockId: Int, newRow: Int, newCol: Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier) {
-        // Football field background
-        Image(
-            painter = painterResource(id = R.drawable.football_field),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            val gridSize = size.width / 6
-            if (showGrid) {
-                drawGrid(gridSize)
-            }
-            for (block in level.blocks) {
-                drawBlock(block, gridSize)
-            }
-        }
-    }
-}
-
-private fun DrawScope.drawGrid(gridSize: Float) {
-    for (i in 1 until 6) {
-        drawLine(
-            color = Color.White,
-            start = Offset(x = i * gridSize, y = 0f),
-            end = Offset(x = i * gridSize, y = size.height),
-            strokeWidth = 2.dp.toPx()
-        )
-        drawLine(
-            color = Color.White,
-            start = Offset(x = 0f, y = i * gridSize),
-            end = Offset(x = size.width, y = i * gridSize),
-            strokeWidth = 2.dp.toPx()
-        )
-    }
-}
-
-private fun DrawScope.drawBlock(block: Block, gridSize: Float) {
-    val topLeft = Offset(block.col * gridSize, block.row * gridSize)
-
-    when (block.shape) {
-        BlockShape.RECTANGLE -> {
-            val size = when (block.orientation) {
-                Orientation.HORIZONTAL -> Size(block.length * gridSize, gridSize)
-                Orientation.VERTICAL -> Size(gridSize, block.length * gridSize)
-                Orientation.SQUARE -> Size(block.length * gridSize, block.length * gridSize)
-            }
-
-            if (block.isTarget) {
-                // Draw the target block with yellow color
-                drawRect(
-                    color = Yellow,
-                    topLeft = topLeft,
-                    size = size
+    val boardSize = 6
+    val cellSize = 40.dp
+    
+    Box(
+        modifier = modifier
+    ) {
+        // Рисуем сетку поля
+        Canvas(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            val width = size.width
+            val height = size.height
+            val cellWidth = width / boardSize
+            val cellHeight = height / boardSize
+            
+            // Горизонтальные линии
+            for (i in 0..boardSize) {
+                drawLine(
+                    color = Color.White,
+                    start = Offset(0f, i * cellHeight),
+                    end = Offset(width, i * cellHeight),
+                    strokeWidth = 2f
                 )
-
-                // Draw ball indicator on target block
-                drawCircle(
-                    color = Color.Red,
-                    center = Offset(
-                        (block.col + block.length/2f) * gridSize,
-                        (block.row + 0.5f) * gridSize
-                    ),
-                    radius = gridSize / 3
-                )
-            } else {
-                // Draw regular blocks with dark gray color
-                drawRect(
-                    color = Color(0xFF2C2C2C), // Dark gray
-                    topLeft = topLeft,
-                    size = size
-                )
-
-                // Draw player indicator on block
-                drawRect(
-                    color = Color.White.copy(alpha = 0.3f),
-                    topLeft = Offset(block.col * gridSize + 4.dp.toPx(), block.row * gridSize + 4.dp.toPx()),
-                    size = when (block.orientation) {
-                        Orientation.HORIZONTAL -> Size(block.length * gridSize - 8.dp.toPx(), gridSize - 8.dp.toPx())
-                        Orientation.VERTICAL -> Size(gridSize - 8.dp.toPx(), block.length * gridSize - 8.dp.toPx())
-                        Orientation.SQUARE -> Size(block.length * gridSize - 8.dp.toPx(), block.length * gridSize - 8.dp.toPx())
-                    }
+            }
+            
+            // Вертикальные линии
+            for (i in 0..boardSize) {
+                drawLine(
+                    color = Color.White,
+                    start = Offset(i * cellWidth, 0f),
+                    end = Offset(i * cellWidth, height),
+                    strokeWidth = 2f
                 )
             }
         }
-
-        BlockShape.L_SHAPED -> {
-            // Draw L-shaped block
-            if (block.isTarget) {
-                drawRect(
-                    color = Yellow,
-                    topLeft = Offset(block.col * gridSize, block.row * gridSize),
-                    size = Size(gridSize, gridSize * 2)
-                )
-                drawRect(
-                    color = Yellow,
-                    topLeft = Offset(block.col * gridSize, block.row * gridSize),
-                    size = Size(gridSize * 2, gridSize)
-                )
-            } else {
-                drawRect(
-                    color = Color(0xFF2C2C2C),
-                    topLeft = Offset(block.col * gridSize, block.row * gridSize),
-                    size = Size(gridSize, gridSize * 2)
-                )
-                drawRect(
-                    color = Color(0xFF2C2C2C),
-                    topLeft = Offset(block.col * gridSize, block.row * gridSize),
-                    size = Size(gridSize * 2, gridSize)
-                )
-
-                // Player indicators
-                drawRect(
-                    color = Color.White.copy(alpha = 0.3f),
-                    topLeft = Offset(block.col * gridSize + 4.dp.toPx(), block.row * gridSize + 4.dp.toPx()),
-                    size = Size(gridSize - 8.dp.toPx(), gridSize * 2 - 8.dp.toPx())
-                )
-                drawRect(
-                    color = Color.White.copy(alpha = 0.3f),
-                    topLeft = Offset(block.col * gridSize + 4.dp.toPx(), block.row * gridSize + 4.dp.toPx()),
-                    size = Size(gridSize * 2 - 8.dp.toPx(), gridSize - 8.dp.toPx())
-                )
-            }
-        }
-
-        BlockShape.T_SHAPED -> {
-            // Draw T-shaped block
-            if (block.isTarget) {
-                drawRect(
-                    color = Yellow,
-                    topLeft = Offset((block.col + 0.5f) * gridSize, block.row * gridSize),
-                    size = Size(gridSize, gridSize * 2)
-                )
-                drawRect(
-                    color = Yellow,
-                    topLeft = Offset(block.col * gridSize, block.row * gridSize),
-                    size = Size(gridSize * 2, gridSize)
-                )
-            } else {
-                drawRect(
-                    color = Color(0xFF2C2C2C),
-                    topLeft = Offset((block.col + 0.5f) * gridSize, block.row * gridSize),
-                    size = Size(gridSize, gridSize * 2)
-                )
-                drawRect(
-                    color = Color(0xFF2C2C2C),
-                    topLeft = Offset(block.col * gridSize, block.row * gridSize),
-                    size = Size(gridSize * 2, gridSize)
-                )
-
-                // Player indicators
-                drawRect(
-                    color = Color.White.copy(alpha = 0.3f),
-                    topLeft = Offset((block.col + 0.5f) * gridSize + 4.dp.toPx(), block.row * gridSize + 4.dp.toPx()),
-                    size = Size(gridSize - 8.dp.toPx(), gridSize * 2 - 8.dp.toPx())
-                )
-                drawRect(
-                    color = Color.White.copy(alpha = 0.3f),
-                    topLeft = Offset(block.col * gridSize + 4.dp.toPx(), block.row * gridSize + 4.dp.toPx()),
-                    size = Size(gridSize * 2 - 8.dp.toPx(), gridSize - 8.dp.toPx())
-                )
-            }
-        }
-
-        BlockShape.Z_SHAPED -> {
-            // Draw Z-shaped block
-            if (block.isTarget) {
-                drawRect(
-                    color = Yellow,
-                    topLeft = Offset(block.col * gridSize, block.row * gridSize),
-                    size = Size(gridSize * 2, gridSize)
-                )
-                drawRect(
-                    color = Yellow,
-                    topLeft = Offset((block.col + 1) * gridSize, (block.row + 1) * gridSize),
-                    size = Size(gridSize * 2, gridSize)
-                )
-            } else {
-                drawRect(
-                    color = Color(0xFF2C2C2C),
-                    topLeft = Offset(block.col * gridSize, block.row * gridSize),
-                    size = Size(gridSize * 2, gridSize)
-                )
-                drawRect(
-                    color = Color(0xFF2C2C2C),
-                    topLeft = Offset((block.col + 1) * gridSize, (block.row + 1) * gridSize),
-                    size = Size(gridSize * 2, gridSize)
-                )
-
-                // Player indicators
-                drawRect(
-                    color = Color.White.copy(alpha = 0.3f),
-                    topLeft = Offset(block.col * gridSize + 4.dp.toPx(), block.row * gridSize + 4.dp.toPx()),
-                    size = Size(gridSize * 2 - 8.dp.toPx(), gridSize - 8.dp.toPx())
-                )
-                drawRect(
-                    color = Color.White.copy(alpha = 0.3f),
-                    topLeft = Offset((block.col + 1) * gridSize + 4.dp.toPx(), (block.row + 1) * gridSize + 4.dp.toPx()),
-                    size = Size(gridSize * 2 - 8.dp.toPx(), gridSize - 8.dp.toPx())
-                )
-            }
+        
+        // Рисуем блоки
+        blocks.forEach { block ->
+            DraggableBlock(
+                block = block,
+                cellSize = cellSize,
+                onMoved = { newRow, newCol ->
+                    onBlockMoved(block.id, newRow, newCol)
+                }
+            )
         }
     }
 }
 
 @Composable
-fun WinScreen(
-    moveCount: Int,
-    stars: Int,
-    onPlayAgain: () -> Unit,
-    onBack: () -> Unit
+fun DraggableBlock(
+    block: Block,
+    cellSize: dp,
+    onMoved: (newRow: Int, newCol: Int) -> Unit
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    var offsetX by remember { mutableStateOf(0f) }
+    var offsetY by remember { mutableStateOf(0f) }
+    
+    val blockColor = when (block.id % 7) {
+        1 -> RedBlock
+        2 -> BlueBlock
+        3 -> PurpleBlock
+        4 -> OrangeBlock
+        5 -> BrownBlock
+        6 -> GrayBlock
+        else -> YellowBlock
+    }
+    
+    Box(
+        modifier = Modifier
+            .offset(offsetX.dp, offsetY.dp)
+            .pointerInput(Unit) {
+                detectDragGestures(
+                    onDragStart = { },
+                    onDragEnd = {
+                        // Вычисляем новую позицию блока
+                        val newRow = block.row + (offsetY / cellSize.value).toInt()
+                        val newCol = block.col + (offsetX / cellSize.value).toInt()
+                        
+                        // Проверяем границы поля
+                        val clampedRow = newRow.coerceIn(0, 5)
+                        val clampedCol = newCol.coerceIn(0, 5)
+                        
+                        onMoved(clampedRow, clampedCol)
+                        
+                        // Сбрасываем смещение
+                        offsetX = 0f
+                        offsetY = 0f
+                    }
+                ) { change, dragAmount ->
+                    change.consume()
+                    offsetX += dragAmount.x
+                    offsetY += dragAmount.y
+                }
+            }
     ) {
-        Text(
-            text = "You Won!",
-            fontSize = 48.sp,
-            color = Yellow
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Row {
-            for (i in 1..3) {
-                Text(
-                    text = if (i <= stars) "★" else "☆",
-                    fontSize = 48.sp,
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    color = if (i <= stars) Yellow else Color.Gray
+        Canvas(
+            modifier = Modifier
+                .size(
+                    width = if (block.orientation == Orientation.HORIZONTAL) cellSize * block.length else cellSize,
+                    height = if (block.orientation == Orientation.VERTICAL) cellSize * block.length else cellSize
                 )
-            }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "Moves: $moveCount",
-            fontSize = 24.sp,
-            color = Yellow
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        Row {
-            Button(
-                onClick = onPlayAgain,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Yellow,
-                    contentColor = Black
-                ),
-                modifier = Modifier.padding(end = 8.dp)
-            ) {
-                Text(text = "Play Again")
-            }
-            Button(
-                onClick = onBack,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Yellow,
-                    contentColor = Black
-                ),
-                modifier = Modifier.padding(start = 8.dp)
-            ) {
-                Text(text = "Back to Menu")
-            }
+        ) {
+            drawRect(
+                color = blockColor,
+                size = Size(size.width, size.height)
+            )
         }
     }
 }

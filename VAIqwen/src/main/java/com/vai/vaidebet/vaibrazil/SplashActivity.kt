@@ -4,33 +4,54 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.vai.vaidebet.vaibrazil.presentation.screens.splash.SplashViewModel
-import com.vai.vaidebet.vaibrazil.ui.screens.splash.SplashScreen
-import com.vai.vaidebet.vaibrazil.ui.theme.VAITheme
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.vai.vaidebet.vaibrazil.ui.theme.AppTheme
+import kotlinx.coroutines.delay
 
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            VAITheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val viewModel = SplashViewModel()
-                    SplashScreen(
-                        viewModel = viewModel,
-                        onNavigateToHome = {
-                            startActivity(Intent(this, MainActivity::class.java))
-                            finish()
-                        }
-                    )
+            AppTheme {
+                SplashScreen {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
                 }
             }
         }
+    }
+}
+
+@Composable
+fun SplashScreen(onTimeout: () -> Unit) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_splash_logo),
+            contentDescription = "Splash Logo"
+        )
+    }
+
+    LaunchedEffect(Unit) {
+        delay(2000) // Задержка 2 секунды
+        onTimeout()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SplashScreenPreview() {
+    AppTheme {
+        SplashScreen {}
     }
 }

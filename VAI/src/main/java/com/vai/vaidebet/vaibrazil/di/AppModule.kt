@@ -14,7 +14,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    single { LocalDataSource(androidContext()) } // Provide Context here
+    single { LocalDataSource(androidContext()) }
     single<GameRepository> { GameRepositoryImpl(get()) }
     single<UserProgressRepository> { UserProgressRepositoryImpl(androidContext()) }
     factory { GetLevelsUseCase(get()) }
@@ -25,5 +25,12 @@ val appModule = module {
 
     viewModel { SplashViewModel() }
     viewModel { HomeViewModel(get(), get()) }
-    viewModel { params -> GameViewModel(get(), get(), get(), params.get()) }
+    viewModel { params ->
+        GameViewModel(
+            getLevelUseCase = get<GetLevelUseCase>(), // Explicitly specify type
+            updateHighestUnlockedLevelUseCase = get<UpdateHighestUnlockedLevelUseCase>(), // Explicitly specify type
+            updateStarsUseCase = get<UpdateStarsUseCase>(), // Explicitly specify type
+            savedStateHandle = params.get()
+        )
+    }
 }

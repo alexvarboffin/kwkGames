@@ -1,24 +1,17 @@
 package com.vai.vaidebet.vaibrazil.ui
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.vai.vaidebet.vaibrazil.presentation.screens.game.GameViewModel
 import com.vai.vaidebet.vaibrazil.presentation.screens.home.HomeViewModel
-import com.vai.vaidebet.vaibrazil.presentation.screens.splash.SplashViewModel
 import com.vai.vaidebet.vaibrazil.ui.screens.game.GameScreen
 import com.vai.vaidebet.vaibrazil.ui.screens.home.HomeScreen
 import com.vai.vaidebet.vaibrazil.ui.screens.splash.SplashScreen
-import com.vai.vaidebet.vaibrazil.presentation.screens.game.GameViewModel
-
-sealed class Screen(val route: String) {
-    object Splash : Screen("splash")
-    object Home : Screen("home")
-    object Game : Screen("game/{levelId}") {
-        fun createRoute(levelId: Int) = "game/$levelId"
-    }
-}
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun AppNavigation() {
@@ -26,33 +19,36 @@ fun AppNavigation() {
     
     NavHost(
         navController = navController,
-        startDestination = Screen.Splash.route
+        startDestination = "splash"
     ) {
-        composable(Screen.Splash.route) {
-            val viewModel = SplashViewModel()
-            SplashScreen(
-                viewModel = viewModel,
-                onNavigateToHome = { navController.navigate(Screen.Home.route) }
-            )
+        composable("splash") {
+            SplashScreen(navController)
         }
         
-        composable(Screen.Home.route) {
-            val viewModel = HomeViewModel()
+        composable("home") {
+            val viewModel: HomeViewModel = getViewModel()
+            val uiState = viewModel.uiState.collectAsState()
+            
             HomeScreen(
-                viewModel = viewModel,
-                onLevelSelected = { levelId ->
-                    navController.navigate(Screen.Game.createRoute(levelId))
-                }
+                uiState = uiState.value,
+                navController = navController
             )
         }
         
-        composable(Screen.Game.route) { backStackEntry ->
-            val levelId = backStackEntry.arguments?.getString("levelId")?.toIntOrNull() ?: 1
-            val viewModel = GameViewModel(levelId)
-            GameScreen(
-                viewModel = viewModel,
-                onBack = { navController.popBackStack() }
-            )
+        composable("game/{levelId}") { backStackEntry ->
+            val levelId = backStackEntry.arguments?.getString("levelId")?.toIntOrNull()
+            if (levelId != null) {
+                val viewModel: GameViewModel = getViewModel(parameters = { parametersOf(levelId) })
+                val uiState = viewModel.uiState.collectAsState()
+                
+                GameScreen(
+                    uiState = uiState.value,
+                    onMoveBlock = { blockId, newRow, newCol ->
+                        viewModel.moveBlock(blockId, newRow, newCol)
+                    },
+                    onBack = { navController.popBackStack() }
+                )
+            }
         }
     }
 }
