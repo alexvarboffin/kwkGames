@@ -1,4 +1,4 @@
-package com.horsewin.onewin.firstwin.ui.splash
+package com.vai.vaidebet.vaibrazil.ui.splash
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.LinearEasing
@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.horsewin.onewin.firstwin.R
-import com.horsewin.onewin.firstwin.ui.theme.Blue // Предполагается, что это фирменный голубой цвет
+import com.vai.vaidebet.vaibrazil.ui.theme.Blue // Предполагается, что это фирменный голубой цвет
 
 
 @SuppressLint("UseOfNonLambdaOffsetOverload")

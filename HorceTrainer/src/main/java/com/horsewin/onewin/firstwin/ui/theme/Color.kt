@@ -1,4 +1,4 @@
-package com.horsewin.onewin.firstwin.ui.theme
+package com.vai.vaidebet.vaibrazil.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

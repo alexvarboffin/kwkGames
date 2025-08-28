@@ -1,4 +1,4 @@
-package com.horsewin.onewin.firstwin.ui.profile
+package com.vai.vaidebet.vaibrazil.ui.profile
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -55,8 +55,8 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
 
 import com.horsewin.onewin.firstwin.presentation.profile.ProfileUiState
-import com.horsewin.onewin.firstwin.ui.theme.Blue
-import com.horsewin.onewin.firstwin.ui.theme.DarkBlue
+import com.vai.vaidebet.vaibrazil.ui.theme.Blue
+import com.vai.vaidebet.vaibrazil.ui.theme.DarkBlue
 import java.text.SimpleDateFormat
 import java.util.Locale
 

@@ -1,4 +1,4 @@
-package com.horsewin.onewin.firstwin.ui.addhealthdata
+package com.vai.vaidebet.vaibrazil.ui.addhealthdata
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
@@ -39,7 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.horsewin.onewin.firstwin.ui.theme.Blue
+import com.vai.vaidebet.vaibrazil.ui.theme.Blue
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

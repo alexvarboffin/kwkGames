@@ -22,5 +22,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "kwkGames"
-include(":HorceTrainer")
+include(":VAI")
 

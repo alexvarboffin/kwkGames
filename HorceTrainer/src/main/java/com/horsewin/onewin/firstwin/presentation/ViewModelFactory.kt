@@ -28,7 +28,7 @@ class ViewModelFactory(private val appContainer: AppContainer) : ViewModelProvid
                 HealthViewModel(appContainer.getHealthRecordsForHorseUseCase) as T
             }
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
-                ProfileViewModel(appContainer.getHorseByIdUseCase, appContainer.getAllHorsesUseCase) as T
+                ProfileViewModel(appContainer.getHorseByIdUseCase, appContainer.getAllHorsesUseCase, appContainer.settingsDataStore) as T
             }
             modelClass.isAssignableFrom(AddHorseViewModel::class.java) -> {
                 AddHorseViewModel(appContainer.addHorseUseCase) as T

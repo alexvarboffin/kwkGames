@@ -1,4 +1,4 @@
-package com.horsewin.onewin.firstwin.ui.health
+package com.vai.vaidebet.vaibrazil.ui.health
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

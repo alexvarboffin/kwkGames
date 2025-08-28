@@ -1,4 +1,4 @@
-package com.horsewin.onewin.firstwin.ui.schedule
+package com.vai.vaidebet.vaibrazil.ui.schedule
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

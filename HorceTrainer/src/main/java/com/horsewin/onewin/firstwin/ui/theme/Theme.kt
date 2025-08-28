@@ -1,4 +1,4 @@
-package com.horsewin.onewin.firstwin.ui.theme
+package com.vai.vaidebet.vaibrazil.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme

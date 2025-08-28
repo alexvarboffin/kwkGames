@@ -1,6 +1,7 @@
 package com.horsewin.onewin.firstwin.di
 
 import android.content.Context
+import com.horsewin.onewin.firstwin.data.SettingsDataStore
 import com.horsewin.onewin.firstwin.data.local.database.HorseDatabase
 import com.horsewin.onewin.firstwin.data.repository.HealthRepositoryImpl
 import com.horsewin.onewin.firstwin.data.repository.HorseRepositoryImpl
@@ -22,6 +23,7 @@ interface AppContainer {
     val horseRepository: HorseRepository
     val trainingRepository: TrainingRepository
     val healthRepository: HealthRepository
+    val settingsDataStore: com.horsewin.onewin.firstwin.data.SettingsDataStore
 
     val addHorseUseCase: AddHorseUseCase
     val getHorseByIdUseCase: GetHorseByIdUseCase

@@ -1,4 +1,4 @@
-package com.horsewin.onewin.firstwin.ui.home
+package com.vai.vaidebet.vaibrazil.ui.home
 
 import android.content.Context
 import android.net.Uri
@@ -35,7 +35,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.horsewin.onewin.firstwin.presentation.home.HomeUiState
-import com.horsewin.onewin.firstwin.ui.theme.Blue
+import com.vai.vaidebet.vaibrazil.ui.theme.Blue
 import java.text.SimpleDateFormat
 import java.util.Locale
 

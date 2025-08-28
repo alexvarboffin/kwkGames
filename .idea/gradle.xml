@@ -10,7 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/HorceTrainer" />
+            <option value="$PROJECT_DIR$/VAI" />
           </set>
         </option>
       </GradleProjectSettings>
