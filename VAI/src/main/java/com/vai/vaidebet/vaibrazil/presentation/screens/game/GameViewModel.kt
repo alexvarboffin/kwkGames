@@ -35,6 +35,7 @@ class GameViewModel(
     private var initialLevel: GameLevel? = null
     private var moveCount = 0
     private var showGrid = true
+    private var startTime = 0L
 
     // Store current pixel offsets for smooth dragging
     private val _blockPixelOffsets = MutableStateFlow<Map<Int, Pair<Float, Float>>>(emptyMap())
@@ -59,6 +60,7 @@ class GameViewModel(
                 if (level != null) {
                     initialLevel = level
                     moveCount = 0
+                    startTime = System.currentTimeMillis()
                     // Initialize pixel offsets for each block
                     val initialOffsets = mutableMapOf<Int, Pair<Float, Float>>()
                     level.blocks.forEach { block ->
@@ -168,7 +170,8 @@ class GameViewModel(
                 updateStarsUseCase(levelId, stars)
                 updateHighestUnlockedLevelUseCase(levelId + 1)
             }
-            _uiState.value = GameUiState.Won(moveCount, stars, 0L)
+            val timeTaken = System.currentTimeMillis() - startTime
+            _uiState.value = GameUiState.Won(moveCount, stars, timeTaken)
         }
     }
 

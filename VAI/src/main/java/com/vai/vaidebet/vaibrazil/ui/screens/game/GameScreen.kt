@@ -37,7 +37,12 @@ import org.koin.androidx.compose.koinViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import com.vai.vaidebet.vaibrazil.R
+import nl.dionsegijn.konfetti.compose.KonfettiView
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.Position
+import nl.dionsegijn.konfetti.core.emitter.Emitter
 import org.koin.core.parameter.parametersOf
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun GameScreen(
@@ -243,33 +248,49 @@ private fun DrawScope.drawGrid(gridSize: Float, gridWidth: Int, gridHeight: Int)
 
 @Composable
 fun WinScreen(moveCount: Int, stars: Int, timeTaken: Long, onPlayAgain: () -> Unit, onContinue: () -> Unit) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "You Won!", fontSize = 48.sp)
-        Spacer(modifier = Modifier.height(16.dp))
-        Row {
-            for (i in 1..3) {
-                Text(
-                    text = if (i <= stars) "⭐" else "☆",
-                    fontSize = 48.sp,
-                    modifier = Modifier.padding(horizontal = 4.dp)
-                )
+    val party = Party(
+        speed = 0f,
+        maxSpeed = 30f,
+        damping = 0.9f,
+        spread = 360,
+        colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
+        emitter = Emitter(duration = 100, TimeUnit.MILLISECONDS).max(100),
+        position = Position.Relative(0.5, 0.3)
+    )
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        KonfettiView(
+            modifier = Modifier.fillMaxSize(),
+            parties = listOf(party)
+        )
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "You Won!", fontSize = 48.sp)
+            Spacer(modifier = Modifier.height(16.dp))
+            Row {
+                for (i in 1..3) {
+                    Text(
+                        text = if (i <= stars) "⭐" else "☆",
+                        fontSize = 48.sp,
+                        modifier = Modifier.padding(horizontal = 4.dp)
+                    )
+                }
             }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Moves: $moveCount", fontSize = 24.sp)
-        Text(text = "Time: ${timeTaken / 1000}s", fontSize = 24.sp)
-        Spacer(modifier = Modifier.height(32.dp))
-        Row {
-            Button(onClick = onPlayAgain) {
-                Text(text = "Play Again")
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Button(onClick = onContinue) {
-                Text(text = "Continue")
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = "Moves: $moveCount", fontSize = 24.sp)
+            Text(text = "Time: ${timeTaken / 1000}s", fontSize = 24.sp)
+            Spacer(modifier = Modifier.height(32.dp))
+            Row {
+                Button(onClick = onPlayAgain) {
+                    Text(text = "Play Again")
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                Button(onClick = onContinue) {
+                    Text(text = "Continue")
+                }
             }
         }
     }
@@ -306,3 +327,9 @@ private fun DrawScope.drawGoal(gridSize: Float, exitX: Int, exitY: Int) {
         )
     }
 }
+
+val Block.widthInGrid: Int
+    get() = if (orientation == Orientation.HORIZONTAL) length else 1
+
+val Block.heightInGrid: Int
+    get() = if (orientation == Orientation.VERTICAL) length else 1

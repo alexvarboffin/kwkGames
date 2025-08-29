@@ -1,6 +1,7 @@
 package com.vai.vaidebet.vaibrazil.ui.screens.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -85,6 +86,7 @@ fun HomeScreen(
                 is HomeUiState.Loading -> {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
                 }
+
                 is HomeUiState.Success -> {
                     val levelsByPage = state.levelsByPage
                     val currentPage = state.currentPage
@@ -113,7 +115,10 @@ fun HomeScreen(
                             onClick = { viewModel.previousPage() },
                             enabled = currentPage > 0
                         ) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Previous")
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Previous"
+                            )
                         }
                         Text(
                             text = "${currentPage + 1} / $totalPages",
@@ -125,10 +130,14 @@ fun HomeScreen(
                             onClick = { viewModel.nextPage() },
                             enabled = currentPage < totalPages - 1
                         ) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next")
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowForward,
+                                contentDescription = "Next"
+                            )
                         }
                     }
                 }
+
                 is HomeUiState.Error -> {
                     Text(
                         text = state.message,
@@ -191,8 +200,10 @@ fun LevelItem(
     Box(
         modifier = Modifier
             .aspectRatio(1f)
+            .background(Color.Yellow.copy(alpha = 0.2f), RoundedCornerShape(16.dp))
             .border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
             .clickable(enabled = !isLocked) { onLevelSelected(level.id) }
+
             .alpha(if (isLocked) 0.9f else 1f),
         contentAlignment = Alignment.Center
     ) {
@@ -217,7 +228,7 @@ fun LevelItem(
                     for (i in 1..3) {
                         Text(
                             text = if (i <= stars) "⭐" else "☆",
-                            fontSize = 24.sp
+                            fontSize = 18.sp
                         )
                     }
                 }
