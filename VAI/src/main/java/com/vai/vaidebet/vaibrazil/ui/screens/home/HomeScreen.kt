@@ -29,17 +29,26 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 import com.vai.vaidebet.vaibrazil.R
 import com.vai.vaidebet.vaibrazil.domain.model.GameLevel
 import com.vai.vaidebet.vaibrazil.domain.model.UserProgress
 import com.vai.vaidebet.vaibrazil.presentation.screens.home.HomeUiState
 import com.vai.vaidebet.vaibrazil.presentation.screens.home.HomeViewModel
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Regular
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.regular.Star
+import compose.icons.fontawesomeicons.solid.Star
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -197,14 +206,18 @@ fun LevelItem(
     stars: Int,
     onLevelSelected: (Int) -> Unit
 ) {
+    val grayscaleMatrix = ColorMatrix().apply { setToSaturation(0f) }
+
     Box(
         modifier = Modifier
             .aspectRatio(1f)
             .background(Color.Yellow.copy(alpha = 0.2f), RoundedCornerShape(16.dp))
             .border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
             .clickable(enabled = !isLocked) { onLevelSelected(level.id) }
-
-            .alpha(if (isLocked) 0.9f else 1f),
+            .then(
+                if (isLocked) Modifier.graphicsLayer(colorFilter = ColorFilter.colorMatrix(grayscaleMatrix))
+                else Modifier
+            ),
         contentAlignment = Alignment.Center
     ) {
         if (isLocked) {
@@ -226,9 +239,11 @@ fun LevelItem(
                 Text(text = "${level.id}", fontSize = 32.sp, fontWeight = FontWeight.Bold)
                 Row {
                     for (i in 1..3) {
-                        Text(
-                            text = if (i <= stars) "⭐" else "☆",
-                            fontSize = 18.sp
+                        Icon(
+                            imageVector = if (i <= stars) FontAwesomeIcons.Solid.Star else FontAwesomeIcons.Regular.Star,
+                            contentDescription = null,
+                            tint = Color.Yellow,
+                            modifier = Modifier.size(18.dp)
                         )
                     }
                 }
