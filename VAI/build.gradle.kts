@@ -92,4 +92,5 @@ dependencies {
     // Kotlinx Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("nl.dionsegijn:konfetti-compose:2.0.2")
+    implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
 }
