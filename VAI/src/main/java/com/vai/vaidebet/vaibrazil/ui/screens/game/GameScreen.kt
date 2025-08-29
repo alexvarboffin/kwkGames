@@ -34,6 +34,9 @@ import com.vai.vaidebet.vaibrazil.domain.model.Orientation
 import com.vai.vaidebet.vaibrazil.presentation.screens.game.GameUiState
 import com.vai.vaidebet.vaibrazil.presentation.screens.game.GameViewModel
 import org.koin.androidx.compose.koinViewModel
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import com.vai.vaidebet.vaibrazil.R
 import org.koin.core.parameter.parametersOf
 
 @Composable
@@ -168,7 +171,7 @@ fun GameBoard(
                     }
                     .width(gridSize * block.widthInGrid)
                     .height(gridSize * block.heightInGrid)
-                    .background(if (block.isTarget) Color.Red else Color.Gray)
+                    .background(if (block.isTarget) Color.Transparent else Color.Gray)
                     .border(2.dp, Color.Black)
                     .pointerInput(block) {
                         detectDragGestures(
@@ -188,7 +191,15 @@ fun GameBoard(
                             }
                         )
                     }
-            )
+            ) {
+                if (block.isTarget) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ball),
+                        contentDescription = "Ball",
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
         }
     }
 }
