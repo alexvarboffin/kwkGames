@@ -26,20 +26,6 @@ class LocalDataSource(private val context: Context) {
 
         val unblockMeLevels = json.decodeFromString<List<UnblockMeLevel>>(jsonString)
 
-        val hardcodedFirstLevel = GameLevel(
-            id = 1,
-            solutionMoves = 0, // Placeholder
-            blocks = listOf(
-                Block(id = 0, isTarget = true, orientation = Orientation.HORIZONTAL, length = 2, widthInGrid = 2, heightInGrid = 1, row = 2, col = 0),
-                Block(id = 1, isTarget = false, orientation = Orientation.VERTICAL, length = 2, widthInGrid = 1, heightInGrid = 2, row = 0, col = 2),
-                Block(id = 2, isTarget = false, orientation = Orientation.HORIZONTAL, length = 2, widthInGrid = 2, heightInGrid = 1, row = 2, col = 2)
-            ),
-            gridWidth = 6,
-            gridHeight = 6,
-            exitX = 6, // Right edge of 6x6 grid
-            exitY = 2
-        )
-
         val parsedLevels = unblockMeLevels.mapIndexed {
             index,
             unblockMeLevel ->
@@ -62,7 +48,7 @@ class LocalDataSource(private val context: Context) {
                     length = length,
                     widthInGrid = unblockMeBlock.w,
                     heightInGrid = unblockMeBlock.h,
-                    row = y,
+                    row = unblockMeLevel.h - y - unblockMeBlock.h,
                     col = x
                 )
             }
@@ -73,10 +59,25 @@ class LocalDataSource(private val context: Context) {
                 gridWidth = unblockMeLevel.w,
                 gridHeight = unblockMeLevel.h,
                 exitX = unblockMeLevel.e.x,
-                exitY = unblockMeLevel.e.y
+                exitY = unblockMeLevel.h - unblockMeLevel.e.y - 1
             )
         }
-        // Replace the first parsed level with the hardcoded one
-        return parsedLevels.toMutableList().apply { this[0] = hardcodedFirstLevel }
+        return parsedLevels
+    }
+
+    fun getTotalLevels(): Int {
+        val levelsJsContent = context.assets.open("levels.js").bufferedReader().use { it.readText() }
+        val pattern = Pattern.compile("\\[[\\s\\S]*\\]")
+        val matcher = pattern.matcher(levelsJsContent)
+        val jsonString: String
+
+        if (matcher.find()) {
+            jsonString = matcher.group()
+        } else {
+            throw IllegalStateException("Could not find JSON array in levels.js")
+        }
+
+        val unblockMeLevels = json.decodeFromString<List<UnblockMeLevel>>(jsonString)
+        return unblockMeLevels.size
     }
 }

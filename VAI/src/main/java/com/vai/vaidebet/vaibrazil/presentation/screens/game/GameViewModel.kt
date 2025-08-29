@@ -8,6 +8,7 @@ import com.vai.vaidebet.vaibrazil.domain.model.GameLevel
 import com.vai.vaidebet.vaibrazil.domain.model.Orientation
 
 import com.vai.vaidebet.vaibrazil.domain.usecase.GetLevelUseCase
+import com.vai.vaidebet.vaibrazil.domain.usecase.GetTotalLevelsUseCase
 import com.vai.vaidebet.vaibrazil.domain.usecase.UpdateHighestUnlockedLevelUseCase
 import com.vai.vaidebet.vaibrazil.domain.usecase.UpdateStarsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,7 @@ import kotlin.math.roundToInt
 
 class GameViewModel(
     private val getLevelUseCase: GetLevelUseCase,
+    private val getTotalLevelsUseCase: GetTotalLevelsUseCase,
     private val updateHighestUnlockedLevelUseCase: UpdateHighestUnlockedLevelUseCase,
     private val updateStarsUseCase: UpdateStarsUseCase,
     savedStateHandle: SavedStateHandle
@@ -26,6 +28,9 @@ class GameViewModel(
 
     private val _uiState = MutableStateFlow<GameUiState>(GameUiState.Loading)
     val uiState = _uiState.asStateFlow()
+
+    private val _totalLevels = MutableStateFlow(0)
+    val totalLevels = _totalLevels.asStateFlow()
 
     private var initialLevel: GameLevel? = null
     private var moveCount = 0
@@ -37,6 +42,13 @@ class GameViewModel(
 
     init {
         loadLevel()
+        loadTotalLevels()
+    }
+
+    fun loadTotalLevels() {
+        viewModelScope.launch {
+            _totalLevels.value = getTotalLevelsUseCase()
+        }
     }
 
     fun loadLevel() {
@@ -53,7 +65,7 @@ class GameViewModel(
                         initialOffsets[block.id] = Pair(0f, 0f)
                     }
                     _blockPixelOffsets.value = initialOffsets
-                    _uiState.value = GameUiState.Success(level, 0, showGrid)
+                    _uiState.value = GameUiState.Success(level, 0, showGrid, totalLevels.value)
                 } else {
                     _uiState.value = GameUiState.Error("Level not found")
                 }
@@ -156,14 +168,14 @@ class GameViewModel(
                 updateStarsUseCase(levelId, stars)
                 updateHighestUnlockedLevelUseCase(levelId + 1)
             }
-            _uiState.value = GameUiState.Won(moveCount, stars)
+            _uiState.value = GameUiState.Won(moveCount, stars, 0L)
         }
     }
 
     fun resetLevel() {
         initialLevel?.let {
             moveCount = 0
-            _uiState.value = GameUiState.Success(it, 0, showGrid)
+            _uiState.value = GameUiState.Success(it, 0, showGrid, totalLevels.value)
         }
     }
 
@@ -178,7 +190,7 @@ class GameViewModel(
 
 sealed class GameUiState {
     object Loading : GameUiState()
-    data class Success(val level: GameLevel, val moveCount: Int, val showGrid: Boolean) : GameUiState()
+    data class Success(val level: GameLevel, val moveCount: Int, val showGrid: Boolean, val totalLevels: Int) : GameUiState()
     data class Error(val message: String) : GameUiState()
-    data class Won(val finalMoveCount: Int, val stars: Int) : GameUiState()
+    data class Won(val finalMoveCount: Int, val stars: Int, val timeTaken: Long) : GameUiState()
 }

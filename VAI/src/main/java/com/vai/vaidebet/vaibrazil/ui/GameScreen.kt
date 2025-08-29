@@ -37,7 +37,7 @@ fun GameScreen(level: Int, navController: NavController, gameViewModel: GameView
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.football_field),
+            painter = painterResource(id = R.drawable.gamescreen_bg),
             contentDescription = "Football field background",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop

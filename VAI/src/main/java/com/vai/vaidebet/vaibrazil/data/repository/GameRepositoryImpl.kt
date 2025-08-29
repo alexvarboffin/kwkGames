@@ -14,4 +14,8 @@ class GameRepositoryImpl(private val localDataSource: LocalDataSource) : GameRep
     override suspend fun getLevel(id: Int): GameLevel? {
         return localDataSource.getLevels().find { it.id == id }
     }
+
+    override suspend fun getTotalLevels(): Int {
+        return localDataSource.getTotalLevels()
+    }
 }

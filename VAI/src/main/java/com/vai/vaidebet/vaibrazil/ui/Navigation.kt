@@ -3,6 +3,8 @@ package com.vai.vaidebet.vaibrazil.ui
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
@@ -32,7 +34,14 @@ fun AppNavigation() {
             val levelId = backStackEntry.arguments?.getInt("levelId") ?: 0
             GameScreen(
                 levelId = levelId,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onContinue = {
+                    navController.navigate(Screen.Game.createRoute(levelId + 1)) {
+                        popUpTo(Screen.Game.route) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
     }

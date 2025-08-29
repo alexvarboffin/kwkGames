@@ -19,6 +19,7 @@ val appModule = module {
     single<UserProgressRepository> { UserProgressRepositoryImpl(androidContext()) }
     factory { GetLevelsUseCase(get()) }
     factory { GetLevelUseCase(get()) }
+    factory { GetTotalLevelsUseCase(get()) }
     factory { GetUserProgressUseCase(get()) }
     factory { UpdateHighestUnlockedLevelUseCase(get()) }
     factory { UpdateStarsUseCase(get()) }
@@ -28,6 +29,7 @@ val appModule = module {
     viewModel { params ->
         GameViewModel(
             getLevelUseCase = get<GetLevelUseCase>(), // Explicitly specify type
+            getTotalLevelsUseCase = get<GetTotalLevelsUseCase>(), // Explicitly specify type
             updateHighestUnlockedLevelUseCase = get<UpdateHighestUnlockedLevelUseCase>(), // Explicitly specify type
             updateStarsUseCase = get<UpdateStarsUseCase>(), // Explicitly specify type
             savedStateHandle = params.get()
