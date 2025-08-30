@@ -1,0 +1,8 @@
+{
+  "iteration": 0,
+  "lastActionId": 0,
+  "last_similarity": 0.0,
+  "device_available": true,
+  "max_iterations": 10,
+  "threshold": 0.95
+}

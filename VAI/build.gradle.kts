@@ -54,6 +54,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":sdk"))
     //Coil
     implementation(libs.coil.compose)
     //implementation(libs.coil.network.ktor2)

@@ -1,0 +1,239 @@
+{
+  "images": {
+    "img_200x200": {
+      "source": "html5/sprites/200x200.jpg",
+      "dest": "res/drawable-nodpi/img_200x200.webp",
+      "type": "static"
+    },
+    "img_arrow_left": {
+      "source": "html5/sprites/arrow_left.png",
+      "dest": "res/drawable-nodpi/img_arrow_left.webp",
+      "type": "static"
+    },
+    "img_arrow_right": {
+      "source": "html5/sprites/arrow_right.png",
+      "dest": "res/drawable-nodpi/img_arrow_right.webp",
+      "type": "static"
+    },
+    "img_audio_icon": {
+      "source": "html5/sprites/audio_icon.png",
+      "dest": "res/drawable-nodpi/img_audio_icon.webp",
+      "type": "static"
+    },
+    "img_ball_shadow": {
+      "source": "html5/sprites/ball_shadow.png",
+      "dest": "res/drawable-nodpi/img_ball_shadow.webp",
+      "type": "static"
+    },
+    "img_ball": {
+      "source": "html5/sprites/ball.png",
+      "dest": "res/drawable-nodpi/img_ball.webp",
+      "type": "static"
+    },
+    "img_bg_game": {
+      "source": "html5/sprites/bg_game.jpg",
+      "dest": "res/drawable-nodpi/img_bg_game.webp",
+      "type": "static"
+    },
+    "img_bg_menu": {
+      "source": "html5/sprites/bg_menu.jpg",
+      "dest": "res/drawable-nodpi/img_bg_menu.webp",
+      "type": "static"
+    },
+    "img_but_continue": {
+      "source": "html5/sprites/but_continue.png",
+      "dest": "res/drawable-nodpi/img_but_continue.webp",
+      "type": "static"
+    },
+    "img_but_exit": {
+      "source": "html5/sprites/but_exit.png",
+      "dest": "res/drawable-nodpi/img_but_exit.webp",
+      "type": "static"
+    },
+    "img_but_fullscreen": {
+      "source": "html5/sprites/but_fullscreen.png",
+      "dest": "res/drawable-nodpi/img_but_fullscreen.webp",
+      "type": "static"
+    },
+    "img_but_home": {
+      "source": "html5/sprites/but_home.png",
+      "dest": "res/drawable-nodpi/img_but_home.webp",
+      "type": "static"
+    },
+    "img_but_info": {
+      "source": "html5/sprites/but_info.png",
+      "dest": "res/drawable-nodpi/img_but_info.webp",
+      "type": "static"
+    },
+    "img_but_level": {
+      "source": "html5/sprites/but_level.png",
+      "dest": "res/drawable-nodpi/img_but_level.webp",
+      "type": "static"
+    },
+    "img_but_no": {
+      "source": "html5/sprites/but_no.png",
+      "dest": "res/drawable-nodpi/img_but_no.webp",
+      "type": "static"
+    },
+    "img_but_pause": {
+      "source": "html5/sprites/but_pause.png",
+      "dest": "res/drawable-nodpi/img_but_pause.webp",
+      "type": "static"
+    },
+    "img_but_play": {
+      "source": "html5/sprites/but_play.png",
+      "dest": "res/drawable-nodpi/img_but_play.webp",
+      "type": "static"
+    },
+    "img_but_restart": {
+      "source": "html5/sprites/but_restart.png",
+      "dest": "res/drawable-nodpi/img_but_restart.webp",
+      "type": "static"
+    },
+    "img_but_yes": {
+      "source": "html5/sprites/but_yes.png",
+      "dest": "res/drawable-nodpi/img_but_yes.webp",
+      "type": "static"
+    },
+    "img_cursor": {
+      "source": "html5/sprites/cursor.png",
+      "dest": "res/drawable-nodpi/img_cursor.webp",
+      "type": "static"
+    },
+    "img_goal": {
+      "source": "html5/sprites/goal.png",
+      "dest": "res/drawable-nodpi/img_goal.webp",
+      "type": "static"
+    },
+    "img_hand_touch": {
+      "source": "html5/sprites/hand_touch.png",
+      "dest": "res/drawable-nodpi/img_hand_touch.webp",
+      "type": "static"
+    },
+    "img_logo_ctl": {
+      "source": "html5/sprites/logo_ctl.png",
+      "dest": "res/drawable-nodpi/img_logo_ctl.webp",
+      "type": "static"
+    },
+    "img_msg_box": {
+      "source": "html5/sprites/msg_box.png",
+      "dest": "res/drawable-nodpi/img_msg_box.webp",
+      "type": "static"
+    },
+    "img_progress_bar": {
+      "source": "html5/sprites/progress_bar.png",
+      "dest": "res/drawable-nodpi/img_progress_bar.webp",
+      "type": "static"
+    },
+    "img_shot_left": {
+      "source": "html5/sprites/shot_left.png",
+      "dest": "res/drawable-nodpi/img_shot_left.webp",
+      "type": "static"
+    },
+    "img_start_ball": {
+      "source": "html5/sprites/start_ball.png",
+      "dest": "res/drawable-nodpi/img_start_ball.webp",
+      "type": "static"
+    }
+  },
+  "animations": {
+    "gk_idle": {
+      "source_dir": "html5/sprites/gk_idle/",
+      "dest_prefix": "anim_gk_idle_",
+      "dest_dir": "res/drawable-nodpi/",
+      "type": "spritesheet"
+    },
+    "gk_save_center": {
+      "source_dir": "html5/sprites/gk_save_center/",
+      "dest_prefix": "anim_gk_save_center_",
+      "dest_dir": "res/drawable-nodpi/",
+      "type": "spritesheet"
+    },
+    "gk_save_center_down": {
+      "source_dir": "html5/sprites/gk_save_center_down/",
+      "dest_prefix": "anim_gk_save_center_down_",
+      "dest_dir": "res/drawable-nodpi/",
+      "type": "spritesheet"
+    },
+    "gk_save_center_up": {
+      "source_dir": "html5/sprites/gk_save_center_up/",
+      "dest_prefix": "anim_gk_save_center_up_",
+      "dest_dir": "res/drawable-nodpi/",
+      "type": "spritesheet"
+    },
+    "gk_save_down_left": {
+      "source_dir": "html5/sprites/gk_save_down_left/",
+      "dest_prefix": "anim_gk_save_down_left_",
+      "dest_dir": "res/drawable-nodpi/",
+      "type": "spritesheet"
+    },
+    "gk_save_down_right": {
+      "source_dir": "html5/sprites/gk_save_down_right/",
+      "dest_prefix": "anim_gk_save_down_right_",
+      "dest_dir": "res/drawable-nodpi/",
+      "type": "spritesheet"
+    },
+    "gk_save_left": {
+      "source_dir": "html5/sprites/gk_save_left/",
+      "dest_prefix": "anim_gk_save_left_",
+      "dest_dir": "res/drawable-nodpi/",
+      "type": "spritesheet"
+    },
+    "gk_save_right": {
+      "source_dir": "html5/sprites/gk_save_right/",
+      "dest_prefix": "anim_gk_save_right_",
+      "dest_dir": "res/drawable-nodpi/",
+      "type": "spritesheet"
+    },
+    "player_kick": {
+        "source_dir": "html5/sprites/player/",
+        "dest_prefix": "anim_player_kick_",
+        "dest_dir": "res/drawable-nodpi/",
+        "type": "spritesheet"
+    }
+  },
+  "sounds": {
+    "sfx_ball_saved": {
+      "source": "html5/sounds/ball_saved.mp3",
+      "dest": "res/raw/sfx_ball_saved.mp3",
+      "type": "sfx"
+    },
+    "sfx_click": {
+      "source": "html5/sounds/click.mp3",
+      "dest": "res/raw/sfx_click.mp3",
+      "type": "sfx"
+    },
+    "sfx_drop_bounce_grass": {
+      "source": "html5/sounds/drop_bounce_grass.mp3",
+      "dest": "res/raw/sfx_drop_bounce_grass.mp3",
+      "type": "sfx"
+    },
+    "sfx_goal": {
+      "source": "html5/sounds/goal.mp3",
+      "dest": "res/raw/sfx_goal.mp3",
+      "type": "sfx"
+    },
+    "sfx_kick": {
+      "source": "html5/sounds/kick.mp3",
+      "dest": "res/raw/sfx_kick.mp3",
+      "type": "sfx"
+    },
+    "sfx_pole": {
+      "source": "html5/sounds/pole.mp3",
+      "dest": "res/raw/sfx_pole.mp3",
+      "type": "sfx"
+    },
+    "music_soundtrack": {
+      "source": "html5/sounds/soundtrack.mp3",
+      "dest": "res/raw/music_soundtrack.mp3",
+      "type": "music"
+    }
+  },
+  "fonts": {
+    "trade_gothic_bold": {
+      "source": "html5/css/TradeGothic-Bold.woff2",
+      "dest": "res/font/trade_gothic_bold.ttf",
+      "type": "font"
+    }
+  }
+}

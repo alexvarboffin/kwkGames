@@ -5,7 +5,6 @@ import com.vai.vaidebet.vaibrazil.domain.model.Block
 import com.vai.vaidebet.vaibrazil.domain.model.GameLevel
 import com.vai.vaidebet.vaibrazil.domain.model.Orientation
 import com.vai.vaidebet.vaibrazil.data.model.UnblockMeLevel
-import com.vai.vaidebet.vaibrazil.data.model.UnblockMeBlock
 import kotlinx.serialization.json.Json
 import java.util.regex.Pattern
 
