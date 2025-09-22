@@ -1,4 +1,5 @@
 package com.walhalla.annotations
 
-class Encrypt {
-}
+@Retention(AnnotationRetention.SOURCE)
+@Target(AnnotationTarget.FIELD)
+annotation class Encrypt

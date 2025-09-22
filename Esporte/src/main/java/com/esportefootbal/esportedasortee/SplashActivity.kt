@@ -1,10 +1,10 @@
-package com.esportedasorte.esportefootbal
+package com.esportefootbal.esportedasortee
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.esportedasorte.esportefootbal.ui.theme.PenaltiKicksTheme
+import com.esportefootbal.esportedasortee.ui.theme.PenaltiKicksTheme
 
 
 class SplashActivity : ComponentActivity() {

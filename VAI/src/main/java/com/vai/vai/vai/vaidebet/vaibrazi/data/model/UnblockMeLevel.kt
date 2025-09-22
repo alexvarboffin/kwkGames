@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.data.model
+package com.vai.vai.vai.vaidebet.vaibrazi.data.model
 
 import kotlinx.serialization.Serializable
 

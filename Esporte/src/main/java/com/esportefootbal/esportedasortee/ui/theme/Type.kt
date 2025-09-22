@@ -1,4 +1,4 @@
-package com.esportedasorte.esportefootbal.ui.theme
+package com.esportefootbal.esportedasortee.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

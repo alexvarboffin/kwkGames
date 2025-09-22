@@ -1,4 +1,4 @@
-package com.esportedasorte.esportefootbal
+package com.esportefootbal.esportedasortee
 
 import org.junit.Test
 

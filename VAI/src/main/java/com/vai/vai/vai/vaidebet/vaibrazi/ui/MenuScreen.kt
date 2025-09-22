@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.ui
+package com.vai.vai.vai.vaidebet.vaibrazi.ui
 
 import android.content.Context
 import android.net.Uri
@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.vai.vai.vaidebet.vaibrazil.data.LevelRepository
+import com.vai.vai.vai.vaidebet.vaibrazi.data.LevelRepository
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

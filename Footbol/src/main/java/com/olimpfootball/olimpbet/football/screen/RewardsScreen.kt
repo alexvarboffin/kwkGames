@@ -1,4 +1,4 @@
-package com.olimpfootball.olimpbet.footgame.screen
+package com.olimpfootball.olimpbet.football.screen
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -27,7 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.olimpfootball.olimpbet.footgame.PremiumButton
+import com.olimpfootball.olimpbet.football.PremiumButton
 
 @Composable
 fun RewardsScreen(onClose: () -> Unit) {

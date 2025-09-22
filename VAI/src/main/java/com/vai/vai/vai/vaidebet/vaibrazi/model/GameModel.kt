@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.model
+package com.vai.vai.vai.vaidebet.vaibrazi.model
 
 data class GameState(
     val board: GameBoard,

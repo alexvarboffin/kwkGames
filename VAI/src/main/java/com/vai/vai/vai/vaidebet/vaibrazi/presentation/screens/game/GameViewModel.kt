@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.presentation.screens.game
+package com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.game
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
-import kotlin.text.get
 
 class GameViewModel(
     private val getLevelUseCase: GetLevelUseCase,

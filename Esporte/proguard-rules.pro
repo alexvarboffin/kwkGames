@@ -45,5 +45,5 @@
 -keep class android.media.SoundPool { *; }
 
 # Keep game state classes
--keep class com.esportedasorte.esportefootbal.game.** { *; }
--keep class com.esportedasorte.esportefootbal.ui.** { *; }
+-keep class com.esportefootbal.esportedasortee.game.** { *; }
+-keep class com.esportefootbal.esportedasortee.ui.** { *; }

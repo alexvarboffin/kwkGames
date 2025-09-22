@@ -1,8 +1,8 @@
-package com.vai.vai.vaidebet.vaibrazil.data
+package com.vai.vai.vai.vaidebet.vaibrazi.data
 
-import com.vai.vai.vaidebet.vaibrazil.model.Block
-import com.vai.vai.vaidebet.vaibrazil.model.Exit
-import com.vai.vai.vaidebet.vaibrazil.model.GameBoard
+import com.vai.vai.vai.vaidebet.vaibrazi.model.Block
+import com.vai.vai.vai.vaidebet.vaibrazi.model.Exit
+import com.vai.vai.vai.vaidebet.vaibrazi.model.GameBoard
 
 class LevelRepository {
 

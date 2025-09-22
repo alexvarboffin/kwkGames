@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil
+package com.vai.vai.vai.vaidebet.vaibrazi
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,10 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.vai.vai.vaidebet.vaibrazil.ui.GameScreen
-import com.vai.vai.vaidebet.vaibrazil.ui.MenuScreen
-import com.vai.vai.vaidebet.vaibrazil.ui.SplashScreen
-import com.vai.vai.vaidebet.vaibrazil.ui.theme.VAITheme
+import com.vai.vai.vai.vaidebet.vaibrazi.ui.GameScreen
+import com.vai.vai.vai.vaidebet.vaibrazi.ui.MenuScreen
+import com.vai.vai.vai.vaidebet.vaibrazi.ui.SplashScreen
+import com.vai.vai.vai.vaidebet.vaibrazi.ui.theme.VAITheme
 
 class GameActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

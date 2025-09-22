@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.ui
+package com.vai.vai.vai.vaidebet.vaibrazi.ui
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
@@ -6,8 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.vai.vai.vaidebet.vaibrazil.ui.screens.game.GameScreen
-import com.vai.vai.vaidebet.vaibrazil.ui.screens.home.HomeScreen
+import com.vai.vai.vai.vaidebet.vaibrazi.ui.screens.game.GameScreen
+import com.vai.vai.vai.vaidebet.vaibrazi.ui.screens.home.HomeScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")

@@ -1,8 +1,8 @@
-package com.esportedasorte.esportefootbal.di
+package com.esportefootbal.esportedasortee.di
 
-import com.esportedasorte.esportefootbal.data.datasource.LocalDataSource
-import com.esportedasorte.esportefootbal.data.repository.GameRepositoryImpl
-import com.esportedasorte.esportefootbal.ui.screens.home.HomeViewModel
+import com.esportefootbal.esportedasortee.data.datasource.LocalDataSource
+import com.esportefootbal.esportedasortee.data.repository.GameRepositoryImpl
+import com.esportefootbal.esportedasortee.ui.screens.home.HomeViewModel
 import com.vai.vaidebet.vaibrazil.data.repository.UserProgressRepositoryImpl
 
 import com.walhalla.sdk.domain.repository.GameRepository

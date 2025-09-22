@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.ui.screens.splash
+package com.vai.vai.vai.vaidebet.vaibrazi.ui.screens.splash
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
@@ -16,8 +16,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.vai.vai.vaidebet.vaibrazil.presentation.screens.splash.SplashViewModel
-import com.vai.vai.vaidebet.vaibrazil.R
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.splash.SplashViewModel
+import com.vai.vai.vai.vaidebet.vaibrazi.R
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

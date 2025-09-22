@@ -1,7 +1,8 @@
-package com.olimpfootball.olimpbet.footgame
+package com.olimpfootball.olimpbet.football
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.olimpfootball.olimpbet.football.SoundManager
 
 @Composable
 fun GameScreen(
@@ -45,7 +47,7 @@ fun GameScreen(
                 contentScale = ContentScale.FillWidth
             )
             Box(
-                modifier = Modifier.fillMaxWidth().weight(1f).background(Color(0xFF3A8A53))
+                modifier = Modifier.fillMaxWidth().weight(1f).background(Color(0xFF05886B))
             )
         }
 
@@ -106,9 +108,8 @@ fun GameScreen(
 @Composable
 fun TopBar(balance: Double, onSettingsClicked: () -> Unit, onRewardsClicked: () -> Unit) {
     Row(
-        modifier = Modifier
+        modifier = Modifier.padding(16.dp)
             .fillMaxWidth()
-            .padding(16.dp)
             .background(Color.Black.copy(alpha = 0.7f)),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -118,7 +119,7 @@ fun TopBar(balance: Double, onSettingsClicked: () -> Unit, onRewardsClicked: () 
             Icon(
                 imageVector = Icons.Filled.CardGiftcard,
                 contentDescription = "Rewards",
-                tint = Color.Yellow,
+                tint = Color.White,
                 modifier = Modifier
                     .size(32.dp)
                     .clickable { onRewardsClicked() }
@@ -285,14 +286,8 @@ fun GameControls(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Main Action Button
-        Button(
-            onClick = onBumpClicked,
-            modifier = Modifier.fillMaxWidth(0.8f).height(60.dp),
-            shape = RoundedCornerShape(12.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow)
-        ) {
-            Text("Bump", color = Color.Black, fontSize = 22.sp, fontWeight = FontWeight.Bold)
-        }
+        BumpButton(onClick = onBumpClicked, text = "Bump")
+
         Spacer(modifier = Modifier.height(16.dp))
 
         // Main Ball Image
@@ -308,6 +303,7 @@ fun GameControls(
 @Composable
 fun InfoDisplay(label: String, value: String) {
     Card(
+        modifier = Modifier.border(1.dp, MaterialTheme.colorScheme.onPrimaryContainer),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.3f))
     ) {
@@ -324,7 +320,8 @@ fun InfoDisplay(label: String, value: String) {
 @Composable
 fun SeriesToggle(isSeriesMode: Boolean, onToggle: () -> Unit) {
     Card(
-        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.border(1.dp, MaterialTheme.colorScheme.onPrimaryContainer),
+        shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = Color.Black.copy(alpha = 0.3f))
     ) {
         Column(

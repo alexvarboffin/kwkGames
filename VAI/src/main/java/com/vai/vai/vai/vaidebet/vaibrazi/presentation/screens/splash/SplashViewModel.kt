@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.presentation.screens.splash
+package com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.splash
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,4 +1,4 @@
-package com.esportedasorte.esportefootbal
+package com.esportefootbal.esportedasortee
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import com.esportedasorte.esportefootbal.R
 
 @Composable
 fun StartScreen(onStartClick: () -> Unit) {

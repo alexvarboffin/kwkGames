@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.presentation.screens.home
+package com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

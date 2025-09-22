@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.ui.theme
+package com.vai.vai.vai.vaidebet.vaibrazi.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.ui
+package com.vai.vai.vai.vaidebet.vaibrazi.ui
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Canvas
@@ -16,9 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.vai.vai.vaidebet.vaibrazil.R
-import com.vai.vai.vaidebet.vaibrazil.model.GameState
-import com.vai.vai.vaidebet.vaibrazil.presentation.GameViewModel
+import com.vai.vai.vai.vaidebet.vaibrazi.model.GameState
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.GameViewModel
+import com.vai.vai.vai.vaidebet.vaibrazi.R
 
 
 @Composable

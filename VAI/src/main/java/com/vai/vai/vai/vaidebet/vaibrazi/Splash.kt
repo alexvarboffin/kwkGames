@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import com.vai.vai.vai.vaidebet.vaibrazi.ui.screens.splash.SplashScreen
 import com.vai.vai.vai.vaidebet.vaibrazi.ui.theme.VAITheme
 
-class SplashActivity : ComponentActivity() {
+class Splash : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -20,3 +20,5 @@ class SplashActivity : ComponentActivity() {
         }
     }
 }
+
+

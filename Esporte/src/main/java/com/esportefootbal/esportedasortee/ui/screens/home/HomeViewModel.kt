@@ -1,4 +1,4 @@
-package com.esportedasorte.esportefootbal.ui.screens.home
+package com.esportefootbal.esportedasortee.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

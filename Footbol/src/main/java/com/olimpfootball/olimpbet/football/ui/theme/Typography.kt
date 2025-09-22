@@ -1,4 +1,4 @@
-package com.olimpfootball.olimpbet.footgame.ui.theme
+package com.olimpfootball.olimpbet.football.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

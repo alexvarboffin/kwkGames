@@ -1,13 +1,13 @@
-package com.vai.vai.vaidebet.vaibrazil.presentation
+package com.vai.vai.vai.vaidebet.vaibrazi.presentation
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 
 import androidx.lifecycle.ViewModel
-import com.vai.vai.vaidebet.vaibrazil.data.LevelRepository
-import com.vai.vai.vaidebet.vaibrazil.model.Block
-import com.vai.vai.vaidebet.vaibrazil.model.GameBoard
-import com.vai.vai.vaidebet.vaibrazil.model.GameState
+import com.vai.vai.vai.vaidebet.vaibrazi.data.LevelRepository
+import com.vai.vai.vai.vaidebet.vaibrazi.model.Block
+import com.vai.vai.vai.vaidebet.vaibrazi.model.GameBoard
+import com.vai.vai.vai.vaidebet.vaibrazi.model.GameState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

@@ -1,7 +1,7 @@
-package com.vai.vai.vaidebet.vaibrazil.data.datasource
+package com.vai.vai.vai.vaidebet.vaibrazi.data.datasource
 
 import android.content.Context
-import com.vai.vai.vaidebet.vaibrazil.data.model.UnblockMeLevel
+import com.vai.vai.vai.vaidebet.vaibrazi.data.model.UnblockMeLevel
 import com.walhalla.sdk.domain.model.Block
 
 import com.walhalla.sdk.domain.model.GameLevel

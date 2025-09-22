@@ -67,20 +67,19 @@ sealed class Screen(val route: String) {
 
 val x: CharArray ="https://esporhp.top/terms9".toCharArray()
 
-class GameActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
 
     private lateinit var soundManager: SoundManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        soundManager =
-            SoundManager(applicationContext, provideUserPreferencesRepository(applicationContext))
+        soundManager = SoundManager(applicationContext, provideUserPreferencesRepository(applicationContext))
         //enableEdgeToEdge()
         webView = WebView(this).apply {} //not set WebViewClient!!!
         setContent {
             PXBFootballTheme {
                 AppNavigation(soundManager = soundManager)
-                Text("@@@ ${String(x)}", color = Color.Red)
+                //Text("@@@ ${String(x)}", color = Color.Red)
             }
         }
     }
@@ -112,10 +111,8 @@ fun openInCustomTab(context: Context, url: String) {
 fun AppNavigation(soundManager: SoundManager) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Screen.Splash.route) {
-        composable(Screen.Splash.route) {
-            SplashScreen(navController = navController, soundManager = soundManager)
-        }
+    NavHost(navController = navController, startDestination = Screen.MainMenu.route) {
+
         composable(Screen.MainMenu.route) {
             MainMenuScreen(navController = navController, soundManager = soundManager)
         }
@@ -193,6 +190,36 @@ fun PremiumButton(text: String, onClick: () -> Unit) {
         }
     }
 }
+
+@Composable
+fun BumpButton(text: String, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.fillMaxWidth(0.8f),
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(Color(0xFFFFD700), Color(0xFFFFA500)) // Gold/Orange gradient
+                    )
+                )
+                .padding(vertical = 16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                style = MaterialTheme.typography.headlineLarge.copy(fontFamily = customFont),
+                text = text.uppercase(), color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 22.sp)
+        }
+    }
+}
+
 @Composable
 fun PremiumButtonAnimated(text: String, onClick: () -> Unit) {
     Button(

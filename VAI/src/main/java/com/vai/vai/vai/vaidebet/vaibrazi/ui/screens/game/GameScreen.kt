@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.ui.screens.game
+package com.vai.vai.vai.vaidebet.vaibrazi.ui.screens.game
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -29,13 +29,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-import com.vai.vai.vaidebet.vaibrazil.presentation.screens.game.GameUiState
-import com.vai.vai.vaidebet.vaibrazil.presentation.screens.game.GameViewModel
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.game.GameUiState
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.game.GameViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
-import com.vai.vai.vaidebet.vaibrazil.R
+import com.vai.vai.vai.vaidebet.vaibrazi.R
 import com.walhalla.sdk.domain.model.Block
 import com.walhalla.sdk.domain.model.GameLevel
 import com.walhalla.sdk.domain.model.Orientation

@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.utils
+package com.vai.vai.vai.vaidebet.vaibrazi.utils
 
 import android.webkit.WebView
 

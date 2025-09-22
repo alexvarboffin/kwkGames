@@ -1,10 +1,10 @@
-package com.vai.vai.vaidebet.vaibrazil.di
+package com.vai.vai.vai.vaidebet.vaibrazi.di
 
-import com.vai.vai.vaidebet.vaibrazil.data.datasource.LocalDataSource
-import com.vai.vai.vaidebet.vaibrazil.data.repository.GameRepositoryImpl
-import com.vai.vai.vaidebet.vaibrazil.presentation.screens.game.GameViewModel
-import com.vai.vai.vaidebet.vaibrazil.presentation.screens.home.HomeViewModel
-import com.vai.vai.vaidebet.vaibrazil.presentation.screens.splash.SplashViewModel
+import com.vai.vai.vai.vaidebet.vaibrazi.data.datasource.LocalDataSource
+import com.vai.vai.vai.vaidebet.vaibrazi.data.repository.GameRepositoryImpl
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.game.GameViewModel
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.home.HomeViewModel
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.splash.SplashViewModel
 import com.vai.vaidebet.vaibrazil.data.repository.UserProgressRepositoryImpl
 import com.walhalla.sdk.domain.repository.GameRepository
 import com.walhalla.sdk.domain.repository.UserProgressRepository

@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+
+//    id("java-library")
+//    id("org.jetbrains.kotlin.jvm")
+//    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
 }
 
 android {
@@ -33,7 +37,10 @@ android {
 }
 
 dependencies {
-
+    implementation("com.squareup:kotlinpoet:1.14.2")
+    implementation("com.google.auto.service:auto-service:1.1.1")
+    annotationProcessor("com.google.auto.service:auto-service:1.1.1")
+    implementation("com.google.auto.service:auto-service-annotations:1.1.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

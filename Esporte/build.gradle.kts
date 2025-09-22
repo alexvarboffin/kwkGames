@@ -8,19 +8,33 @@ plugins {
     id("kotlin-kapt")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
 }
+val majorVersion = 1
+val minorVersion = 0
+val patchVersion = 12
+//val versionSuffix = "beta.1"
+val versionSuffix = ""//"" для стабильной версии
 
+val _versionName = if (versionSuffix.isNotBlank()) {
+    "$majorVersion.$minorVersion.$patchVersion-$versionSuffix"
+} else {
+    "$majorVersion.$minorVersion.$patchVersion"
+}
+
+val _versionCode = majorVersion * 10000 + minorVersion * 100 + patchVersion
+//=====================================================================
 android {
-    namespace = "com.esportedasorte.esportefootbal"
+    namespace = "com.esportefootbal.esportedasortee"
     compileSdk = 36
 
     defaultConfig {
-        namespace = "com.esportedasorte.esportefootbal"
+        namespace = "com.esportefootbal.esportedasortee"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = _versionCode
+        versionName = _versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        setProperty("archivesBaseName", "com.esportefootbal.esportedasortee")
     }
 
     buildTypes {

@@ -1,6 +1,6 @@
-package com.vai.vai.vaidebet.vaibrazil.data.repository
+package com.vai.vai.vai.vaidebet.vaibrazi.data.repository
 
-import com.vai.vai.vaidebet.vaibrazil.data.datasource.LocalDataSource
+import com.vai.vai.vai.vaidebet.vaibrazi.data.datasource.LocalDataSource
 import com.walhalla.sdk.domain.model.GameLevel
 import com.walhalla.sdk.domain.repository.GameRepository
 

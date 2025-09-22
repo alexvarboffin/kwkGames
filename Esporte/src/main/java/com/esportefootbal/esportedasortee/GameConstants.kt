@@ -1,4 +1,4 @@
-package com.esportedasorte.esportefootbal
+package com.esportefootbal.esportedasortee
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpOffset

@@ -1,4 +1,4 @@
-package com.esportedasorte.esportefootbal.ui.theme
+package com.esportefootbal.esportedasortee.ui.theme
 
 import android.app.Activity
 import android.os.Build

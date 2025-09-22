@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
-import com.vai.vaidebet.vaibrazil.R
+import com.vai.vai.vai.vaidebet.vaibrazi.R
 import kotlinx.coroutines.delay
 
 @Composable

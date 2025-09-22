@@ -1,7 +1,7 @@
-package com.esportedasorte.esportefootbal
+package com.esportefootbal.esportedasortee
 
 import android.app.Application
-import com.esportedasorte.esportefootbal.di.appModule
+import com.esportefootbal.esportedasortee.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

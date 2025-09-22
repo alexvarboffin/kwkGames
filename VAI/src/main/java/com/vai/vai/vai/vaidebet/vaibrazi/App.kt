@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil
+package com.vai.vai.vai.vaidebet.vaibrazi
 
 import android.app.Application
 

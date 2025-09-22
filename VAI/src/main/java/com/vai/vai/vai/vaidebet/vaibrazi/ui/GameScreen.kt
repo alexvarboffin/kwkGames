@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.ui
+package com.vai.vai.vai.vaidebet.vaibrazi.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Canvas
@@ -24,9 +24,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.vai.vai.vaidebet.vaibrazil.R
-import com.vai.vai.vaidebet.vaibrazil.presentation.GameViewModel
-import com.vai.vai.vaidebet.vaibrazil.presentation.GameViewModelFactory
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.GameViewModel
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.GameViewModelFactory
+import com.vai.vai.vai.vaidebet.vaibrazi.R
 
 import kotlin.random.Random
 

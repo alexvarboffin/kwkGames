@@ -5,8 +5,8 @@ data class Block(
     val isTarget: Boolean,
     val orientation: Orientation,
     val length: Int, // This is either width or height depending on orientation
-    val widthInGrid: Int, // New field
-    val heightInGrid: Int, // New field
+    val widthInGrid: Int = -1, // New field
+    val heightInGrid: Int= -1, // New field
     val row: Int,
     val col: Int
 )

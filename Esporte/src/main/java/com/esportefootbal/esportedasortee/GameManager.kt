@@ -1,4 +1,4 @@
-package com.esportedasorte.esportefootbal
+package com.esportefootbal.esportedasortee
 
 import android.content.Context
 import androidx.compose.runtime.MutableState
@@ -49,7 +49,7 @@ object GameManager {
         spriteLibrary.addSprite("but_yes", R.drawable.but_yes)
         spriteLibrary.addSprite("but_no", R.drawable.but_no)
         spriteLibrary.addSprite("but_info", R.drawable.but_info)
-        spriteLibrary.addSprite("logo_ctl", R.drawable.logo_ctl)
+        //spriteLibrary.addSprite("logo_ctl", R.drawable.logo_ctl)
         spriteLibrary.addSprite("but_pause", R.drawable.but_pause)
         spriteLibrary.addSprite("arrow_right", R.drawable.arrow_right)
         spriteLibrary.addSprite("arrow_left", R.drawable.arrow_left)

@@ -1,4 +1,4 @@
-package com.esportedasorte.esportefootbal.ui.screens.home
+package com.esportefootbal.esportedasortee.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,7 +22,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,9 +43,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.esportedasorte.esportefootbal.BeautifulButton
-import com.esportedasorte.esportefootbal.ui.screens.home.HomeUiState
-import com.esportedasorte.esportefootbal.ui.screens.home.HomeViewModel
+import com.esportefootbal.esportedasortee.BeautifulButton
 
 import com.walhalla.sdk.domain.model.GameLevel
 import com.walhalla.sdk.domain.model.UserProgress
@@ -58,9 +55,8 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.regular.Star
 import compose.icons.fontawesomeicons.solid.Star
 import org.koin.androidx.compose.koinViewModel
-import kotlin.text.get
-import com.esportedasorte.esportefootbal.R
-import com.esportedasorte.esportefootbal.openInCustomTab
+import com.esportefootbal.esportedasortee.R
+import com.esportefootbal.esportedasortee.openInCustomTab
 
 @Composable
 fun HomeScreen(

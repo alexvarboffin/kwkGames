@@ -1,4 +1,4 @@
-package com.esportedasorte.esportefootbal.data.datasource
+package com.esportefootbal.esportedasortee.data.datasource
 
 import android.content.Context
 import com.walhalla.sdk.domain.model.Block

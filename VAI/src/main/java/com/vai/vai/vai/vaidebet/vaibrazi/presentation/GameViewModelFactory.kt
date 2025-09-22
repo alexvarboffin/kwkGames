@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.presentation
+package com.vai.vai.vai.vaidebet.vaibrazi.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

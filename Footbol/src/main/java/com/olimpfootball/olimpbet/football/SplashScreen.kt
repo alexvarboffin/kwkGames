@@ -1,4 +1,4 @@
-package com.olimpfootball.olimpbet.footgame
+package com.olimpfootball.olimpbet.football
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,7 +34,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun SplashScreen(navController: NavController, soundManager: SoundManager) {
+fun SplashScreen(onScreenClick: () -> Unit,
+
+//navController: NavController,
+ soundManager: SoundManager
+
+) {
 
     val customFont = FontFamily(Font(R.font.baloo))
 
@@ -71,7 +77,7 @@ fun SplashScreen(navController: NavController, soundManager: SoundManager) {
                 text = "OLIEMP",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Companion.Bold,
-                color = Color(0xFFFFD700), // Gold color
+                color = Color(0xFFFF9100), // Gold color
                 modifier = Modifier.Companion.graphicsLayer {
                     scaleX = scale
                     scaleY = scale
@@ -81,17 +87,15 @@ fun SplashScreen(navController: NavController, soundManager: SoundManager) {
                 text = "FOOTBALL",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Companion.Bold,
-                color = Color(0xFFFFD700), // Gold color
+                color = Color(0xFFFF9100), // Gold color
                 modifier = Modifier.Companion.graphicsLayer {
                     scaleX = scale
                     scaleY = scale
                 }
             )
-            Spacer(modifier = Modifier.Companion.height(32.dp))
+            Spacer(modifier = Modifier.Companion.height(52.dp))
             PremiumButtonAnimated(text = "Click to start") {
-                navController.navigate(Screen.MainMenu.route) {
-                    popUpTo(Screen.Splash.route) { inclusive = true }
-                }
+                onScreenClick()
             }
         }
     }

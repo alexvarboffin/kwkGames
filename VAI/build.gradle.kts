@@ -7,30 +7,45 @@ plugins {
 }
 
 android {
-    namespace = "com.vai.vaidebet.vaibrazil"
+    namespace = "com.vai.vai.vai.vaidebet.vaibrazi"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.vai.vaidebet.vaibrazil"
+        applicationId = "com.vai.vai.vai.vaidebet.vaibrazi"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "2.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
-        setProperty("archivesBaseName", "com.vai.vaidebet.vaibrazil")
+        setProperty("archivesBaseName", "com.vai.vai.vai.vaidebet.vaibrazi")
+    }
+
+    signingConfigs {
+
+        create("x") {
+            keyAlias = "release"
+            keyPassword = "release"
+            storeFile = file("keystore/keystore.jks")
+            storePassword = "release"
+        }
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("x")
+        }
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "../proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("x")
         }
     }
     compileOptions {
@@ -81,9 +96,9 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
 
-    implementation("androidx.room:room-runtime:2.7.2")
-    implementation("androidx.room:room-ktx:2.7.2")
-    kapt("androidx.room:room-compiler:2.7.2")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 
     // Koin
     implementation(platform("io.insert-koin:koin-bom:3.5.6"))

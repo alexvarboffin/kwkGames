@@ -1,7 +1,8 @@
-package com.olimpfootball.olimpbet.footgame
+package com.olimpfootball.olimpbet.football
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -97,7 +98,7 @@ class GameViewModel : ViewModel() {
             val finalHandPos = positions[1] // This will be the final hand position
 
             // Short delay before hands start moving
-            kotlinx.coroutines.delay(200L)
+            delay(200L)
 
             // Animate hands to final position
             _uiState.update {
@@ -107,7 +108,7 @@ class GameViewModel : ViewModel() {
             }
 
             // Simulate remaining animation duration
-            kotlinx.coroutines.delay(1300L) // Total animation time 1.5s (200ms + 1300ms)
+            delay(1300L) // Total animation time 1.5s (200ms + 1300ms)
 
             val lossZone = mutableListOf(finalHandPos)
             if (finalHandPos > 0) lossZone.add(finalHandPos - 1)

@@ -1,4 +1,4 @@
-package com.esportedasorte.esportefootbal
+package com.esportefootbal.esportedasortee
 
 import android.os.Bundle
 import android.webkit.WebView
@@ -10,8 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.esportedasorte.esportefootbal.ui.screens.home.HomeScreen
-import com.esportedasorte.esportefootbal.ui.theme.PenaltiKicksTheme
+import com.esportefootbal.esportedasortee.ui.screens.home.HomeScreen
+import com.esportefootbal.esportedasortee.ui.theme.PenaltiKicksTheme
 
 
 class MainActivity : ComponentActivity() {

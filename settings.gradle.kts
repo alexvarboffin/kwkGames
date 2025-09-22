@@ -41,6 +41,14 @@ rootProject.name = "kwkGames"
 include(":VAI")
 include(":Esporte")
 include(":VAIQwen")
+include(":TacticField")
+
+//01 twa
+include(":cricket")//02. app
+include(":cricket_2_mostbet")//cricket clone
+
+include(":Footbol")
 
 
 include(":sdk")
+include(":annotations")

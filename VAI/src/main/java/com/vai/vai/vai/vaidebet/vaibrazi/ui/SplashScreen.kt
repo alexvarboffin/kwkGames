@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.ui
+package com.vai.vai.vai.vaidebet.vaibrazi.ui
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import com.vai.vai.vaidebet.vaibrazil.R
+import com.vai.vai.vai.vaidebet.vaibrazi.R
 import kotlinx.coroutines.delay
 
 @Composable

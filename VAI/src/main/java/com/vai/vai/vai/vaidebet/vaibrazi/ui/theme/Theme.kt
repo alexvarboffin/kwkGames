@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.ui.theme
+package com.vai.vai.vai.vaidebet.vaibrazi.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -17,6 +17,7 @@ private val DarkColorScheme = darkColorScheme(
 fun VAITheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = DarkColorScheme,
+        typography = AppTypography,
         content = content
     )
 }

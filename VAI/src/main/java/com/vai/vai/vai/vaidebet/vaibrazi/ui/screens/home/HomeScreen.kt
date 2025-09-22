@@ -1,4 +1,4 @@
-package com.vai.vai.vaidebet.vaibrazil.ui.screens.home
+package com.vai.vai.vai.vaidebet.vaibrazi.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,10 +34,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.vai.vai.vaidebet.vaibrazil.presentation.screens.home.HomeUiState
-import com.vai.vai.vaidebet.vaibrazil.presentation.screens.home.HomeViewModel
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.home.HomeUiState
+import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.home.HomeViewModel
 
-import com.vai.vai.vaidebet.vaibrazil.R
+import com.vai.vai.vai.vaidebet.vaibrazi.R
 
 import com.walhalla.sdk.domain.model.GameLevel
 import com.walhalla.sdk.domain.model.UserProgress
