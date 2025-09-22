@@ -151,7 +151,7 @@ fun GameBoard(
     onBlockDragEnd: (Block) -> Unit
 ) {
     var selectedBlock by remember { mutableStateOf<Block?>(null) }
-
+    val blockColor = Color(0xFF8D086E)
     BoxWithConstraints(modifier = modifier.border(4.dp, Color.Black)) {
         val gridSize = maxWidth / level.gridWidth
         val gridSizePx = with(LocalDensity.current) { gridSize.toPx() }
@@ -178,7 +178,7 @@ fun GameBoard(
                     }
                     .width(gridSize * block.widthInGrid)
                     .height(gridSize * block.heightInGrid)
-                    .background(if (block.isTarget) Color.Transparent else Color.Gray)
+                    .background(if (block.isTarget) Color.Transparent else blockColor)
                     .border(2.dp, Color.Black)
                     .pointerInput(block) {
                         detectDragGestures(
