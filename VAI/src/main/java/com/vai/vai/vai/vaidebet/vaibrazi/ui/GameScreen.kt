@@ -1,5 +1,6 @@
 package com.vai.vai.vai.vaidebet.vaibrazi.ui
 
+import android.media.MediaPlayer
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -20,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -33,9 +36,19 @@ import kotlin.random.Random
 @Composable
 fun GameScreen(level: Int, navController: NavController, gameViewModel: GameViewModel = viewModel(factory = GameViewModelFactory(
     level
-)
-)) {
+))) {
     val gameState by gameViewModel.gameState.collectAsState()
+
+    val context = LocalContext.current
+    LaunchedEffect(gameState.isGameWon) {
+        if (gameState.isGameWon) {
+            val mediaPlayer = MediaPlayer.create(context, R.raw.win)
+            mediaPlayer.setOnCompletionListener { mp ->
+                mp.release()
+            }
+            mediaPlayer.start()
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(

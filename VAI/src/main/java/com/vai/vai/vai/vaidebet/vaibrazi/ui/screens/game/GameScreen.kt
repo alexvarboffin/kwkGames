@@ -199,7 +199,7 @@ fun GameBoard(
                         )
                     }
             ) {
-                val drawableId = if (block.isTarget) R.drawable.ball else R.drawable.player
+                val drawableId = if (block.isTarget) R.drawable.ic_ball else R.drawable.ic_player
                 Image(
                     painter = painterResource(id = drawableId),
                     contentDescription = "Ball",

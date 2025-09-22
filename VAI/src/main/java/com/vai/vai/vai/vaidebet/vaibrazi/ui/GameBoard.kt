@@ -43,7 +43,7 @@ fun GameBoard(gameState: GameState, gameViewModel: GameViewModel) {
             }
         }
         gameState.board.blocks.forEach { block ->
-            val drawableId = if (block.isTarget) R.drawable.ball else R.drawable.player
+            val drawableId = if (block.isTarget) R.drawable.ic_ball else R.drawable.ic_player
             val offsetX by animateDpAsState(targetValue = (block.x * 50).dp, label = "")
             val offsetY by animateDpAsState(targetValue = (block.y * 50).dp, label = "")
             Image(
