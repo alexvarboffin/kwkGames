@@ -90,8 +90,3 @@ fun SplashScreen(onStartClick: () -> Unit) {
     }
 }
 
-fun openInCustomTab(context: Context, url: String) {
-    val builder = CustomTabsIntent.Builder()
-    val customTabsIntent = builder.build()
-    customTabsIntent.launchUrl(context, url.toUri())
-}

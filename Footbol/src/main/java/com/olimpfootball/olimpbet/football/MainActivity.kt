@@ -45,6 +45,7 @@ import com.olimpfootball.olimpbet.football.screen.MainMenuScreen
 import com.olimpfootball.olimpbet.football.screen.RewardsScreen
 import com.olimpfootball.olimpbet.football.screen.SettingsScreen
 import com.olimpfootball.olimpbet.football.screen.WelcomeScreen
+import com.walhalla.sdk.utils.loadPrivacyPolicy
 
 val customFont = FontFamily(Font(R.font.baloo))
 
@@ -101,11 +102,7 @@ class MainActivity : ComponentActivity() {
 
 }
 
-fun openInCustomTab(context: Context, url: String) {
-    val builder = CustomTabsIntent.Builder()
-    val customTabsIntent = builder.build()
-    customTabsIntent.launchUrl(context, url.toUri())
-}
+
 
 @Composable
 fun AppNavigation(soundManager: SoundManager) {

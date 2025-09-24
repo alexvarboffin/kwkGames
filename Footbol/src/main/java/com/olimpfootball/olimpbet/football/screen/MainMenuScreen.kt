@@ -22,13 +22,13 @@ import com.olimpfootball.olimpbet.football.PremiumButton
 import com.olimpfootball.olimpbet.football.R
 import com.olimpfootball.olimpbet.football.Screen
 import com.olimpfootball.olimpbet.football.SoundManager
-import com.olimpfootball.olimpbet.football.openInCustomTab
+import com.walhalla.sdk.utils.openInCustomTab
 
 @Composable
 fun MainMenuScreen(navController: NavController, soundManager: SoundManager) {
     val context = LocalContext.current
-    val z = stringResource(R.string.privacyPolicyUrl)
-    val faq = stringResource(R.string.faq)
+    val z = stringResource(R.string.privacyPolicyUrl).toCharArray()
+    val faq = stringResource(R.string.faq).toCharArray()
 
     Column(
         modifier = Modifier.Companion

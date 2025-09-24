@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,6 +39,7 @@ import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.home.HomeUiState
 import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.home.HomeViewModel
 
 import com.vai.vai.vai.vaidebet.vaibrazi.R
+import com.vai.vai.vai.vaidebet.vaibrazi.ui.openUrl
 
 import com.walhalla.sdk.domain.model.GameLevel
 import com.walhalla.sdk.domain.model.UserProgress
@@ -54,7 +56,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val uriHandler = LocalUriHandler.current
+    //val uriHandler = LocalUriHandler.current
+    val context = LocalContext.current
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -159,10 +162,10 @@ fun HomeScreen(
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(onClick = { uriHandler.openUri("https://haliol.top/Privacyy4") }) {
+                Button(onClick = { openUrl(context = context, "https://haliol.top/Privacyy".toCharArray()) }) {
                     Text(text = "Privacy Policy")
                 }
-                Button(onClick = { uriHandler.openUri("https://haliol.top/FAQQ4") }) {
+                Button(onClick = { openUrl(context=context,"https://haliol.top/FAQQ".toCharArray()) }) {
                     Text(text = "FAQ")
                 }
             }

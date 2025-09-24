@@ -149,9 +149,7 @@ class GameActivity : ComponentActivity() {
     }
 }
 
-fun WebView.loadPrivacyPolicy(string: String) {
-    loadUrl(string)
-}
+
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {

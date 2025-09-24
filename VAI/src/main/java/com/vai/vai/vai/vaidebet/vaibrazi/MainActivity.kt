@@ -7,7 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.vai.vai.vai.vaidebet.vaibrazi.ui.AppNavigation
 import com.vai.vai.vai.vaidebet.vaibrazi.ui.theme.VAITheme
-import com.vai.vai.vai.vaidebet.vaibrazi.utils.loadPrivacyPolicy
+
+import com.walhalla.sdk.utils.loadPrivacyPolicy
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        webView.loadPrivacyPolicy("https://haliol.top/termss3")
+        webView.loadPrivacyPolicy(x)
     }
 }

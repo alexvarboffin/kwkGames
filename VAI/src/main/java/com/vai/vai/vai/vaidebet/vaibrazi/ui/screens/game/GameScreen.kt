@@ -33,6 +33,7 @@ import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.game.GameUiState
 import com.vai.vai.vai.vaidebet.vaibrazi.presentation.screens.game.GameViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import com.vai.vai.vai.vaidebet.vaibrazi.R
@@ -260,6 +261,14 @@ fun WinScreen(moveCount: Int, stars: Int, timeTaken: Long, onPlayAgain: () -> Un
     )
 
     Box(modifier = Modifier.fillMaxSize()) {
+
+        Image(
+            painter = painterResource(id = R.drawable.gamescreen_bg),
+            contentDescription = "Football field background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
         KonfettiView(
             modifier = Modifier.fillMaxSize(),
             parties = listOf(party)
