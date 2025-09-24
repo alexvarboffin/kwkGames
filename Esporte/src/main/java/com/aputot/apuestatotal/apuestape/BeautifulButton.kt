@@ -1,8 +1,6 @@
 package com.aputot.apuestatotal.apuestape
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -14,40 +12,36 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.aputot.apuestatotal.apuestape.ui.theme.GoldDark
+import com.aputot.apuestatotal.apuestape.ui.theme.GoldLight
 
 @Composable
-fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modifier.Companion) {
+fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modifier) {
     Button(
         onClick = onClick,
         modifier = modifier.width(180.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Companion.Transparent,
-            contentColor = Color.Companion.White
+            containerColor = Color.Transparent,
+            contentColor = Color.White
         ),
         contentPadding = PaddingValues()
     ) {
         Box(
-            modifier = Modifier.Companion
+            modifier = Modifier
+                .clip(RoundedCornerShape(12.dp)) // Premium touch: rounded corners
                 .background(
-                    Brush.Companion.verticalGradient(
-                        colors = listOf(
-                            Color(0xFFFF9100),
-                            Color(0xFFF50057)
-                        )
-                    ), RoundedCornerShape(16.dp)
-                )
-                .border(
-                    BorderStroke(2.dp, Color.Companion.White),
-                    androidx.compose.foundation.shape.RoundedCornerShape(16.dp)
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(GoldLight, GoldDark) // Apply the gradient
+                    )
                 )
                 .padding(16.dp),
-            contentAlignment = Alignment.Companion.Center
+            contentAlignment = Alignment.Center
         ) {
-            Text(text = text, fontWeight = FontWeight.Companion.Bold)
+            Text(text = text, color = Color.Black) // Adjust text color for contrast
         }
     }
 }

@@ -47,3 +47,6 @@
 # Keep game state classes
 -keep class com.esportefootbal.esportedasortee.game.** { *; }
 -keep class com.esportefootbal.esportedasortee.ui.** { *; }
+
+
+-repackageclasses 'androidx.compose.ui'

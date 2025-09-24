@@ -93,12 +93,26 @@ fun HomeScreen(
 //                )
 //            }
 
-            Text(
-                text = "Select Level",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(16.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .background(
+                        color = com.aputot.apuestatotal.apuestape.ui.theme.SemiTransparentWhite,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .border(
+                        width = 2.dp,
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+            ) {
+                Text(
+                    text = "Select Level",
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 32.dp, vertical = 8.dp)
+                )
+            }
 
             when (val state = uiState) {
                 is HomeUiState.Loading -> {

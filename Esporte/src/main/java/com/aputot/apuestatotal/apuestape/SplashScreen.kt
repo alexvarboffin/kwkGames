@@ -51,7 +51,7 @@ fun SplashScreen(onStartClick: () -> Unit) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.bg_game),
+            painter = painterResource(id = R.drawable.ic_splash),
             contentDescription = "Football field background",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -67,6 +67,7 @@ fun SplashScreen(onStartClick: () -> Unit) {
                 text = stringResource(R.string.app_name_full),
                 style = MaterialTheme.typography.headlineLarge.copy(fontFamily = customFont),
                 color = Color.Black
+
             )
             Spacer(modifier = Modifier.height(32.dp))
             BeautifulButton(text = "Click to start", onClick = onStartClick)
