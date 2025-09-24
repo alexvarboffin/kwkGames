@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">OLIMP</string>
+    <string name="app_name">ОЛИМP</string>
     <string name="privacyPolicyUrl">https://esporhp.top/Privacy10</string>
     <string name="faq">https://esporhp.top/FAQ10</string>
-    <string name="app_name_full">OLIEMP FOOTBALL</string>
+    <string name="app_name_full">ОЛИМP FOOTBALL</string>
     <string name="playGame">Go to Game</string>
     <string name="settings">Settings</string>
     <string name="rewards">Rewards</string>

@@ -3,7 +3,7 @@ import java.util.Date
 
 
 fun versionCodeDate(): Int {
-    return SimpleDateFormat("yyMMdd").format(Date()).toInt()
+    return SimpleDateFormat("yyMMdd").format(Date()).toInt()+1
 }
 plugins {
     alias(libs.plugins.android.application)
