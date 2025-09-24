@@ -22,19 +22,23 @@ val _versionName = if (versionSuffix.isNotBlank()) {
 
 val _versionCode = majorVersion * 10000 + minorVersion * 100 + patchVersion
 //=====================================================================
+
+
+//com.esportefootbal.esportedasortee
+
 android {
-    namespace = "com.esportefootbal.esportedasortee"
+    namespace = "com.aputot.apuestatotal.apuestape"
     compileSdk = 36
 
     defaultConfig {
-        namespace = "com.esportefootbal.esportedasortee"
+        namespace = "com.aputot.apuestatotal.apuestape"
         minSdk = 24
         targetSdk = 36
         versionCode = _versionCode
         versionName = _versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        setProperty("archivesBaseName", "com.esportefootbal.esportedasortee")
+        setProperty("archivesBaseName", "com.aputot.apuestatotal.apuestape")
     }
 
     buildTypes {

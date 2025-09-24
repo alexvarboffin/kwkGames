@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">ESP</string>
+
+
+    <string name="app_name">ATOT</string>
+    <string name="app_name_full">ATOT Football</string>
+
+
 </resources>
