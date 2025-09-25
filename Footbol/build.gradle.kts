@@ -20,7 +20,7 @@ android {
         minSdk = 24
         targetSdk = 36
         versionCode = code
-        versionName = "1.1.$code.release"
+        versionName = "1.2.$code.release"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "com.olimpfootball.olimpbet.football")

@@ -74,7 +74,7 @@ fun SplashScreen(onScreenClick: () -> Unit,
             )
             Spacer(modifier = Modifier.Companion.height(16.dp))
             Text(style = MaterialTheme.typography.headlineLarge.copy(fontFamily = customFont),
-                text = "OLIEMP",
+                text = "", //OLIEMP
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Companion.Bold,
                 color = Color(0xFFFF9100), // Gold color

@@ -10,7 +10,7 @@ plugins {
 }
 val majorVersion = 1
 val minorVersion = 0
-val patchVersion = 12
+val patchVersion = 20
 //val versionSuffix = "beta.1"
 val versionSuffix = ""//"" для стабильной версии
 

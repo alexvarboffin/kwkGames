@@ -188,12 +188,12 @@ fun HomeScreen(
                 BeautifulButton(onClick = {
                     openInCustomTab(
                         context = context,
-                        "http://esporhp.top/Privacyy5".toCharArray()
+                        "https://esporhp.top/Privacyy5".toCharArray()
                     )
                 }, text = "Privacy Policy")
                 BeautifulButton(
-                    onClick = { openInCustomTab(context, "http://esporhp.top/FAQQ5".toCharArray()) },
-                    "FAQ"
+                    onClick = { openInCustomTab(context, "https://esporhp.top/FAQQ5".toCharArray()) },
+                    "FAQ...."
                 )
             }
         }

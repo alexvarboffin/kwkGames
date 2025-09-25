@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        webView.loadPrivacyPolicy("http://esporhp.top/termss4".toCharArray())
+        webView.loadPrivacyPolicy("https://esporhp.top/termss4".toCharArray())
 
     }
 }
