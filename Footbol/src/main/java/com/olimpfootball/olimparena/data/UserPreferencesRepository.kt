@@ -1,4 +1,4 @@
-package com.olimpfootball.olimpbet.football.data
+package com.olimpfootball.olimparena.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore

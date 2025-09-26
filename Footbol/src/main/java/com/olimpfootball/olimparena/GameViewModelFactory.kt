@@ -1,4 +1,4 @@
-package com.olimpfootball.olimpbet.football
+package com.olimpfootball.olimparena
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

@@ -1,7 +1,7 @@
-package com.olimpfootball.olimpbet.football
+package com.olimpfootball.olimparena
 
 import android.app.Application
-import com.olimpfootball.olimpbet.football.data.provideUserPreferencesRepository
+import com.olimpfootball.olimparena.data.provideUserPreferencesRepository
 
 class FootbolApplication : Application() {
     override fun onCreate() {

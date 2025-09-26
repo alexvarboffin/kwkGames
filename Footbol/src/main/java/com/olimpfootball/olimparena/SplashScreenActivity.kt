@@ -1,37 +1,15 @@
-package com.olimpfootball.olimpbet.football
+package com.olimpfootball.olimparena
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.olimpfootball.olimpbet.football.MainActivity
-import com.olimpfootball.olimpbet.football.SoundManager
-import com.olimpfootball.olimpbet.football.data.provideUserPreferencesRepository
-import com.olimpfootball.olimpbet.football.ui.theme.PXBFootballTheme
+import com.olimpfootball.olimparena.data.provideUserPreferencesRepository
+import com.olimpfootball.olimparena.ui.theme.PXBFootballTheme
 
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +18,7 @@ class SplashScreenActivity : ComponentActivity() {
 
                 val soundManager = SoundManager(applicationContext, provideUserPreferencesRepository(applicationContext))
 
-                com.olimpfootball.olimpbet.football.SplashScreen(
+                SplashScreen(
                     onScreenClick = {
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
@@ -48,7 +26,7 @@ class SplashScreenActivity : ComponentActivity() {
                     soundManager = soundManager
 
 
-//                            navController.navigate(Screen.MainMenu.route) {
+//                        navController.navigate(Screen.MainMenu.route) {
 //                        popUpTo(Screen.Splash.route) { inclusive = true }
 //                    }
                 )

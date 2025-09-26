@@ -1,11 +1,10 @@
-package com.olimpfootball.olimpbet.football
+package com.olimpfootball.olimparena
 
 import android.content.Context
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -38,13 +37,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.olimpfootball.olimpbet.football.ui.theme.PXBFootballTheme
-import androidx.core.net.toUri
-import com.olimpfootball.olimpbet.football.data.provideUserPreferencesRepository
-import com.olimpfootball.olimpbet.football.screen.MainMenuScreen
-import com.olimpfootball.olimpbet.football.screen.RewardsScreen
-import com.olimpfootball.olimpbet.football.screen.SettingsScreen
-import com.olimpfootball.olimpbet.football.screen.WelcomeScreen
+import com.olimpfootball.olimparena.ui.theme.PXBFootballTheme
+import com.olimpfootball.olimparena.data.provideUserPreferencesRepository
+import com.olimpfootball.olimparena.screen.MainMenuScreen
+import com.olimpfootball.olimparena.screen.RewardsScreen
+import com.olimpfootball.olimparena.screen.SettingsScreen
+import com.olimpfootball.olimparena.screen.WelcomeScreen
 import com.walhalla.sdk.utils.loadPrivacyPolicy
 
 val customFont = FontFamily(Font(R.font.baloo))

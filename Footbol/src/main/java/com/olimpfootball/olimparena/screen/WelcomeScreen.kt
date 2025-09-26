@@ -1,4 +1,4 @@
-package com.olimpfootball.olimpbet.football.screen
+package com.olimpfootball.olimparena.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.olimpfootball.olimpbet.football.PremiumButton
+import com.olimpfootball.olimparena.PremiumButton
 
 @Composable
 fun WelcomeScreen(onClose: () -> Unit) {
