@@ -1,14 +1,11 @@
 package com.cricjojo.cricmost
 
-import android.content.Context
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -30,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.cricjojo.cricmost.ui.theme.CricketTheme
-import androidx.core.net.toUri
 
 import com.walhalla.sdk.utils.loadPrivacyPolicy
 
@@ -68,16 +63,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        webView.loadPrivacyPolicy("https://rotyik.top/terms6".toCharArray())
+        webView.loadPrivacyPolicy(Cfg.terms)
     }
 }
-
-fun openUrlInCustomTab(context: Context, url: String) {
-    val builder = CustomTabsIntent.Builder()
-    val customTabsIntent = builder.build()
-    customTabsIntent.launchUrl(context, url.toUri())
-}
-
 
 @Composable
 fun LevelItem(level: Int, stars: Int, isLocked: Boolean, onClick: () -> Unit) {

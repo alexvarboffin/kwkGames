@@ -27,7 +27,7 @@ class SplashScreenActivity : ComponentActivity() {
         setContent {
             CricketTheme {
                 Box(
-                    contentAlignment = Alignment.BottomCenter,
+                    contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .clickable {
@@ -43,7 +43,7 @@ class SplashScreenActivity : ComponentActivity() {
                     )
 
                     Box(
-                        contentAlignment = Alignment.BottomCenter,
+                        contentAlignment = Alignment.Center,
                         modifier = Modifier.padding(bottom = 70.dp).height(170.dp),
                     ) {
                         ClickToStartButton(modifier = Modifier, onClick = { startMainActivity() })

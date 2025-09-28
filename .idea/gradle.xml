@@ -10,14 +10,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Esporte" />
-            <option value="$PROJECT_DIR$/Footbol" />
-            <option value="$PROJECT_DIR$/TacticField" />
-            <option value="$PROJECT_DIR$/VAI" />
-            <option value="$PROJECT_DIR$/VAIQwen" />
             <option value="$PROJECT_DIR$/annotations" />
-            <option value="$PROJECT_DIR$/cricket" />
-            <option value="$PROJECT_DIR$/cricket_2_mostbet" />
+            <option value="$PROJECT_DIR$/cricket_3_WinCric" />
             <option value="$PROJECT_DIR$/sdk" />
           </set>
         </option>

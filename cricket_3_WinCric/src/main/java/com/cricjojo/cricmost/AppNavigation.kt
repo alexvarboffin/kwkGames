@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.walhalla.sdk.utils.openInCustomTab
 
 @Composable
 fun AppNavigation() {
@@ -20,8 +21,8 @@ fun AppNavigation() {
 //                onPrivacyClick = { openUrlInCustomTab(context, "https://jojoapp.site/Privacy") },
 //                onFaqClick = { openUrlInCustomTab(context, "https://jojoapp.site/FAQ") }
 
-                onPrivacyClick = { openUrlInCustomTab(context, "https://rotyik.top/Privacy8") },
-                onFaqClick = { openUrlInCustomTab(context, "https://rotyik.top/FAQ8") }
+                onPrivacyClick = { openInCustomTab(context, Cfg.privacy) },
+                onFaqClick = { openInCustomTab(context, Cfg.faq) }
 
 
             )

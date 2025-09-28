@@ -23,7 +23,9 @@ import kotlin.math.abs
 
 @Composable
 fun GameBoard(onMatch: () -> Unit) {
-    val emojis = listOf("🏏", "🥊", "⛑️", "🏆", "⭐")
+    val emojis = listOf("🏟️", "🧤", "🎯", "🔥", "👑")
+    //val emojis = listOf("🏏", "🥊", "⛑️", "🏆", "⭐")
+
     val emptyEmoji = ""
     var grid by remember { mutableStateOf(List(GRID_SIZE) { List(GRID_SIZE) { emojis.random() } }) }
     var selectedItem by remember { mutableStateOf<Pair<Int, Int>?>(null) }
