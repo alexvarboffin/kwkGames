@@ -83,6 +83,11 @@ Box(
 }
 '''
 
+### Step 5: Uniquify Gradients
+
+1.  **Find Hardcoded Gradients:** Search the codebase for any hardcoded gradients that are not using the theme's color scheme.
+2.  **Replace with Unique Colors:** Replace the hardcoded colors with a new, unique set of colors to ensure all gradients in the application are unique.
+
 ## Summary
 
 By following these steps, you will have successfully replaced a basic color scheme with a more sophisticated, "premium" theme that uses richer colors and gradients to create a more polished user interface.

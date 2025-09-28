@@ -1,6 +1,7 @@
 package com.cricjojo.cricmost
 
 import android.content.Context
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -99,26 +100,32 @@ fun GameScreen(isEndlessMode: Boolean, level: Int, onBack: () -> Unit) {
             )
             if (isEndlessMode) {
                 Row(
-                    modifier = Modifier.Companion.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    Text("Best: $bestScore", color = Color.Companion.White); Text(
-                    "Score: $score",
-                    color = Color.Companion.White
-                )
+                    AnimatedContent(targetState = bestScore, label = "Best") {
+                        Text("Best: $it", color = Color.White)
+                    }
+                    AnimatedContent(targetState = score, label = "Score") {
+                        Text("Score: $it", color = Color.White)
+                    }
                 }
             } else {
                 Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                     Row(
-                        modifier = Modifier.Companion.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        Text("Moves: $moves", color = Color.Companion.White); Text(
-                        "Goal: $goalScore",
-                        color = Color.Companion.White
-                    )
+                        AnimatedContent(targetState = moves, label = "Moves") {
+                            Text("Moves: $it", color = Color.White)
+                        }
+                        AnimatedContent(targetState = goalScore, label = "Goal") {
+                            Text("Goal: $it", color = Color.White)
+                        }
                     }
-                    Text("Score: $score", color = Color.Companion.White)
+                    AnimatedContent(targetState = score, label = "Score") {
+                        Text("Score: $it", color = Color.White)
+                    }
                 }
             }
             Spacer(modifier = Modifier.Companion.height(32.dp))

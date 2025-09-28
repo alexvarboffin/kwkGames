@@ -7,18 +7,22 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -109,6 +113,7 @@ fun LevelItem(level: Int, stars: Int, isLocked: Boolean, onClick: () -> Unit) {
             modifier = Modifier.size(80.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
             contentPadding = PaddingValues(0.dp),
+            border = BorderStroke(2.dp, MaterialTheme.colorScheme.background)
         ) {
             Box(
                 modifier = Modifier
@@ -116,21 +121,12 @@ fun LevelItem(level: Int, stars: Int, isLocked: Boolean, onClick: () -> Unit) {
                     .background(
                         Brush.verticalGradient(
                             colors = listOf(
-                                Color(0xFFFAD961),
-                                Color(0xFFF76B1C)
+                                Color(0xFF2196F3),
+                                Color(0xFF4CAF50)
                             )
                         )
                     ), contentAlignment = Alignment.Center
             ) {
-
-//                Image(
-//                    painter = painterResource(id = R.drawable.ic_target_ball_circle),
-//                    contentDescription = null,
-//                    modifier = Modifier.fillMaxSize(),
-//                    contentScale = ContentScale.Crop
-//                )
-
-
                 if (isLocked) {
                     Text(text = "🔒", fontSize = 32.sp,
                             color = Color.Black,)
