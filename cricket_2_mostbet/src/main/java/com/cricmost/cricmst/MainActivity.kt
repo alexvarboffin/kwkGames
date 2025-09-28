@@ -7,9 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -29,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.cricmost.cricmst.ui.theme.CricketTheme
 import androidx.core.net.toUri
+import com.walhalla.sdk.utils.loadPrivacyPolicy
 
 
 const val GRID_SIZE = 8
@@ -64,7 +63,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        webView.loadPrivacyPolicy("https://rotyik.top/terms6")
+        webView.loadPrivacyPolicy("https://rotyik.top/terms6".toCharArray())
     }
 }
 
@@ -74,36 +73,6 @@ fun openUrlInCustomTab(context: Context, url: String) {
     customTabsIntent.launchUrl(context, url.toUri())
 }
 
-
-@Composable
-fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modifier) {
-    Button(
-        onClick = onClick,
-        modifier = modifier.width(180.dp),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Transparent,
-            contentColor = Color.White
-        ),
-        contentPadding = PaddingValues()
-    ) {
-        Box(
-            modifier = Modifier
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFFFF9100),
-                            Color(0xFFF50057)
-                        )
-                    ), RoundedCornerShape(16.dp)
-                )
-                .border(BorderStroke(2.dp, Color.White), RoundedCornerShape(16.dp))
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = text, fontWeight = FontWeight.Bold)
-        }
-    }
-}
 
 @Composable
 fun LevelItem(level: Int, stars: Int, isLocked: Boolean, onClick: () -> Unit) {
