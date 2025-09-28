@@ -34,6 +34,7 @@ fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modi
     ) {
         Box(
             modifier = Modifier
+                .border(3.dp, Color.Black, RoundedCornerShape(12.dp))
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = listOf(GoldLight, GoldDark)

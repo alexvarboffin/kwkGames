@@ -1,8 +1,16 @@
+import java.text.SimpleDateFormat
+import java.util.Date
+
+
+fun versionCodeDate(): Int {
+    return SimpleDateFormat("yyMMdd").format(Date()).toInt()
+}
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
+val code = versionCodeDate()
 
 android {
     //namespace = "com.mostbet.mostcric.tencric"
@@ -16,8 +24,8 @@ android {
         applicationId = "com.cricjojo.cricmost"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = code
+        versionName = "1.1.$code.full"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
