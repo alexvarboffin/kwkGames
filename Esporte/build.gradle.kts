@@ -10,7 +10,7 @@ plugins {
 }
 val majorVersion = 1
 val minorVersion = 0
-val patchVersion = 20
+val patchVersion = 22
 //val versionSuffix = "beta.1"
 val versionSuffix = ""//"" для стабильной версии
 
@@ -25,6 +25,7 @@ val _versionCode = majorVersion * 10000 + minorVersion * 100 + patchVersion
 
 
 //com.esportefootbal.esportedasortee
+//com.aputot.apuestatotal.apuestape
 
 android {
     namespace = "com.aputot.apuestatotal.apuestape"
@@ -83,8 +84,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Kotlinx Serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
 
     implementation("androidx.media3:media3-exoplayer:1.8.0")
@@ -96,14 +97,14 @@ dependencies {
 //    implementation(libs.androidx.hilt.navigation.compose)
 //    ksp(libs.hilt.compiler)
 
-    implementation("androidx.navigation:navigation-compose:2.9.3")
-    implementation("androidx.browser:browser:1.8.0")
-    implementation("androidx.datastore:datastore-preferences:1.1.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.2")
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.browser)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    implementation("androidx.room:room-runtime:2.7.2")
-    implementation("androidx.room:room-ktx:2.7.2")
-    kapt("androidx.room:room-compiler:2.7.2")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 
     // Koin
     implementation(platform("io.insert-koin:koin-bom:3.5.6"))
@@ -111,7 +112,7 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-compose")
 
     // Kotlinx Serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-    implementation("nl.dionsegijn:konfetti-compose:2.0.2")
-    implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.konfetti.compose)
+    implementation(libs.font.awesome)
 }
