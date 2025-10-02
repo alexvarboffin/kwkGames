@@ -1,4 +1,4 @@
-package com.olimpfootball.olimpbet.football.ui.theme
+package com.obarena.olimpob.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

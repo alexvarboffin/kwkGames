@@ -10,20 +10,20 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
-
+//com.obarena.olimpob - used by other dev
 android {
-    namespace = "com.olimpfootball.olimpbet.football"
+    namespace = "com.obarena.olimpob"
     compileSdk = 36
     val code = versionCodeDate()
     defaultConfig {
-        applicationId = "com.olimpfootball.olimpbet.football"
+        applicationId = "com.obarena.olimpob"
         minSdk = 24
         targetSdk = 36
         versionCode = code
         versionName = "1.2.$code.release"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        setProperty("archivesBaseName", "com.olimpfootball.olimpbet.football")
+        setProperty("archivesBaseName", "com.obarena.olimpob")
     }
 
     signingConfigs {

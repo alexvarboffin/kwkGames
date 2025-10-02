@@ -1,4 +1,4 @@
-package com.olimpfootball.olimpbet.football
+package com.obarena.olimpob
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.olimpfootball.olimpbet.football.SoundManager
+
 
 @Composable
 fun GameScreen(

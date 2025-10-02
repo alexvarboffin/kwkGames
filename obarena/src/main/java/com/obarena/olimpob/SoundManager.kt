@@ -1,11 +1,11 @@
-package com.olimpfootball.olimpbet.football
+package com.obarena.olimpob
 
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.SoundPool
 import androidx.compose.runtime.mutableStateOf
-import com.olimpfootball.olimpbet.football.data.UserPreferencesRepository
+import com.obarena.olimpob.data.UserPreferencesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first

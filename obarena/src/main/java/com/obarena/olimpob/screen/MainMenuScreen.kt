@@ -1,4 +1,4 @@
-package com.olimpfootball.olimpbet.football.screen
+package com.obarena.olimpob.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,10 +18,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.olimpfootball.olimpbet.football.PremiumButton
-import com.olimpfootball.olimpbet.football.R
-import com.olimpfootball.olimpbet.football.Screen
-import com.olimpfootball.olimpbet.football.SoundManager
+import com.obarena.olimpob.PremiumButton
+import com.obarena.olimpob.R
+
+import com.obarena.olimpob.Screen
+import com.obarena.olimpob.SoundManager
 import com.walhalla.sdk.utils.openInCustomTab
 
 @Composable

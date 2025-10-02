@@ -1,4 +1,4 @@
-package com.olimpfootball.olimpbet.football.ui.theme
+package com.obarena.olimpob.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
