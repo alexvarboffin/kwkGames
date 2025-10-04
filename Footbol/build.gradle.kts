@@ -3,27 +3,27 @@ import java.util.Date
 
 
 fun versionCodeDate(): Int {
-    return SimpleDateFormat("yyMMdd").format(Date()).toInt()+1
+    return SimpleDateFormat("yyMMdd").format(Date()).toInt()+2
 }
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
-
+//com.olimpfootball.olimpbet.football
 android {
-    namespace = "com.olimpfootball.olimpbet.football"
+    namespace = "com.olimpfootball.olimparena"
     compileSdk = 36
     val code = versionCodeDate()
     defaultConfig {
-        applicationId = "com.olimpfootball.olimpbet.football"
+        applicationId = "com.olimpfootball.olimparena"
         minSdk = 24
         targetSdk = 36
         versionCode = code
-        versionName = "1.1.$code.release"
+        versionName = "1.2.$code.release"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        setProperty("archivesBaseName", "com.olimpfootball.olimpbet.football")
+        setProperty("archivesBaseName", "com.olimpfootball.olimparena")
     }
 
     signingConfigs {

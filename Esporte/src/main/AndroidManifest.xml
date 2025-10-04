@@ -4,16 +4,17 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:name="com.aputot.apuestatotal.apuestape.App"
+        android:name="com.aputot.totapupe.apuestatotal.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.PenaltiKicks"
         tools:targetApi="31">
         <activity
-            android:name="com.aputot.apuestatotal.apuestape.SplashActivity"
+            android:name="com.aputot.totapupe.apuestatotal.SplashActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -24,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aputot.apuestatotal.apuestape.MainActivity"
+            android:name="com.aputot.totapupe.apuestatotal.MainActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

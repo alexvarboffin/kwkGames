@@ -11,7 +11,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/annotations" />
-            <option value="$PROJECT_DIR$/cricket_3_WinCric" />
+            <option value="$PROJECT_DIR$/cricket" />
+            <option value="$PROJECT_DIR$/cricket_2_mostbet" />
+            <option value="$PROJECT_DIR$/obarena" />
             <option value="$PROJECT_DIR$/sdk" />
           </set>
         </option>
