@@ -38,11 +38,11 @@
 ## Allow classes and class members to be made public.
 #
 #-allowaccessmodification
--obfuscationdictionary "dictionaries\keywords.txt"
+-obfuscationdictionary "../dictionaries\keywords.txt"
 
 #D:\android\GitHub\facebook\proguard\examples\dictionaries\keywords.txt
--classobfuscationdictionary "dictionaries\class.txt"
--packageobfuscationdictionary "dictionaries\package.txt"
+-classobfuscationdictionary "../dictionaries\class.txt"
+-packageobfuscationdictionary "../dictionaries\package.txt"
 
 #___-flattenpackagehierarchy 'xxx'#xxxxx
 

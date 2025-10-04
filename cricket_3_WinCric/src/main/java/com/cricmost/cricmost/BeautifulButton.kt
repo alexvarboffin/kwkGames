@@ -1,6 +1,5 @@
-package com.cricjojo.cricmost
+package com.cricmost.cricmost
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -18,8 +17,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.cricjojo.cricmost.ui.theme.GoldDark
-import com.cricjojo.cricmost.ui.theme.GoldLight
+import com.cricmost.cricmost.ui.theme.GoldDark
+import com.cricmost.cricmost.ui.theme.GoldLight
 
 @Composable
 fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modifier) {

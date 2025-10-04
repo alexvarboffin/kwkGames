@@ -1,4 +1,4 @@
-package com.cricjojo.cricmost
+package com.cricmost.cricmost
 
 object Cfg{
 

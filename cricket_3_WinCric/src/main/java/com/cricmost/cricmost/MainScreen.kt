@@ -1,4 +1,4 @@
-package com.cricjojo.cricmost
+package com.cricmost.cricmost
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

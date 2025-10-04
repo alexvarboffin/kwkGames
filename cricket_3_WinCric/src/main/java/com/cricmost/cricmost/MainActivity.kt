@@ -1,4 +1,4 @@
-package com.cricjojo.cricmost
+package com.cricmost.cricmost
 
 import android.os.Bundle
 import android.webkit.WebView
@@ -25,7 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.cricjojo.cricmost.ui.theme.CricketTheme
+import com.cricmost.cricmost.ui.theme.CricketTheme
 
 import com.walhalla.sdk.utils.loadPrivacyPolicy
 

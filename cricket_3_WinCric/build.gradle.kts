@@ -1,5 +1,6 @@
 import java.text.SimpleDateFormat
 import java.util.Date
+import org.gradle.api.tasks.Copy
 
 
 fun versionCodeDate(): Int {
@@ -15,13 +16,13 @@ val code = versionCodeDate()
 android {
     //namespace = "com.mostbet.mostcric.tencric"
     //namespace = "com.cricmost.cricmst"
-
-    namespace = "com.cricjojo.cricmost"
+    //com.cricjojo.cricmost
+    namespace = "com.cricmost.cricmost"
 
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.cricjojo.cricmost"
+        applicationId = "com.cricmost.cricmost"
         minSdk = 24
         targetSdk = 36
         versionCode = code
@@ -30,7 +31,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
 
-        setProperty("archivesBaseName", "com.cricjojo.cricmost")
+        setProperty("archivesBaseName", "com.cricmost.cricmost")
     }
 
     signingConfigs {
@@ -58,15 +59,34 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "11"
+//    kotlinOptions {
+//        jvmTarget = "11"
+//    }
+
+    kotlin{
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_21
+            targetCompatibility = JavaVersion.VERSION_21
+        }
     }
+
     buildFeatures {
         compose = true
     }
+}
+
+tasks.register("buildReleaseArtifacts", Copy::class) {
+    dependsOn("assembleRelease", "bundleRelease")
+    from(layout.buildDirectory.dir("outputs/apk/release")) {
+        include("*.apk")
+    }
+    from(layout.buildDirectory.dir("outputs/bundle/release")) {
+        include("*.aab")
+    }
+    into(rootProject.file("c:/build"))
 }
 
 dependencies {

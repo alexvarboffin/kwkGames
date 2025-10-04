@@ -1,4 +1,4 @@
-package com.cricjojo.cricmost
+package com.cricmost.cricmost
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

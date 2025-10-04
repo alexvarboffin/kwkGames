@@ -1,4 +1,4 @@
-package com.cricjojo.cricmost
+package com.cricmost.cricmost
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
