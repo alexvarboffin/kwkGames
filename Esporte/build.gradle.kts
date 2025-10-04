@@ -28,18 +28,18 @@ val _versionCode = majorVersion * 10000 + minorVersion * 100 + patchVersion
 //com.aputot.apuestatotal.apuestape
 
 android {
-    namespace = "com.aputot.apuestatotal.apuestape"
+    namespace = "com.aputot.totapupe.apuestatotal"
     compileSdk = 36
 
     defaultConfig {
-        namespace = "com.aputot.apuestatotal.apuestape"
+        namespace = "com.aputot.totapupe.apuestatotal"
         minSdk = 24
         targetSdk = 36
         versionCode = _versionCode
         versionName = _versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        setProperty("archivesBaseName", "com.aputot.apuestatotal.apuestape")
+        setProperty("archivesBaseName", "com.aputot.totapupe.apuestatotal")
     }
 
     buildTypes {

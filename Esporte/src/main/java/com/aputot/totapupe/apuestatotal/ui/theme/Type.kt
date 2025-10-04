@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.aputot.apuestatotal.apuestape.R
+import com.aputot.totapupe.apuestatotal.R
 
 val AppFontFamily = FontFamily(
     Font(R.font.trade_gothic_bold, FontWeight.Normal),

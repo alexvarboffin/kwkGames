@@ -6,14 +6,13 @@
       <GradleProjectSettings>
         <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="jbr-17" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Esporte" />
             <option value="$PROJECT_DIR$/annotations" />
-            <option value="$PROJECT_DIR$/cricket" />
-            <option value="$PROJECT_DIR$/cricket_2_mostbet" />
-            <option value="$PROJECT_DIR$/obarena" />
+            <option value="$PROJECT_DIR$/cricket_3_WinCric" />
             <option value="$PROJECT_DIR$/sdk" />
           </set>
         </option>

@@ -44,7 +44,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aputot.totapupe.apuestatotal.BeautifulButton
-import com.aputot.apuestatotal.apuestape.R
+import com.aputot.totapupe.apuestatotal.R
+
 import com.aputot.totapupe.apuestatotal.ui.theme.SemiTransparentWhite
 
 import com.walhalla.sdk.domain.model.GameLevel

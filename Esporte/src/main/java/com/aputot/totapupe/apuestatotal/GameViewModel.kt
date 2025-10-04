@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aputot.apuestatotal.apuestape.R
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

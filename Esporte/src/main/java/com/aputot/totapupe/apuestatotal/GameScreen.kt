@@ -27,7 +27,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
-import com.aputot.apuestatotal.apuestape.R
 
 
 const val ORIGINAL_WIDTH = 1360f
