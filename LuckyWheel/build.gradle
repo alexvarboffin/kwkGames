@@ -1,0 +1,123 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdk 33
+    buildToolsVersion '33.0.0'
+
+    dataBinding {
+        enabled = true
+    }
+
+    def versionPropsFile = file('version.properties')
+
+    if (versionPropsFile.canRead()) {
+        Properties versionProps = new Properties()
+
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+        def code = versionProps['VERSION_CODE'].toInteger() + 1
+
+        versionProps['VERSION_CODE'] = code.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+
+        defaultConfig {
+            multiDexEnabled = true
+            //vectorDrawables.useSupportLibrary = true
+            //resConfigs "ru", "uk", "en", "uz"
+
+//            vectorDrawables {
+//                useSupportLibrary = true
+//            }
+
+            applicationId "com.walhalla.luckypunch"
+            minSdkVersion rootProject.minSdkVersion
+            targetSdkVersion rootProject.targetSdkVersion
+            versionCode code
+            versionName "1.1." + code + ".release"
+
+            // Stops the Gradle plugin’s automatic rasterization of vectors
+            //generatedDensities = []
+            setProperty("archivesBaseName", "com.walhalla.luckypunch")
+            //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        }
+    } else {
+        throw new GradleException("Could not read version.properties!")
+    }
+
+
+    signingConfigs {
+        debug {
+            keyAlias 'release'
+            keyPassword 'release'
+            storeFile file('keystore/keystore.jks')
+            storePassword 'release'
+        }
+
+        config {
+            keyAlias 'release'
+            keyPassword 'release'
+            storeFile file('keystore/keystore.jks')
+            storePassword 'release'
+        }
+    }
+    buildTypes {
+
+        debug {
+            ext.enableCrashlytics = false
+            //to debug ProGuard rules
+            multiDexEnabled true
+            minifyEnabled false
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-debug.pro'
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //consumerProguardFiles 'proguard-rules.pro'
+            //    shrinkResources true
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //"$rootProject.rootDir.absolutePath/myJavaModule/proguard-rules.pro"
+            debuggable false
+            jniDebuggable false
+            signingConfig signingConfigs.config
+        }
+
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$rootProject.compatVersion"
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    implementation project(path: ':library')
+    implementation 'com.google.android.gms:play-services-ads:22.2.0'
+    testImplementation 'junit:junit:4.13.2'
+
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'androidx.room:room-runtime:2.5.2'
+    annotationProcessor 'androidx.room:room-compiler:2.5.2'
+
+    implementation project(':threader')
+    implementation project(':ui')
+    implementation project(':c')
+
+    implementation 'com.github.GoodieBag:CarouselPicker:v1.2'
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.21"
+}

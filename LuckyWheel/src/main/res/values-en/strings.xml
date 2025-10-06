@@ -1,0 +1,36 @@
+<resources>
+
+    <string name="app_name" translatable="false">Lucky Punch</string>
+
+    <string name="msg_no_notes">List is Empty</string>
+    <string name="lbl_proxy_host_name">Top Text</string>
+    <string name="hint_enter_host">Enter Top Text</string>
+    <string name="lbl_proxy_port">Enter Secondary Text</string>
+    <string name="hint_enter_port">Enter Secondary Text</string>
+    <string name="lbl_edit_note_title">No Title</string>
+    <string name="dialog_action_update">Update</string>
+    <string name="action_save">Save</string>
+    <string name="tab_coin">Coin</string>
+
+
+
+    <string name="tab_random_number">Number generator</string>
+    <string name="tab_roulette">Wheel of Luck</string>
+
+    <!--    <string name="tab_roulette">Колесо фортуны</string>-->
+    <!--    Рулетка также известная как Колесо Удачи-->
+
+    <string name="label_random_number">Случайное число:</string>
+    <string name="label_save_random_number">Сохранить это число</string>
+
+    <string name="answer_no">Generate</string>
+    <string name="flip">Flip</string>
+
+    <string name="action_play" translatable="false">Spin</string>
+    <string name="sequense_title">A new sequence of</string>
+    <string name="random_number_1">random number</string>
+    <string name="random_number_2">random numbers</string>
+    <string name="uniq">исключить повторения</string>
+    <string name="choose_option">Choose option</string>
+
+</resources>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_margin"
+        android:paddingTop="@dimen/activity_margin"
+        android:paddingRight="@dimen/activity_margin">
+
+        <in.goodiebag.carouselpicker.CarouselPicker
+            android:id="@+id/carousel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#CCC"
+            app:items_visible="three" />
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif-medium"
+            android:lineSpacingExtra="8sp"
+            android:maxLines="1"
+            android:text="@string/lbl_proxy_host_name"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/proxy_host_name"
+            android:textStyle="normal" />
+
+        <EditText
+            android:id="@+id/host"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:hint="@string/hint_enter_host"
+            android:inputType="text"
+            android:lines="1"
+            android:textColorHint="@color/hint_enter_note"
+            android:textSize="@dimen/input_new_note"
+            tools:text="00000000000" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif-medium"
+            android:lineSpacingExtra="8sp"
+            android:maxLines="1"
+            android:text="@string/lbl_proxy_port"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/proxy_host_name"
+            android:textStyle="normal" />
+
+        <!--android:digits="0123456789."-->
+        <EditText
+            android:id="@+id/port"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="top"
+            android:hint="@string/hint_enter_port"
+            android:inputType="number"
+            android:lines="1"
+            android:textColorHint="@color/hint_enter_note"
+            android:textSize="@dimen/input_new_note" />
+
+
+        <!--    <TextView-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_marginBottom="5dp"-->
+        <!--        android:fontFamily="sans-serif-medium"-->
+        <!--        android:lineSpacingExtra="8sp"-->
+        <!--        android:maxLines="1"-->
+        <!--        android:text="@string/lbl_proxy_description"-->
+        <!--        android:textColor="@color/colorAccent"-->
+        <!--        android:textSize="@dimen/proxy_host_name"-->
+        <!--        android:textStyle="normal" />-->
+
+        <!--    <EditText-->
+        <!--        android:id="@+id/description"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+
+        <!--        android:gravity="top"-->
+        <!--        android:hint="@string/hint_enter_description"-->
+        <!--        android:inputType="textCapSentences|textMultiLine"-->
+        <!--        android:lines="1"-->
+        <!--        android:textSize="@dimen/input_new_note" />-->
+    </LinearLayout>
+</layout>

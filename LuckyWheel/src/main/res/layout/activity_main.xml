@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+<!--            android:layout_above="@id/adView0"-->
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+                <!--            <include layout="@layout/content_main" />-->
+            </FrameLayout>
+
+
+            <!--            <com.google.android.gms.ads.AdView-->
+            <!--                android:id="@+id/adView"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_centerHorizontal="true"-->
+            <!--                app:adSize="BANNER"-->
+            <!--                app:adUnitId="@string/b1" />-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/adView0"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="122dp"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/action_open_web1"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:text="{ Open Chrome }"-->
+<!--                    tools:ignore="ButtonStyle,HardcodedText,ObsoleteLayoutParam" />-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/action_open_web2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="{Open WebView}"-->
+<!--                    tools:ignore="ButtonStyle,HardcodedText" />-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/action_open_web3"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="{TwaLauncher.Trusted}"-->
+<!--                    tools:ignore="ButtonStyle,HardcodedText" />-->
+<!--            </LinearLayout>-->
+        </RelativeLayout>
+
+        <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--        android:id="@+id/fab"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_gravity="bottom|end"-->
+        <!--        android:layout_margin="@dimen/fab_margin"-->
+        <!--        app:srcCompat="@drawable/ic_brush_black_24dp" />-->
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

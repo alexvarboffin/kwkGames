@@ -39,7 +39,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "kwkGames"
 //include(":VAI")
-include(":Esporte")
+//include(":Esporte")
+include(":sounds")
+
 //include(":VAIQwen")
 //include(":TacticField")
 

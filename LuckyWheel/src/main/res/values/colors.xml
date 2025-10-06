@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#361A48</color>
+    <color name="colorPrimaryDark">#2A1235</color>
+
+    <color name="colorAccent">#D50000</color>
+    <color name="msg_no_notes">#D50000</color>
+    <color name="timestamp">#D50000</color>
+    <color name="hint_enter_note">#2962FF</color>
+
+    <color name="btn_start_rounded_enabled">#D50000</color>
+    <color name="btn_start_rounded_pressed">#B40909</color>
+    <color name="btn_start_rounded_enabled_stroke">#D50000</color>
+    <color name="btn_start_rounded_pressed_stroke">#5993fe</color>
+    <color name="background">#00BFA5</color>
+</resources>

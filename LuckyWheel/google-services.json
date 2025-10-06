@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "715007172429",
+    "project_id": "luckypunch-9875d",
+    "storage_bucket": "luckypunch-9875d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715007172429:android:5ab5488b66b661f5f06104",
+        "android_client_info": {
+          "package_name": "com.walhalla.luckypunch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715007172429-l9rabb8hs1c1clh2lhnqfhmp7avit0t1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.walhalla.luckypunch",
+            "certificate_hash": "bd614d595c1cafdeb4f4a5bb0e90df4adf1baee2"
+          }
+        },
+        {
+          "client_id": "715007172429-j4cqh47c27ce5g5iipu3neqedoa02kqu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhT0TZsKQ9-mY8n7tJmtSjK8GPIAlHCMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715007172429-j4cqh47c27ce5g5iipu3neqedoa02kqu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
