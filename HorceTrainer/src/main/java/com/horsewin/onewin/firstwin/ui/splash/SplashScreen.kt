@@ -24,15 +24,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.DarkGray
+
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.esporte.olimp.yay.R
 
-import com.vai.vaidebet.vaibrazil.ui.theme.Blue // Предполагается, что это фирменный голубой цвет
+import com.horsewin.onewin.firstwin.ui.theme.Blue // Предполагается, что это фирменный голубой цвет
 
 
 @SuppressLint("UseOfNonLambdaOffsetOverload")
@@ -51,7 +53,13 @@ fun SplashScreen(onStartClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(DarkGray), // Темный фон
+            .background( Brush.verticalGradient(
+                colors = listOf(
+                    Color(0xFF0F2027), // тёмный глубокий
+                    Color(0xFF203A43), // холодный сине-серый
+                    Color(0xFF2C5364)  // мягкий аквамариновый
+                )
+            )), // Темный фон
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -60,7 +68,7 @@ fun SplashScreen(onStartClick: () -> Unit) {
         ) {
             // Анимированный текст "WIN HORSE"
             Text(
-                text = "WIN HORSE",
+                text = stringResource(R.string.app_name_full),
                 fontSize = 48.sp,
                 fontWeight = FontWeight.Bold,
                 color = Blue, // Фирменный голубой цвет
@@ -90,6 +98,6 @@ private fun PrettyButton(onStartClick: () -> Unit) {
         onClick = onStartClick,
         modifier = Modifier.padding(horizontal = 32.dp)
     ) {
-        Text("click to start", fontSize = 20.sp)
+        Text("CLICK TO START", fontSize = 20.sp)
     }
 }

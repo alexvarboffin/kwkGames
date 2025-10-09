@@ -5,14 +5,14 @@ import android.os.Bundle
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.horsewin.onewin.firstwin.ui.theme.HorceTrainerTheme
+import com.horsewin.onewin.firstwin.ui.theme.HorseTrainerTheme
 import com.horsewin.onewin.firstwin.ui.splash.SplashScreen
 
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HorceTrainerTheme {
+            HorseTrainerTheme {
                 SplashScreen(onStartClick = {
                     startActivity(Intent(this, GameActivity::class.java))
                     finish()

@@ -1,8 +1,5 @@
 package com.horsewin.onewin.firstwin.ui.home
 
-import android.content.Context
-import android.net.Uri
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.horsewin.onewin.firstwin.Const
 import com.horsewin.onewin.firstwin.presentation.home.HomeUiState
-import com.vai.vaidebet.vaibrazil.ui.theme.Blue
+import com.horsewin.onewin.firstwin.ui.theme.Blue
 import com.walhalla.sdk.utils.openInCustomTab
 import java.text.SimpleDateFormat
 import java.util.Locale

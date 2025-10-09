@@ -11,17 +11,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.vai.vaidebet.vaibrazil.ui.theme.Blue
-import com.vai.vaidebet.vaibrazil.ui.theme.DarkBlue
-import com.vai.vaidebet.vaibrazil.ui.theme.DarkOrange
-import com.vai.vaidebet.vaibrazil.ui.theme.Orange
 import com.vai.vaidebet.vaibrazil.ui.theme.Typography
 
 private val DarkColorScheme = darkColorScheme(
     primary = DarkOrange,
     secondary = DarkBlue,
     background = Color(0xFF1A222C),
-    surface = Color(0xFF1A222C),
+    surface = Color(0xFF15202D),
     onPrimary = Color.White,
     onSecondary = Color.White,
     onBackground = Color.White,
@@ -40,7 +36,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun HorceTrainerTheme(
+fun HorseTrainerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

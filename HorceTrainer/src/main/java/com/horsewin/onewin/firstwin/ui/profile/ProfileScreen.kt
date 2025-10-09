@@ -54,7 +54,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
 
 import com.horsewin.onewin.firstwin.presentation.profile.ProfileUiState
-import com.vai.vaidebet.vaibrazil.ui.theme.Blue
+import com.horsewin.onewin.firstwin.ui.theme.Blue
 import java.text.SimpleDateFormat
 import java.util.Locale
 
