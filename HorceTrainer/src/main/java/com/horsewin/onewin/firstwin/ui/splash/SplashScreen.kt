@@ -1,4 +1,4 @@
-package com.vai.vaidebet.vaibrazil.ui.splash
+package com.horsewin.onewin.firstwin.ui.splash
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.LinearEasing
@@ -30,7 +30,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.horsewin.onewin.firstwin.R
+import com.esporte.olimp.yay.R
+
 import com.vai.vaidebet.vaibrazil.ui.theme.Blue // Предполагается, что это фирменный голубой цвет
 
 
@@ -78,12 +79,17 @@ fun SplashScreen(onStartClick: () -> Unit) {
             Spacer(modifier = Modifier.height(64.dp))
 
             // Кнопка "click to start"
-            Button(
-                onClick = onStartClick,
-                modifier = Modifier.padding(horizontal = 32.dp)
-            ) {
-                Text("click to start", fontSize = 20.sp)
-            }
+            PrettyButton(onStartClick)
         }
+    }
+}
+
+@Composable
+private fun PrettyButton(onStartClick: () -> Unit) {
+    Button(
+        onClick = onStartClick,
+        modifier = Modifier.padding(horizontal = 32.dp)
+    ) {
+        Text("click to start", fontSize = 20.sp)
     }
 }

@@ -1,4 +1,4 @@
-package com.vai.vaidebet.vaibrazil.ui.home
+package com.horsewin.onewin.firstwin.ui.home
 
 import android.content.Context
 import android.net.Uri
@@ -34,8 +34,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.horsewin.onewin.firstwin.Const
 import com.horsewin.onewin.firstwin.presentation.home.HomeUiState
 import com.vai.vaidebet.vaibrazil.ui.theme.Blue
+import com.walhalla.sdk.utils.openInCustomTab
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -146,19 +148,14 @@ fun HomeScreen(
                 text = "Privacy Policy",
                 color = Blue,
                 textDecoration = TextDecoration.Underline,
-                modifier = Modifier.clickable { openUrl(context, "https://halkip.top/Privacy3") }
+                modifier = Modifier.clickable { openInCustomTab(context, Const.privacyPolicy) }
             )
             Text(
                 text = "FAQ",
                 color = Blue,
                 textDecoration = TextDecoration.Underline,
-                modifier = Modifier.clickable { openUrl(context, "https://halkip.top/FAQ3") }
+                modifier = Modifier.clickable { openInCustomTab(context, Const.faq) }
             )
         }
     }
-}
-
-fun openUrl(context: Context, url: String) {
-    val intent = CustomTabsIntent.Builder().build()
-    intent.launchUrl(context, Uri.parse(url))
 }

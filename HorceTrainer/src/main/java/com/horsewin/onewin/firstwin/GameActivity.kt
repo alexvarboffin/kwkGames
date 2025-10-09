@@ -46,8 +46,9 @@ import com.horsewin.onewin.firstwin.ui.home.HomeScreen
 import com.horsewin.onewin.firstwin.ui.newtraining.NewTrainingScreen
 import com.horsewin.onewin.firstwin.ui.profile.ProfileScreen
 import com.horsewin.onewin.firstwin.ui.schedule.ScheduleScreen
-import com.horsewin.onewin.firstwin.ui.theme.HorceTrainerTheme
 import com.horsewin.onewin.firstwin.ui.trainings.TrainingsScreen
+import com.horsewin.onewin.firstwin.ui.theme.HorceTrainerTheme
+import com.walhalla.sdk.utils.loadPrivacyPolicy
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
     object Home : Screen("home", "Home", Icons.Default.Home)
@@ -145,7 +146,7 @@ class GameActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        webView.loadPrivacyPolicy("https://halkip.top/terms2")
+        webView.loadPrivacyPolicy(Const.site)
     }
 }
 

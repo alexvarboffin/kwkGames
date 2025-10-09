@@ -1,4 +1,4 @@
-package com.vai.vaidebet.vaibrazil.ui.newtraining
+package com.horsewin.onewin.firstwin.ui.newtraining
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker

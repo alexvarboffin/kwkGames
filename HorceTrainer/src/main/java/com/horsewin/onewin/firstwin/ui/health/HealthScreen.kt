@@ -1,7 +1,5 @@
-package com.vai.vaidebet.vaibrazil.ui.health
+package com.horsewin.onewin.firstwin.ui.health
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

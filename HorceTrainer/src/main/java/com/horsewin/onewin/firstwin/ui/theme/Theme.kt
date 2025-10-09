@@ -1,4 +1,4 @@
-package com.vai.vaidebet.vaibrazil.ui.theme
+package com.horsewin.onewin.firstwin.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -11,6 +11,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.vai.vaidebet.vaibrazil.ui.theme.Blue
+import com.vai.vaidebet.vaibrazil.ui.theme.DarkBlue
+import com.vai.vaidebet.vaibrazil.ui.theme.DarkOrange
+import com.vai.vaidebet.vaibrazil.ui.theme.Orange
+import com.vai.vaidebet.vaibrazil.ui.theme.Typography
 
 private val DarkColorScheme = darkColorScheme(
     primary = DarkOrange,
