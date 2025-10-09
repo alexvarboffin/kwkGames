@@ -10,10 +10,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Esporte" />
             <option value="$PROJECT_DIR$/annotations" />
             <option value="$PROJECT_DIR$/cricket_3_WinCric" />
             <option value="$PROJECT_DIR$/sdk" />
+            <option value="$PROJECT_DIR$/sounds" />
           </set>
         </option>
       </GradleProjectSettings>

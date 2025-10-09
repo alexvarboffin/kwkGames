@@ -173,7 +173,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onFileAdded(file: File): Boolean {
         val internalPath = FileUtils.getInternalPath(this, file)
-        if (internalPath != null && !FileUtils.existsInternalFile(this, file.getName()) &&
+        if (internalPath != null && !FileUtils.existsInternalFile(this, file.name) &&
             FileUtils.isWhitelisted(file)
         ) {
             FileUtils.copyToInternal(this, file)
