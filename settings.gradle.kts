@@ -48,10 +48,11 @@ include(":sounds")
 //01 twa
 //include(":cricket")//02. app
 //include(":cricket_2_mostbet")//cricket clone
-include(":cricket_3_WinCric")//cricket clone
+//include(":cricket_3_WinCric")//cricket clone
 
 
 //include(":Footbol")
+include(":HorceTrainer")
 
 include(":sdk")
 include(":annotations")

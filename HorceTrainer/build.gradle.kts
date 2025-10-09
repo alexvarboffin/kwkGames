@@ -4,13 +4,14 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("kotlin-kapt")
 }
+//com.horsewin.onewin.firstwin
 
 android {
-    namespace = "com.horsewin.onewin.firstwin"
+    namespace = "com.esporte.olimp.yay"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.horsewin.onewin.firstwin"
+        applicationId = "com.esporte.olimp.yay"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -20,12 +21,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        setProperty("archivesBaseName", "com.horsewin.onewin.firstwin")
+        setProperty("archivesBaseName", "com.esporte.olimp.yay")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -53,13 +54,16 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":sdk"))
+
     //Coil
     implementation(libs.coil.compose)
     //implementation(libs.coil.network.ktor2)
     implementation(libs.coil.network.ktor3)
-    implementation("androidx.core:core-ktx:1.17.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.2")
-    implementation("androidx.activity:activity-compose:1.10.1")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
     implementation(platform("androidx.compose:compose-bom:2025.08.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")

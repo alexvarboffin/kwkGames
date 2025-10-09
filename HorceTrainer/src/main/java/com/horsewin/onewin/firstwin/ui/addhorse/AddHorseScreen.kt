@@ -1,9 +1,8 @@
-package com.vai.vaidebet.vaibrazil.ui.addhorse
+package com.horsewin.onewin.firstwin.ui.addhorse
 
 import android.app.DatePickerDialog
 import android.net.Uri
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -56,7 +55,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
 
 
-import com.vai.vaidebet.vaibrazil.ui.theme.Blue
+import com.horsewin.onewin.firstwin.ui.theme.Blue
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

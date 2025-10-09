@@ -1,4 +1,4 @@
-package com.vai.vaidebet.vaibrazil.ui.profile
+package com.horsewin.onewin.firstwin.ui.profile
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -37,7 +37,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,8 +54,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
 
 import com.horsewin.onewin.firstwin.presentation.profile.ProfileUiState
-import com.vai.vaidebet.vaibrazil.ui.theme.Blue
-import com.vai.vaidebet.vaibrazil.ui.theme.DarkBlue
+import com.horsewin.onewin.firstwin.ui.theme.Blue
 import java.text.SimpleDateFormat
 import java.util.Locale
 

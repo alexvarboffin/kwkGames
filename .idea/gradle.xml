@@ -10,8 +10,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+<<<<<<< HEAD
+=======
+            <option value="$PROJECT_DIR$/HorceTrainer" />
+>>>>>>> 137283dd9c2fb708b4b167ed0b89b011fe6cfe34
             <option value="$PROJECT_DIR$/annotations" />
-            <option value="$PROJECT_DIR$/cricket_3_WinCric" />
             <option value="$PROJECT_DIR$/sdk" />
             <option value="$PROJECT_DIR$/sounds" />
           </set>
