@@ -46,6 +46,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.footballpxb.pixbet.pxbbraz.ui.theme.PXBFootballTheme
+import com.walhalla.sdk.utils.loadPrivacyPolicy
+import androidx.core.net.toUri
 
 const val PREFS_NAME_GAME = "PXBGamePrefs"
 const val KEY_UNLOCKED_LEVEL = "unlockedLevel"
@@ -76,14 +78,14 @@ class GameActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        webView.loadPrivacyPolicy("https://footga.top/terms")
+        webView.loadPrivacyPolicy("https://footga.top/terms".toCharArray())
     }
 }
 
 fun openInCustomTab(context: Context, url: String) {
     val builder = CustomTabsIntent.Builder()
     val customTabsIntent = builder.build()
-    customTabsIntent.launchUrl(context, Uri.parse(url))
+    customTabsIntent.launchUrl(context, url.toUri())
 }
 
 @Composable

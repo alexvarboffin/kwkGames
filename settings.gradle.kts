@@ -38,20 +38,19 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "kwkGames"
-//include(":VAI")
-//include(":Esporte")
+include(":VAI")
+include(":Esporte")
 include(":sounds")
 
 //include(":VAIQwen")
-//include(":TacticField")
+include(":TacticField")
 
 //01 twa
 //include(":cricket")//02. app
 //include(":cricket_2_mostbet")//cricket clone
-//include(":cricket_3_WinCric")//cricket clone
+include(":cricket_3_WinCric")//cricket clone
 
-
-//include(":Footbol")
+include(":Footbol")
 include(":HorceTrainer")
 
 include(":sdk")

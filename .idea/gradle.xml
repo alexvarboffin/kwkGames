@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="gradleJvm" value="jbr-21" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-<<<<<<< HEAD
-=======
+            <option value="$PROJECT_DIR$/Esporte" />
+            <option value="$PROJECT_DIR$/Footbol" />
             <option value="$PROJECT_DIR$/HorceTrainer" />
->>>>>>> 137283dd9c2fb708b4b167ed0b89b011fe6cfe34
+            <option value="$PROJECT_DIR$/TacticField" />
+            <option value="$PROJECT_DIR$/VAI" />
             <option value="$PROJECT_DIR$/annotations" />
+            <option value="$PROJECT_DIR$/cricket_3_WinCric" />
             <option value="$PROJECT_DIR$/sdk" />
             <option value="$PROJECT_DIR$/sounds" />
           </set>
