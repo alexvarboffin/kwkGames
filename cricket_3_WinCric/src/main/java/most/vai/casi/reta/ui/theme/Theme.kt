@@ -5,13 +5,13 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 
 private val PremiumDarkColorScheme = darkColorScheme(
-    primary = PremiumGold,
-    background = Charcoal,
-    onBackground = OffWhite,
-    surface = Charcoal,
-    onSurface = OffWhite,
-    primaryContainer = PremiumGold,
-    onPrimaryContainer = Charcoal
+    primary = PremiumBlue,
+    background = DarkBlue,
+    onBackground = LightSilver,
+    surface = DarkBlue,
+    onSurface = LightSilver,
+    primaryContainer = PremiumBlue,
+    onPrimaryContainer = DarkBlue
 )
 
 @Composable

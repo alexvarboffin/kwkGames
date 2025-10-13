@@ -23,7 +23,7 @@ import kotlin.math.abs
 
 @Composable
 fun GameBoard(onMatch: () -> Unit) {
-    val emojis = listOf("🏟️", "🧤", "🎯", "🔥", "👑")
+    val emojis = listOf("🏏", "🏆", "⭐", "🎉", "🎈")
     //val emojis = listOf("🏏", "🥊", "⛑️", "🏆", "⭐")
 
     val emptyEmoji = ""

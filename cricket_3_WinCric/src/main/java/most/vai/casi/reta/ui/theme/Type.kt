@@ -11,10 +11,10 @@ import most.vai.casi.reta.R
 
 // Define a unique FontFamily by randomly assigning fonts to weights
 val AppFontFamily = FontFamily(
-    Font(R.font.gamefont_mahjong, FontWeight.Normal),
-    Font(R.font.trade_gothic_bold, FontWeight.Bold),
-    Font(R.font.baloo, FontWeight.Medium),
-    Font(R.font.custom_font, FontWeight.Light)
+    Font(R.font.custom_font, FontWeight.Normal),
+    Font(R.font.baloo, FontWeight.Bold),
+    Font(R.font.trade_gothic_bold, FontWeight.Medium),
+    Font(R.font.gamefont_mahjong, FontWeight.Light)
 )
 
 // Define the Typography for the theme using the unique FontFamily

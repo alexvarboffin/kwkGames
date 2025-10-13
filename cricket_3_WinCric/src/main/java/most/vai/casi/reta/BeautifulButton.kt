@@ -17,8 +17,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import most.vai.casi.reta.ui.theme.GoldDark
-import most.vai.casi.reta.ui.theme.GoldLight
+import most.vai.casi.reta.ui.theme.BlueDark
+import most.vai.casi.reta.ui.theme.BlueLight
+import most.vai.casi.reta.ui.theme.LightSilver
 
 @Composable
 fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modifier) {
@@ -33,17 +34,17 @@ fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modi
     ) {
         Box(
             modifier = Modifier
-                .border(3.dp, Color.Black, RoundedCornerShape(12.dp))
+                .border(3.dp, LightSilver, RoundedCornerShape(12.dp))
                 .background(
                     brush = Brush.horizontalGradient(
-                        colors = listOf(GoldLight, GoldDark)
+                        colors = listOf(BlueLight, BlueDark)
                     ),
                     shape = RoundedCornerShape(12.dp)
                 )
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = text, fontWeight = FontWeight.Bold, color = Color.Black)
+            Text(text = text, fontWeight = FontWeight.Bold, color = LightSilver)
         }
     }
 }

@@ -2,11 +2,11 @@ package most.vai.casi.reta.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Premium Palette
-val PremiumGold = Color(0xFFD4AF37)
-val Charcoal = Color(0xFF121212)
-val OffWhite = Color(0xFFFAFAFA)
+// New Premium Palette
+val PremiumBlue = Color(0xFF004C99)
+val DarkBlue = Color(0xFF0D1117)
+val LightSilver = Color(0xFFE6E6E6)
 
 // Gradient Colors for Premium Buttons
-val GoldDark = Color(0xFFB8860B)
-val GoldLight = Color(0xFFD4AF37)
+val BlueDark = Color(0xFF003D7A)
+val BlueLight = Color(0xFF0052A3)
