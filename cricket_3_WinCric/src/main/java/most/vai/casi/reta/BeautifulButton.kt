@@ -1,4 +1,4 @@
-package com.cricmost.cricmost
+package most.vai.casi.reta
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.cricmost.cricmost.ui.theme.GoldDark
-import com.cricmost.cricmost.ui.theme.GoldLight
+import most.vai.casi.reta.ui.theme.GoldDark
+import most.vai.casi.reta.ui.theme.GoldLight
 
 @Composable
 fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modifier) {

@@ -1,4 +1,4 @@
-package com.cricmost.cricmost
+package most.vai.casi.reta
 
 import android.os.Bundle
 import android.webkit.WebView
@@ -25,7 +25,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.cricmost.cricmost.ui.theme.CricketTheme
+
+import most.vai.casi.reta.ui.theme.CricketTheme
 
 import com.walhalla.sdk.utils.loadPrivacyPolicy
 

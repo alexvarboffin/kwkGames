@@ -1,4 +1,4 @@
-package com.cricmost.cricmost
+package most.vai.casi.reta
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext

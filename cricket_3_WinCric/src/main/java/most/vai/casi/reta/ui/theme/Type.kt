@@ -1,4 +1,4 @@
-package com.cricmost.cricmost.ui.theme
+package most.vai.casi.reta.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -6,7 +6,8 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.cricmost.cricmost.R
+import most.vai.casi.reta.R
+
 
 // Define a unique FontFamily by randomly assigning fonts to weights
 val AppFontFamily = FontFamily(

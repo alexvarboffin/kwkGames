@@ -1,4 +1,4 @@
-package com.cricmost.cricmost
+package most.vai.casi.reta
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -45,13 +45,13 @@ fun MainScreen(
             BeautifulButton(
                 onClick = onCareerModeClick,
                 text = "Career Mode",
-                modifier = Modifier.Companion.fillMaxWidth(0.8f)
+                modifier = Modifier.fillMaxWidth(0.8f)
             )
             Spacer(modifier = Modifier.Companion.height(20.dp))
             BeautifulButton(
                 onClick = onEndlessModeClick,
                 text = "Endless Mode",
-                modifier = Modifier.Companion.fillMaxWidth(0.8f)
+                modifier = Modifier.fillMaxWidth(0.8f)
             )
             Spacer(modifier = Modifier.Companion.height(40.dp))
             Row(
@@ -61,13 +61,13 @@ fun MainScreen(
                 BeautifulButton(
                     onClick = onPrivacyClick,
                     text = "Privacy",
-                    modifier = Modifier.Companion.weight(1f)
+                    modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.Companion.width(16.dp))
                 BeautifulButton(
                     onClick = onFaqClick,
                     text = "  FAQ  ",
-                    modifier = Modifier.Companion.weight(1f)
+                    modifier = Modifier.weight(1f)
                 )
             }
         }

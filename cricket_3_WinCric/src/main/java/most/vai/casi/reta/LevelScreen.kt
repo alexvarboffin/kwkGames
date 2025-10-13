@@ -1,4 +1,4 @@
-package com.cricmost.cricmost
+package most.vai.casi.reta
 
 import android.content.Context
 import androidx.compose.foundation.Image

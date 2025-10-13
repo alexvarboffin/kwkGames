@@ -1,4 +1,4 @@
-package com.cricmost.cricmost.ui.theme
+package most.vai.casi.reta.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

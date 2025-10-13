@@ -1,4 +1,4 @@
-package com.cricmost.cricmost
+package most.vai.casi.reta
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
