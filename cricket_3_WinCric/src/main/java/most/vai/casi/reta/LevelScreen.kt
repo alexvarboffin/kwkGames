@@ -47,7 +47,7 @@ fun LevelScreen(onLevelClick: (Int) -> Unit) {
                 horizontalAlignment = Alignment.Companion.CenterHorizontally
             ) {
                 Text(
-                    text = "",
+                    text = "Select Level",
                     fontSize = 48.sp,
                     fontWeight = FontWeight.Companion.Bold,
                     color = Color.Companion.White,
