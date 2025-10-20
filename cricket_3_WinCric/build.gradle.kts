@@ -18,12 +18,14 @@ android {
     //namespace = "com.cricmost.cricmst"
     //com.cricjojo.cricmost
     //com.cricmost.cricmost
-    namespace = "most.vai.casi.reta"
+    //most.vai.casi.reta
+
+    namespace = "mostb.vaid.casib.retab"
 
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "most.vai.casi.reta"
+        applicationId = "mostb.vaid.casib.retab"
         minSdk = 24
         targetSdk = 36
         versionCode = code
@@ -32,7 +34,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
 
-        setProperty("archivesBaseName", "most.vai.casi.reta")
+        setProperty("archivesBaseName", "mostb.vaid.casib.retab")
     }
 
     signingConfigs {

@@ -1,4 +1,4 @@
-package most.vai.casi.reta
+package mostb.vaid.casib.retab
 
 object Cfg{
 

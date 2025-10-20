@@ -1,4 +1,4 @@
-package most.vai.casi.reta//package com.mostbet.mostcric.tencric
+package mostb.vaid.casib.retab//package com.mostbet.mostcric.tencric
 //
 //import android.os.Bundle
 //import androidx.activity.ComponentActivity

@@ -1,4 +1,4 @@
-package most.vai.casi.reta
+package mostb.vaid.casib.retab
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,9 +17,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import most.vai.casi.reta.ui.theme.BlueDark
-import most.vai.casi.reta.ui.theme.BlueLight
-import most.vai.casi.reta.ui.theme.LightSilver
+import mostb.vaid.casib.retab.ui.theme.BlueDark
+import mostb.vaid.casib.retab.ui.theme.BlueLight
+import mostb.vaid.casib.retab.ui.theme.LightSilver
 
 @Composable
 fun BeautifulButton(onClick: () -> Unit, text: String, modifier: Modifier = Modifier) {

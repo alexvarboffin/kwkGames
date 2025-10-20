@@ -1,4 +1,4 @@
-package most.vai.casi.reta
+package mostb.vaid.casib.retab
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext

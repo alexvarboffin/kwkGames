@@ -1,4 +1,4 @@
-package most.vai.casi.reta.ui.theme
+package mostb.vaid.casib.retab.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

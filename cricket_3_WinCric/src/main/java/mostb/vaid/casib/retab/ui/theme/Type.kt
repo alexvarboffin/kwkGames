@@ -1,4 +1,4 @@
-package most.vai.casi.reta.ui.theme
+package mostb.vaid.casib.retab.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import most.vai.casi.reta.R
+import mostb.vaid.casib.retab.R
 
 
 // Define a unique FontFamily by randomly assigning fonts to weights

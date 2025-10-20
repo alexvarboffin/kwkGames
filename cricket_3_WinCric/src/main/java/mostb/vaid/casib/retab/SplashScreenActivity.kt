@@ -1,4 +1,4 @@
-package most.vai.casi.reta
+package mostb.vaid.casib.retab
 
 import android.app.Activity
 import android.content.Intent
@@ -19,7 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
-import most.vai.casi.reta.ui.theme.CricketTheme
+import mostb.vaid.casib.retab.ui.theme.CricketTheme
 
 
 class SplashScreenActivity : ComponentActivity() {

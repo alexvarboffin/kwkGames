@@ -2,8 +2,8 @@
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
 -keep class androidx.profileinstaller.ProfileInstallReceiver { <init>(); }
 -keep class androidx.startup.InitializationProvider { <init>(); }
--keep class most.vai.casi.reta.MainActivity { <init>(); }
--keep class most.vai.casi.reta.SplashScreenActivity { <init>(); }
+-keep class mostb.vaid.casib.retab.MainActivity { <init>(); }
+-keep class mostb.vaid.casib.retab.SplashScreenActivity { <init>(); }
 -keep class android.widget.Space { <init>(android.content.Context, android.util.AttributeSet); }
 
 -keep class androidx.appcompat.app.AlertController$RecycleListView { <init>(android.content.Context, android.util.AttributeSet); }

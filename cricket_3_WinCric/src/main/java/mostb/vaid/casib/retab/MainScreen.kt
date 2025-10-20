@@ -1,4 +1,4 @@
-package most.vai.casi.reta
+package mostb.vaid.casib.retab
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
