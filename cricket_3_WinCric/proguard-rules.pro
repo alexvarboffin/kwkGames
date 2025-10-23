@@ -167,4 +167,4 @@
 -optimizationpasses 1
 #-dontobfuscate
 
--repackageclasses 'androidx.compose.ui.text'
+-repackageclasses 'androidx.compose.ui'

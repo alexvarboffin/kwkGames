@@ -1,4 +1,4 @@
-package com.cricmost.cricmost
+package mostb.vaid.casib.retab
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,14 +17,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.math.abs
 
 @Composable
 fun GameBoard(onMatch: () -> Unit) {
-    val emojis = listOf("🏟️", "🧤", "🎯", "🔥", "👑")
+    //val emojis = listOf("🏏", "🏆", "⭐", "🎉", "🎈")
     //val emojis = listOf("🏏", "🥊", "⛑️", "🏆", "⭐")
+
+    //val emojis = listOf("⚡", "💥", "🏃‍♂️", "🔥", "🎯")
+    val classic = listOf("🏏", "🥎", "🏟️", "🧢", "🥇")
+    val dynamic = listOf("⚡", "💥", "🏃‍♂️", "🔥", "🎯")
+    val victory = listOf("🏆", "🎖️", "👑", "🙌", "🎉")
+    val gear = listOf("🎽", "🧤", "🧢", "🥎", "👟")
+    val fans = listOf("🥳", "🎵", "🎈", "📣", "🙌")
+    val atmosphere = listOf("☀️", "🌙", "🏟️", "🌤️", "🔥")
+
+    val emojis = classic
+    val customFont = FontFamily(Font(R.font.gamefont_mahjong))
 
     val emptyEmoji = ""
     var grid by remember { mutableStateOf(List(GRID_SIZE) { List(GRID_SIZE) { emojis.random() } }) }
@@ -107,7 +120,7 @@ fun GameBoard(onMatch: () -> Unit) {
                                         }
                                         selectedItem = null
                                     }
-                                }) { Text(text = grid[i][j], fontSize = 24.sp) }
+                                }) { Text(text = grid[i][j], fontSize = 24.sp, fontFamily = customFont) }
                     }
                 }
             }

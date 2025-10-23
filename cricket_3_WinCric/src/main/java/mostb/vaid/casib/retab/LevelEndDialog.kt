@@ -1,4 +1,4 @@
-package com.cricmost.cricmost
+package mostb.vaid.casib.retab
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

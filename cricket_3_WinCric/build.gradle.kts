@@ -17,12 +17,15 @@ android {
     //namespace = "com.mostbet.mostcric.tencric"
     //namespace = "com.cricmost.cricmst"
     //com.cricjojo.cricmost
-    namespace = "com.cricmost.cricmost"
+    //com.cricmost.cricmost
+    //most.vai.casi.reta
+
+    namespace = "mostb.vaid.casib.retab"
 
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.cricmost.cricmost"
+        applicationId = "mostb.vaid.casib.retab"
         minSdk = 24
         targetSdk = 36
         versionCode = code
@@ -31,7 +34,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
 
-        setProperty("archivesBaseName", "com.cricmost.cricmost")
+        setProperty("archivesBaseName", "mostb.vaid.casib.retab")
     }
 
     signingConfigs {
