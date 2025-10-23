@@ -44,6 +44,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.esporte.olimp.vai.jojo.fon.gam.Blue
+import com.esporte.olimp.vai.jojo.fon.gam.ui.theme.PremiumButton
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -236,20 +237,15 @@ fun NewTrainingScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Button(
+
+
+            PremiumButton(
                 onClick = onCancelClick,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Gray,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(Icons.Default.Close, contentDescription = "Cancel")
-                Spacer(modifier = Modifier.size(8.dp))
-                Text("Cancel")
-            }
+                text = "Cancel",
+                icon = { Icon(Icons.Default.Close, contentDescription = null) }
+            )
             Spacer(modifier = Modifier.width(16.dp))
-            Button(
+            PremiumButton(
                 onClick = { 
                     onSaveClick(
                         trainingName,
@@ -263,17 +259,9 @@ fun NewTrainingScreen(
                         notes
                     )
                 },
-                enabled = trainingName.isNotBlank() && date != null && duration.isNotBlank() && surfaceType.isNotBlank() && distance.isNotBlank() && averageSpeed.isNotBlank(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Blue,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(Icons.Default.Check, contentDescription = "Save")
-                Spacer(modifier = Modifier.size(8.dp))
-                Text("Save")
-            }
+                text = "Save",
+                icon = { Icon(Icons.Default.Check, contentDescription = null) }
+            )
         }
     }
 }

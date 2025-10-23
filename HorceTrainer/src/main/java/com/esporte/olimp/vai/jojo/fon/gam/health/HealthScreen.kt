@@ -29,6 +29,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.esporte.olimp.vai.jojo.fon.gam.domain.model.HealthRecord
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.health.HealthUiState
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.health.HealthViewModel
+import com.esporte.olimp.vai.jojo.fon.gam.ui.theme.PremiumButton
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -55,16 +56,12 @@ fun HealthScreen(uiState: HealthUiState, onNavigateToAddHealthData: () -> Unit) 
             }
         }
 
-        Button(
+
+        PremiumButton(
             onClick = onNavigateToAddHealthData,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Icon(Icons.Default.Add, contentDescription = "Add Health Data")
-            Spacer(modifier = Modifier.size(8.dp))
-            Text("Add Health Data")
-        }
+            text = "Add Health Data",
+            icon = { Icon(Icons.Default.Add, contentDescription = null) }
+        )
     }
 }
 

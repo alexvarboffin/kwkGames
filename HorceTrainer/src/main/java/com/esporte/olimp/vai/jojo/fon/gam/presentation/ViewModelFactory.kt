@@ -10,6 +10,7 @@ import com.esporte.olimp.vai.jojo.fon.gam.presentation.home.HomeViewModel
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.newtraining.NewTrainingViewModel
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.profile.ProfileViewModel
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.schedule.ScheduleViewModel
+import com.esporte.olimp.vai.jojo.fon.gam.presentation.settings.SettingsViewModel
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.trainings.TrainingsViewModel
 
 class ViewModelFactory(private val appContainer: AppContainer) : ViewModelProvider.Factory {
@@ -43,8 +44,14 @@ class ViewModelFactory(private val appContainer: AppContainer) : ViewModelProvid
             modelClass.isAssignableFrom(NewTrainingViewModel::class.java) -> {
                 NewTrainingViewModel(appContainer.addTrainingUseCase) as T
             }
+
+
             modelClass.isAssignableFrom(AddHealthDataViewModel::class.java) -> {
                 AddHealthDataViewModel(appContainer.addHealthRecordUseCase) as T
+            }
+
+            modelClass.isAssignableFrom(SettingsViewModel::class.java) -> {
+                SettingsViewModel(appContainer.settingsDataStore) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }

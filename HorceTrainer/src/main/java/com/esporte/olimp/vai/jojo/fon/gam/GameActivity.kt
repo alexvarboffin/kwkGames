@@ -39,15 +39,18 @@ import com.esporte.olimp.vai.jojo.fon.gam.presentation.newtraining.NewTrainingVi
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.profile.ProfileViewModel
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.schedule.ScheduleViewModel
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.trainings.TrainingsViewModel
-import com.esporte.olimp.yay.ui.addhorse.AddHorseScreen
-import com.esporte.olimp.yay.ui.addhealthdata.AddHealthDataScreen
+import com.esporte.olimp.vai.jojo.fon.gam.addhorse.AddHorseScreen
+import com.esporte.olimp.vai.jojo.fon.gam.addhealthdata.AddHealthDataScreen
 import com.esporte.olimp.yay.ui.health.HealthScreen
-import com.esporte.olimp.yay.ui.home.HomeScreen
+import com.esporte.olimp.vai.jojo.fon.gam.home.HomeScreen
 import com.esporte.olimp.yay.ui.newtraining.NewTrainingScreen
 import com.esporte.olimp.yay.ui.profile.ProfileScreen
 import com.esporte.olimp.yay.ui.schedule.ScheduleScreen
-import com.esporte.olimp.yay.ui.trainings.TrainingsScreen
+import com.esporte.olimp.vai.jojo.fon.gam.trainings.TrainingsScreen
 import com.walhalla.sdk.utils.loadPrivacyPolicy
+
+import androidx.compose.material.icons.filled.Settings
+import com.esporte.olimp.vai.jojo.fon.gam.ui.settings.SettingsScreen
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
     object Home : Screen("home", "Home", Icons.Default.Home)
@@ -58,6 +61,7 @@ sealed class Screen(val route: String, val label: String, val icon: ImageVector)
     object AddHorse : Screen("add_horse", "Add Horse", Icons.Default.Add)
     object NewTraining : Screen("new_training", "New Training", Icons.Default.Add)
     object AddHealthData : Screen("add_health_data", "Add Health Data", Icons.Default.Add)
+    object Settings : Screen("settings", "Settings", Icons.Default.Settings)
 }
 
 class GameActivity : ComponentActivity() {
@@ -66,7 +70,8 @@ class GameActivity : ComponentActivity() {
         webView = WebView(this).apply {} //not set WebViewClient!!!
         val appContainer = (application as HorseApplication).appContainer
         setContent {
-            HorseTrainerTheme {
+            val theme by appContainer.settingsDataStore.theme.collectAsState(initial = "System")
+            HorseTrainerTheme(theme) {
                 val navController = rememberNavController()
                 Scaffold(
                     bottomBar = {
@@ -88,8 +93,12 @@ class GameActivity : ComponentActivity() {
                                 uiState = viewModel.uiState.collectAsState().value,
                                 onAddHorseClick = { navController.navigate(Screen.AddHorse.route) },
                                 onNewTrainingClick = { navController.navigate(Screen.NewTraining.route) },
-                                onAddHealthDataClick = { navController.navigate(Screen.AddHealthData.route) }
+                                onAddHealthDataClick = { navController.navigate(Screen.AddHealthData.route) },
+                                onSettingsClick = { navController.navigate(Screen.Settings.route) }
                             )
+                        }
+                        composable(Screen.Settings.route) {
+                            SettingsScreen(factory = ViewModelFactory(appContainer))
                         }
                         composable(Screen.Schedule.route) {
                             val viewModel: ScheduleViewModel = viewModel(factory = ViewModelFactory(

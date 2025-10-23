@@ -1,4 +1,4 @@
-package com.esporte.olimp.yay.ui.trainings
+package com.esporte.olimp.vai.jojo.fon.gam.trainings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,6 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.esporte.olimp.vai.jojo.fon.gam.domain.model.Training
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.trainings.TrainingsUiState
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.trainings.TrainingsViewModel
+import com.esporte.olimp.vai.jojo.fon.gam.ui.theme.PremiumButton
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -55,16 +55,12 @@ fun TrainingsScreen(uiState: TrainingsUiState, onNavigateToNewTraining: () -> Un
             }
         }
 
-        Button(
+
+        PremiumButton(
             onClick = onNavigateToNewTraining,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Icon(Icons.Default.Add, contentDescription = "New Training")
-            Spacer(modifier = Modifier.size(8.dp))
-            Text("New Training")
-        }
+            text = "New Training",
+            icon = { Icon(Icons.Default.Add, contentDescription = null) }
+        )
     }
 }
 

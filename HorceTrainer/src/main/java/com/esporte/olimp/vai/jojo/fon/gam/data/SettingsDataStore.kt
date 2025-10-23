@@ -9,6 +9,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+import androidx.datastore.preferences.core.stringPreferencesKey
+
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class SettingsDataStore(context: Context) {
@@ -17,10 +19,21 @@ class SettingsDataStore(context: Context) {
 
     companion object {
         val SELECTED_HORSE_ID = longPreferencesKey("selected_horse_id")
+        val THEME = stringPreferencesKey("theme")
     }
 
     val selectedHorseId: Flow<Long?> = dataStore.data.map {
         it[SELECTED_HORSE_ID]
+    }
+
+    val theme: Flow<String> = dataStore.data.map {
+        it[THEME] ?: "System"
+    }
+
+    suspend fun saveTheme(theme: String) {
+        dataStore.edit {
+            it[THEME] = theme
+        }
     }
 
     suspend fun setSelectedHorseId(horseId: Long) {

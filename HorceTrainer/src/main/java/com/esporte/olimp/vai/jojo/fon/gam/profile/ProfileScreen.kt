@@ -56,6 +56,7 @@ import com.esporte.olimp.vai.jojo.fon.gam.domain.model.Horse
 
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.profile.ProfileUiState
 import com.esporte.olimp.vai.jojo.fon.gam.Blue
+import com.esporte.olimp.vai.jojo.fon.gam.ui.theme.PremiumButton
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -150,30 +151,13 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+
             // Add Data button
-            Button(
+            PremiumButton(
                 onClick = onAddDataClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Blue,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "+ ADD DATA",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+                text = "+ ADD DATA",
+                icon = { Icon(Icons.Default.Add, contentDescription = null) }
+            )
         } else {
             // Empty state - no horse selected
             Card(
@@ -220,17 +204,11 @@ fun ProfileScreen(
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    Button(
+                    PremiumButton(
                         onClick = onAddHorseClick, // Use the callback here
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Blue,
-                            contentColor = Color.White
-                        )
-                    ) {
-                        Icon(Icons.Default.Add, contentDescription = "Add Horse")
-                        Spacer(modifier = Modifier.size(8.dp))
-                        Text("Add Horse")
-                    }
+                        text = "Add Horse",
+                        icon = { Icon(Icons.Default.Add, contentDescription = null) }
+                    )
                 }
             }
         }

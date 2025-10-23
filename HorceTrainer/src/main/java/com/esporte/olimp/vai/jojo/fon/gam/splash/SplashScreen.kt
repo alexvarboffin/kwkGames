@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.esporte.olimp.vai.jojo.fon.gam.Blue
 
 import com.esporte.olimp.vai.jojo.fon.gam.R
+import com.esporte.olimp.vai.jojo.fon.gam.ui.theme.PremiumButton
 
 @SuppressLint("UseOfNonLambdaOffsetOverload")
 @Composable
@@ -91,12 +92,11 @@ fun SplashScreen(onStartClick: () -> Unit) {
     }
 }
 
+
 @Composable
 private fun PrettyButton(onStartClick: () -> Unit) {
-    Button(
+    PremiumButton(
         onClick = onStartClick,
-        modifier = Modifier.padding(horizontal = 32.dp)
-    ) {
-        Text("CLICK TO START", fontSize = 20.sp)
-    }
+        text = "CLICK TO START"
+    )
 }

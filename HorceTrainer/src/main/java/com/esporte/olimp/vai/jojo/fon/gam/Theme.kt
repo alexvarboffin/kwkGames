@@ -12,15 +12,26 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
-    primary = DarkOrange,
-    secondary = DarkBlue,
-    background = Color(0xFF1A222C),
-    surface = Color(0xFF15202D),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
+private val PremiumDarkColorScheme = darkColorScheme(
+    primary = PremiumDarkGold,
+    secondary = PremiumDarkSilver,
+    background = Color(0xFF121212),
+    surface = Color(0xFF1E1E1E),
+    onPrimary = Color.Black,
+    onSecondary = Color.Black,
     onBackground = Color.White,
     onSurface = Color.White,
+)
+
+private val PremiumLightColorScheme = lightColorScheme(
+    primary = PremiumGold,
+    secondary = PremiumSilver,
+    background = Color.White,
+    surface = Color(0xFFF0F0F0),
+    onPrimary = Color.Black,
+    onSecondary = Color.Black,
+    onBackground = Color.Black,
+    onSurface = Color.Black,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -36,16 +47,21 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun HorseTrainerTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    theme: String = "System",
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    val darkTheme = when (theme) {
+        "Light" -> false
+        "Dark" -> true
+        else -> isSystemInDarkTheme()
+    }
+    val colorScheme = if (darkTheme) PremiumDarkColorScheme else PremiumLightColorScheme
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 

@@ -1,4 +1,4 @@
-package com.esporte.olimp.yay.ui.addhorse
+package com.esporte.olimp.vai.jojo.fon.gam.addhorse
 
 import android.app.DatePickerDialog
 import android.net.Uri
@@ -56,6 +56,7 @@ import coil3.compose.rememberAsyncImagePainter
 
 
 import com.esporte.olimp.vai.jojo.fon.gam.Blue
+import com.esporte.olimp.vai.jojo.fon.gam.ui.theme.PremiumButton
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -295,20 +296,16 @@ fun AddHorseScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Button(
+
+
+
+            PremiumButton(
                 onClick = onCancelClick,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Gray,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(Icons.Default.Close, contentDescription = "Cancel")
-                Spacer(modifier = Modifier.size(8.dp))
-                Text("Cancel")
-            }
+                text = "Cancel",
+                icon = { Icon(Icons.Default.Close, contentDescription = null) }
+            )
             Spacer(modifier = Modifier.width(16.dp))
-            Button(
+            PremiumButton(
                 onClick = { 
                     onSaveClick(
                         horseName,
@@ -325,17 +322,9 @@ fun AddHorseScreen(
                         acthLevel.toDoubleOrNull()
                     )
                 },
-                enabled = isFormValid,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Blue,
-                    contentColor = Color.White
-                ),
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(Icons.Default.Check, contentDescription = "Save")
-                Spacer(modifier = Modifier.size(8.dp))
-                Text("Save")
-            }
+                text = "Save",
+                icon = { Icon(Icons.Default.Check, contentDescription = null) }
+            )
         }
     }
 }

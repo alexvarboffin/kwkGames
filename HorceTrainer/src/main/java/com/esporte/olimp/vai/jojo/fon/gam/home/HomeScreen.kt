@@ -1,5 +1,6 @@
-package com.esporte.olimp.yay.ui.home
+package com.esporte.olimp.vai.jojo.fon.gam.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,16 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,16 +28,26 @@ import androidx.compose.ui.unit.sp
 import com.esporte.olimp.vai.jojo.fon.gam.Const
 import com.esporte.olimp.vai.jojo.fon.gam.presentation.home.HomeUiState
 import com.esporte.olimp.vai.jojo.fon.gam.Blue
+import com.esporte.olimp.vai.jojo.fon.gam.ui.theme.PremiumButton
 import com.walhalla.sdk.utils.openInCustomTab
 import java.text.SimpleDateFormat
 import java.util.Locale
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
     onAddHorseClick: () -> Unit = {},
     onNewTrainingClick: () -> Unit = {},
-    onAddHealthDataClick: () -> Unit = {}
+    onAddHealthDataClick: () -> Unit = {},
+    onSettingsClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
 
@@ -53,35 +57,51 @@ fun HomeScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "WELCOME",
-            color = Blue,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
-        Button(onClick = onAddHealthDataClick) {
-            Icon(Icons.Default.Favorite, contentDescription = "Add Health Data")
-            Spacer(modifier = Modifier.size(8.dp))
-            Text("Add Health Data")
+
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = "WELCOME",
+                color = Blue,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 24.dp),
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            IconButton(onClick = onSettingsClick) {
+                Icon(Icons.Default.Settings, contentDescription = "Settings")
+            }
         }
+
+
+
+
+        PremiumButton(
+            onClick = onAddHealthDataClick, 
+            text = "Add Health Data",
+            icon = { Icon(Icons.Default.Favorite, contentDescription = null) }
+        )
 
         // Quick Actions
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().height(100.dp),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
 
-            Button(onClick = onNewTrainingClick) {
-                Icon(Icons.Default.Star, contentDescription = "New Training")
-                Spacer(modifier = Modifier.size(8.dp))
-                Text("New Training")
-            }
-            Button(onClick = onAddHorseClick) {
-                Icon(Icons.Default.Add, contentDescription = "Add Horse")
-                Spacer(modifier = Modifier.size(8.dp))
-                Text("Add Horse")
-            }
+
+
+            PremiumButton(
+                onClick = onNewTrainingClick, 
+                text = "New Training",
+                icon = { Icon(Icons.Default.Star, contentDescription = null) }
+            )
+            PremiumButton(
+                onClick = onAddHorseClick, 
+                text = "Add Horse",
+                icon = { Icon(Icons.Default.Add, contentDescription = null) }
+            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
