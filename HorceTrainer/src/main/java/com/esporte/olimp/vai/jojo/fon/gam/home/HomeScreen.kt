@@ -1,0 +1,158 @@
+package com.esporte.olimp.yay.ui.home
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.esporte.olimp.vai.jojo.fon.gam.Const
+import com.esporte.olimp.vai.jojo.fon.gam.presentation.home.HomeUiState
+import com.esporte.olimp.vai.jojo.fon.gam.Blue
+import com.walhalla.sdk.utils.openInCustomTab
+import java.text.SimpleDateFormat
+import java.util.Locale
+
+@Composable
+fun HomeScreen(
+    uiState: HomeUiState,
+    onAddHorseClick: () -> Unit = {},
+    onNewTrainingClick: () -> Unit = {},
+    onAddHealthDataClick: () -> Unit = {}
+) {
+    val context = LocalContext.current
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "WELCOME",
+            color = Blue,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
+        Button(onClick = onAddHealthDataClick) {
+            Icon(Icons.Default.Favorite, contentDescription = "Add Health Data")
+            Spacer(modifier = Modifier.size(8.dp))
+            Text("Add Health Data")
+        }
+
+        // Quick Actions
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+
+            Button(onClick = onNewTrainingClick) {
+                Icon(Icons.Default.Star, contentDescription = "New Training")
+                Spacer(modifier = Modifier.size(8.dp))
+                Text("New Training")
+            }
+            Button(onClick = onAddHorseClick) {
+                Icon(Icons.Default.Add, contentDescription = "Add Horse")
+                Spacer(modifier = Modifier.size(8.dp))
+                Text("Add Horse")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        if (uiState.isLoading) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        } else if (uiState.error != null) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(text = uiState.error, color = Color.Red)
+            }
+        } else {
+            // Latest Training Card
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text("Latest Training", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    if (uiState.latestTraining != null) {
+                        val training = uiState.latestTraining
+                        Text("Name: ${training.name}")
+                        Text("Date: ${SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(training.date)}")
+                        Text("Duration: ${training.durationMinutes} min")
+                    } else {
+                        Text("No recent training data.", color = Color.Gray)
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Latest Health Metrics Card
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text("Latest Health Metrics", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    if (uiState.latestHealthRecord != null) {
+                        val healthRecord = uiState.latestHealthRecord
+                        Text("Date: ${SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(healthRecord.date)}")
+                        healthRecord.weight?.let { Text("Weight: $it kg") }
+                        healthRecord.bodyTemperature?.let { Text("Temperature: $it °C") }
+                        healthRecord.pulse?.let { Text("Pulse: $it bpm") }
+                    } else {
+                        Text("No recent health data.", color = Color.Gray)
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            Text(
+                text = "Privacy Policy",
+                color = Blue,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable { openInCustomTab(context, Const.privacyPolicy) }
+            )
+            Text(
+                text = "FAQ",
+                color = Blue,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable { openInCustomTab(context, Const.faq) }
+            )
+        }
+    }
+}

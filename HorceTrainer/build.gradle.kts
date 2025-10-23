@@ -5,13 +5,14 @@ plugins {
     id("kotlin-kapt")
 }
 //com.horsewin.onewin.firstwin
+//com.esporte.olimp.yay
 
 android {
-    namespace = "com.esporte.olimp.yay"
+    namespace = "com.esporte.olimp.vai.jojo.fon.gam"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.esporte.olimp.yay"
+        applicationId = "com.esporte.olimp.vai.jojo.fon.gam"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -21,7 +22,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        setProperty("archivesBaseName", "com.esporte.olimp.yay")
+        setProperty("archivesBaseName", "com.esporte.olimp.vai.jojo.fon.gam")
     }
 
     buildTypes {
