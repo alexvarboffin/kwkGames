@@ -5,19 +5,19 @@
       <SelectionState runConfigName="Esporte">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="HorceTrainer">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="sounds">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="Footbol">
+      <SelectionState runConfigName="HorceTrainer">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="TacticField">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="cricket_3_WinCric">
+      <SelectionState runConfigName="VAI">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="Footbol">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
